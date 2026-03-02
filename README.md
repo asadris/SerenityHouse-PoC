@@ -2,6 +2,8 @@
 
 Welcome to the Serenity House project! This project aims to...
 
+First, verify public access by Tris.
+
 ## Features
 - Feature 1
 - Feature 2
