@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainerMobileState/2.2.0/schema.json",
+  "position": {
+    "x": 10,
+    "y": 204,
+    "z": 3,
+    "height": 317,
+    "width": 314
+  },
+  "objects": {
+    "subTotals": [],
+    "values": [],
+    "rowHeaders": [],
+    "columnHeaders": [
+      {
+        "properties": {
+          "autoSizeColumnWidth": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "columnAdjustment": {
+            "expr": {
+              "Literal": {
+                "Value": "'fitToContent'"
+              }
+            }
+          },
+          "wordWrap": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualContainerObjects": {
+    "stylePreset": [
+      {
+        "properties": {
+          "name": {
+            "expr": {
+              "Literal": {
+                "Value": "'Default'"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

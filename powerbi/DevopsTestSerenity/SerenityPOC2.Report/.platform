@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SerenityPOC2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "54a42e7d-291f-4b6b-9b04-01629e207e19"
+  }
+}

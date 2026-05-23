@@ -1,0 +1,108 @@
+table DimDonor
+	lineageTag: 868960ff-aaaf-4a9e-a710-92e0c80d8a33
+
+	column DonorKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 660446c2-9659-4641-8bfc-0835633c2b16
+		summarizeBy: none
+		sourceColumn: DonorKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DonorID
+		dataType: int64
+		formatString: 0
+		lineageTag: a41e984d-aa44-4035-9f6c-056e43d93a80
+		summarizeBy: none
+		sourceColumn: DonorID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DonorName
+		dataType: string
+		lineageTag: 7e734719-b899-4490-a63a-16a65cc24968
+		summarizeBy: none
+		sourceColumn: DonorName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DonorType
+		dataType: string
+		lineageTag: cdf359e2-b80c-4c04-b9a1-5fff7050b7fe
+		summarizeBy: none
+		sourceColumn: DonorType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 5092b8e4-0e4f-4265-a6e1-d3fa565c215b
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: string
+		lineageTag: 981f15d9-89a5-401e-80bd-1275e994300e
+		summarizeBy: none
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 58c88bc8-8570-408d-ba8c-cbd36002cfb4
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column StateProvince
+		dataType: string
+		lineageTag: 34c7398a-9954-45d4-8b93-8c232858dcb2
+		summarizeBy: none
+		sourceColumn: StateProvince
+
+		annotation SummarizationSetBy = Automatic
+
+	column PostalCode
+		dataType: string
+		lineageTag: 947bb916-4ae9-4f4c-8301-7f81505ea203
+		summarizeBy: none
+		sourceColumn: PostalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CashOnSite
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d45b5c22-87d9-4828-ac29-189966764d71
+		summarizeBy: none
+		sourceColumn: CashOnSite
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsAnonymous
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6d305b9a-a71a-4c81-8cee-538a088d9311
+		summarizeBy: none
+		sourceColumn: IsAnonymous
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDonor = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimDonor = Source{[Schema="dw",Item="DimDonor"]}[Data]
+				in
+				    dw_DimDonor
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

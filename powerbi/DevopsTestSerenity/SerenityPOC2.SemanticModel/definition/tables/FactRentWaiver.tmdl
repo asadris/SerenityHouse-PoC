@@ -1,0 +1,78 @@
+table FactRentWaiver
+	lineageTag: bc5f3126-e15c-49bf-87fa-97dc5d8957e3
+
+	column RentWaiverKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 27df5a41-4e5b-4f30-8c10-4ecee4c43d6d
+		summarizeBy: count
+		sourceColumn: RentWaiverKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RentWaiverID
+		dataType: int64
+		formatString: 0
+		lineageTag: a5bc595b-8821-421e-aee5-5cea9060ec46
+		summarizeBy: count
+		sourceColumn: RentWaiverID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StayKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ef69a59-07c9-40e6-8ee9-a1cdf8b73489
+		summarizeBy: none
+		sourceColumn: StayKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WaiverDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 46538fb4-8f2d-4c8f-9a7c-7b7daf1f12cd
+		summarizeBy: count
+		sourceColumn: WaiverDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: fa110e96-8344-4f04-984f-9f8a86b67807
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Reason
+		dataType: string
+		lineageTag: 42a7231d-24d6-4415-8d50-25959bbdc52c
+		summarizeBy: none
+		sourceColumn: Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column ApprovedBy
+		dataType: string
+		lineageTag: ae1d9423-68fb-4db5-b2c0-84177861b25f
+		summarizeBy: none
+		sourceColumn: ApprovedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactRentWaiver = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_FactRentWaiver = Source{[Schema="dw",Item="FactRentWaiver"]}[Data]
+				in
+				    dw_FactRentWaiver
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

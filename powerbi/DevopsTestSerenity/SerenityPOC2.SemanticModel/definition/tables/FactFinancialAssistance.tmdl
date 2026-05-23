@@ -1,0 +1,78 @@
+table FactFinancialAssistance
+	lineageTag: 7b61f6f6-57fb-469b-bf93-15fc67d6dba4
+
+	column FinancialAssistanceKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 62c62c1a-bc37-4511-a4e0-5a6ba9bafb8e
+		summarizeBy: count
+		sourceColumn: FinancialAssistanceKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinancialAssistanceID
+		dataType: int64
+		formatString: 0
+		lineageTag: 24711ad8-dc5f-4fbe-bc24-1ffa2b9e046c
+		summarizeBy: count
+		sourceColumn: FinancialAssistanceID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StayKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f835378a-ebfe-460b-a2a9-7b9dbf8e6563
+		summarizeBy: none
+		sourceColumn: StayKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssistanceDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 35a53c37-84fd-42bf-9615-afa56a217eb7
+		summarizeBy: count
+		sourceColumn: AssistanceDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: 88627968-9d87-46a5-abc3-68f9a456c085
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Source
+		dataType: string
+		lineageTag: 2dab8b16-d4a7-4028-b5a2-cf984c279746
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: 1ad2504b-b19c-4655-a188-ac1a2f25ca86
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactFinancialAssistance = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_FactFinancialAssistance = Source{[Schema="dw",Item="FactFinancialAssistance"]}[Data]
+				in
+				    dw_FactFinancialAssistance
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

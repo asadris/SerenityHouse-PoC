@@ -1,0 +1,66 @@
+table DimHouse
+	lineageTag: 386c5df2-f333-4168-8c56-a43102608f98
+
+	column HouseKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 199dc486-26c8-4a2d-9d36-edb87a15641b
+		summarizeBy: none
+		sourceColumn: HouseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column HouseID
+		dataType: int64
+		formatString: 0
+		lineageTag: b574b6ad-9216-4207-ac3a-3b6ee9a1fd2b
+		summarizeBy: none
+		sourceColumn: HouseID
+
+		annotation SummarizationSetBy = Automatic
+
+	column HouseName
+		dataType: string
+		lineageTag: fc134dba-fd7c-4201-a847-3d867cb3cb08
+		summarizeBy: none
+		sourceColumn: HouseName
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 84026cc9-e0d7-4c25-81f6-97f8d1a8d48e
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column StateProvince
+		dataType: string
+		lineageTag: 22f7b851-ffe4-4b90-83fa-4f8e35767a40
+		summarizeBy: none
+		sourceColumn: StateProvince
+
+		annotation SummarizationSetBy = Automatic
+
+	column County
+		dataType: string
+		lineageTag: c57206ff-c57c-40e0-b12f-65efbaf1ea65
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimHouse = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimHouse = Source{[Schema="dw",Item="DimHouse"]}[Data]
+				in
+				    dw_DimHouse
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

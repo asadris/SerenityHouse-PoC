@@ -1,0 +1,121 @@
+table FactStay
+	lineageTag: 91d1b65b-b4c0-47a5-9ce2-c79e60f33c7c
+
+	column StayKey
+		dataType: int64
+		formatString: 0
+		lineageTag: db8a89fd-6ddc-4274-9028-4d7066b54fd7
+		summarizeBy: none
+		sourceColumn: StayKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StayID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8abe9af9-8b4f-4a4a-b5d2-f76b9a937582
+		summarizeBy: count
+		sourceColumn: StayID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f5e78443-a4cb-4330-93c9-9bd401b9000c
+		summarizeBy: none
+		sourceColumn: ParticipantKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column BedKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9819db63-424b-421b-b5de-615c428c8a69
+		summarizeBy: none
+		sourceColumn: BedKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CaseManagerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7228bf56-9186-4732-83c3-b3c2222671ff
+		summarizeBy: count
+		sourceColumn: CaseManagerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReferralSourceKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 59f0a253-4fba-432c-aeee-6e515f46674e
+		summarizeBy: count
+		sourceColumn: ReferralSourceKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IntakeDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 1cf683bb-8f6b-417f-88e9-3d7c00cbd2c0
+		summarizeBy: none
+		sourceColumn: IntakeDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExitDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 63323b7a-da43-423f-b57d-e3c728d5c85b
+		summarizeBy: count
+		sourceColumn: ExitDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsSuccessfulExit
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 30cf4e1b-423e-4efb-a2d9-6751d2d52a66
+		summarizeBy: none
+		sourceColumn: IsSuccessfulExit
+
+		annotation SummarizationSetBy = Automatic
+
+	column OutcomeCategory
+		dataType: string
+		lineageTag: 31387605-c651-4817-a83c-cdf66942dddc
+		summarizeBy: none
+		sourceColumn: OutcomeCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column DestinationType
+		dataType: string
+		lineageTag: 407bb5cf-0c6f-4265-8857-af4842378fd7
+		summarizeBy: none
+		sourceColumn: DestinationType
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmploymentStatusAtExit
+		dataType: string
+		lineageTag: 8fb53e57-c59d-410c-9cec-7f24be62db5a
+		summarizeBy: none
+		sourceColumn: EmploymentStatusAtExit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactStay = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_FactStay = Source{[Schema="dw",Item="FactStay"]}[Data]
+				in
+				    dw_FactStay
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

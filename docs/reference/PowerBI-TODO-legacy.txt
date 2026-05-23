@@ -1,0 +1,10 @@
+
+-  Daily Occupancy isn't right
+	-- why don't the exit date keys match up to anything when they are still here.
+	
+-- note somewhere that the generator added an exit date to every stay
+	-- AI created an incorrect DAX formula for occupancy count
+
+--  look at arrears balances
+
+

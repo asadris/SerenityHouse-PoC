@@ -1,0 +1,30 @@
+# Connection strings / secrets
+python/config.py
+*.env
+
+# Power BI — binary files (large, don't diff well; add back when ready to version)
+*.pbix
+
+# Power BI local settings (machine-specific)
+powerbi/**/.pbi/localSettings.json
+powerbi/**/.pbi/cache.abf
+
+# VS Code / SSMS project files
+.vs/
+*.suo
+*.user
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database files (no SQLite in repo)
+*.sqlite
+*.db
+*.bak
+*.dacpac

@@ -1,0 +1,12 @@
+You could package this into a public portfolio project with:
+• 	 — generator
+• 	 — schema + views
+• 	 — PDF + diagrams
+• 	 — dashboard template
+• 	 — predictive modeling
+This would be a killer showcase of:
+• 	Data engineering
+• 	Behavioral modeling
+• 	Analytics
+• 	Documentation
+• 	System design
