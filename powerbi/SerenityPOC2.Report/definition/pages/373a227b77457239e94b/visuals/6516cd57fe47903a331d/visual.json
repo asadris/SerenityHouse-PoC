@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "e362d9cba1494ea8b674",
+  "name": "6516cd57fe47903a331d",
   "position": {
-    "x": 670.64456721915292,
-    "y": 265.19337016574588,
-    "z": 3000,
-    "height": 446.70349907918973,
-    "width": 584.60405156537752,
-    "tabOrder": 3000
+    "x": 661.66681104246845,
+    "y": 0,
+    "z": 0,
+    "height": 496.20626151012891,
+    "width": 591.67587476979747,
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "barChart",
@@ -29,24 +29,6 @@
               "queryRef": "DimReferralSource.Name",
               "nativeQueryRef": "Name",
               "active": true
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "DimReferralSource"
-                    }
-                  },
-                  "Property": "Category"
-                }
-              },
-              "queryRef": "DimReferralSource.Category",
-              "nativeQueryRef": "Category"
             }
           ]
         },
@@ -125,7 +107,7 @@
             "labelPosition": {
               "expr": {
                 "Literal": {
-                  "Value": "'InsideEnd'"
+                  "Value": "'Auto'"
                 }
               }
             },
@@ -215,5 +197,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "819b0b1130fe3f6d8939"
 }

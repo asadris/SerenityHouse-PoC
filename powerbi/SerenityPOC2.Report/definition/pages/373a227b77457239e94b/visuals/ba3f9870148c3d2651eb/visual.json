@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "ba3f9870148c3d2651eb",
+  "position": {
+    "x": 10.607734806629836,
+    "y": 78.96869244935543,
+    "z": 0,
+    "height": 121.39963167587477,
+    "width": 176.79558011049724,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "My Measures"
+                    }
+                  },
+                  "Property": "Total Intakes"
+                }
+              },
+              "queryRef": "My Measures.Total Intakes",
+              "nativeQueryRef": "Total Intakes"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "My Measures"
+                  }
+                },
+                "Property": "Total Intakes"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Total Intakes"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

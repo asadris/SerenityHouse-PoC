@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "4f7d973a60ea67e5dc71",
+  "position": {
+    "x": 691.86003683241256,
+    "y": 78.96869244935543,
+    "z": 2001,
+    "height": 121.39963167587477,
+    "width": 540.99447513812163,
+    "tabOrder": 2001
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "My Measures"
+                    }
+                  },
+                  "Property": "Top Treatment Referral"
+                }
+              },
+              "queryRef": "My Measures.Top Treatment Referral",
+              "nativeQueryRef": "Top Treatment Referral"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

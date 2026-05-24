@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "d74769d185944af76a6b",
+  "name": "553243c4161b3d94cc30",
   "position": {
-    "x": 49.502762430939228,
-    "y": 28.28729281767956,
-    "z": 2000,
-    "height": 331.19705340699818,
-    "width": 570.46040515653783,
-    "tabOrder": 2000
+    "x": 0,
+    "y": 0.099688321281803383,
+    "z": 1000,
+    "height": 495.02762430939231,
+    "width": 635.28545119705348,
+    "tabOrder": 1000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "DimResident"
+                      "Entity": "DimReferralSource"
                     }
                   },
-                  "Property": "Race / Ethnicity"
+                  "Property": "Name"
                 }
               },
-              "queryRef": "DimParticipant.RaceEthnicity",
-              "nativeQueryRef": "RaceEthnicity",
+              "queryRef": "DimReferralSource.Name",
+              "nativeQueryRef": "Name",
               "active": true
             }
           ]
@@ -36,22 +36,17 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "DimResident"
-                        }
-                      },
-                      "Property": "ResidentKey"
+                    "SourceRef": {
+                      "Entity": "My Measures"
                     }
                   },
-                  "Function": 5
+                  "Property": "Successful Exit Rate"
                 }
               },
-              "queryRef": "CountNonNull(DimParticipant.ParticipantKey)",
-              "nativeQueryRef": "ParticipantKey"
+              "queryRef": "My Measures.Successful Exit Rate",
+              "nativeQueryRef": "Successful Exit Rate"
             }
           ]
         }
@@ -60,18 +55,13 @@
         "sort": [
           {
             "field": {
-              "Aggregation": {
+              "Measure": {
                 "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "DimResident"
-                      }
-                    },
-                    "Property": "ResidentKey"
+                  "SourceRef": {
+                    "Entity": "My Measures"
                   }
                 },
-                "Function": 5
+                "Property": "Successful Exit Rate"
               }
             },
             "direction": "Descending"
@@ -81,10 +71,10 @@
       }
     },
     "objects": {
-      "legend": [
+      "categoryAxis": [
         {
           "properties": {
-            "showTitle": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -97,10 +87,30 @@
       "labels": [
         {
           "properties": {
-            "labelStyle": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Percent of total'"
+                  "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -115,7 +125,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Race / Ethnicity'"
+                  "Value": "'Successful Exit Rate by Referral Source'"
                 }
               }
             },
@@ -131,5 +141,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "819b0b1130fe3f6d8939"
 }

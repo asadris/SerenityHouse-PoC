@@ -227,6 +227,53 @@ table 'My Measures'
 		formatString: 0
 		lineageTag: f6dfa0c3-b35c-4a4d-a54e-c110bae67b65
 
+	measure 'Total Intakes' = ```
+			COUNTROWS(FactStay)
+			
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 7bf8f727-4699-4214-96e1-e17acb3736df
+
+	measure 'Court Intake %' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(FactStay), DimReferralSource[Category] = "Court"),
+			    COUNTROWS(FactStay)
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7db252f8-9b39-4c23-8a29-f44a3efc302a
+
+	measure 'Successful Exit Rate' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(FactStay), FactStay[IsSuccessfulExit] = TRUE(), FactStay[Is Current Stay] = 0),
+			    CALCULATE(COUNTROWS(FactStay), FactStay[Is Current Stay] = 0)
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 79e5c5ed-b286-4e07-8774-5ebda41b54c0
+
+	measure 'Top Referral Source' =
+			
+			CALCULATE(
+			    SELECTEDVALUE(DimReferralSource[Name]),
+			    TOPN(1, ALL(DimReferralSource), CALCULATE(COUNTROWS(FactStay)))
+			)
+		lineageTag: 0c39a5d6-3aaa-4692-9eda-c093b7e8f409
+
+	measure 'Top Treatment Referral' =
+			
+			CALCULATE(
+			    SELECTEDVALUE(DimReferralSource[Name]),
+			    TOPN(
+			        1,
+			        FILTER(ALL(DimReferralSource), DimReferralSource[Category] = "Treatment"),
+			        CALCULATE(COUNTROWS(FactStay))
+			    )
+			)
+		lineageTag: e172e2ff-1121-422a-8093-ad9487855934
+
 	partition 'My Measures' = m
 		mode: import
 		source =
