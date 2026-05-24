@@ -551,20 +551,24 @@ ALTER TABLE sh.FundraisingDonation ADD CONSTRAINT FK_Donation_Event
 
 -- Referral Sources
 INSERT INTO sh.ReferralSource (SourceName, SourceCategory) VALUES
+-- Court / Criminal Justice
+('Jail',                     'Court'),
+('Prison',                   'Court'),
 ('Drug Court',               'Court'),
 ('Probation / Parole',       'Court'),
-('Criminal Court',           'Court'),
-('Inpatient Treatment',      'Treatment'),
-('Outpatient Treatment',     'Treatment'),
-('Detox Program',            'Treatment'),
-('Hospital / ER',            'Treatment'),
+-- Local Treatment Centers (Clark County / Louisville area)
+('Avenues',                  'Treatment'),
+('Sunrise',                  'Treatment'),
+('Hickory',                  'Treatment'),
+('Centerstone',              'Treatment'),
+('True Healing',             'Treatment'),
+('Life Springs',             'Treatment'),
+('Hospital',                 'Treatment'),
+-- Self / Social
+('Street',                   'Self'),
 ('Self-Referral',            'Self'),
 ('Family / Friend',          'Family'),
-('Veterans Services',        'Other'),
-('Homeless Shelter',         'Other'),
-('Social Services',          'Other'),
-('Faith Community',          'Other'),
-('Online / Social Media',    'Other'),
+-- Other
 ('Other',                    'Other');
 
 -- Service Types (mandatory and optional programming)

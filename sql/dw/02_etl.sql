@@ -49,12 +49,9 @@ SELECT
     p.FirstName,
     p.LastName,
     p.Gender,
-    CASE
-        WHEN p.Race IS NOT NULL AND p.Ethnicity IS NOT NULL THEN p.Race + ' / ' + p.Ethnicity
-        WHEN p.Race IS NOT NULL THEN p.Race
-        WHEN p.Ethnicity IS NOT NULL THEN p.Ethnicity
-        ELSE NULL
-    END,
+    -- Use Race only for display — avoids long "White / Not Hispanic or Latino" labels
+    -- Full ethnicity detail available in sh.Resident if needed for formal reporting
+    ISNULL(p.Race, 'Unknown'),
     p.DateOfBirth,
     p.HomeCity,
     p.HomeState,

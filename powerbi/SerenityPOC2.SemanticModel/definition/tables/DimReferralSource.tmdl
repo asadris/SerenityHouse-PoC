@@ -1,0 +1,50 @@
+table DimReferralSource
+	lineageTag: 71aa1b3b-d11f-49aa-8234-fe84f78f8c22
+
+	column ReferralSourceKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 5041ba91-4b07-4100-9baa-94ce93c28bd3
+		summarizeBy: none
+		sourceColumn: ReferralSourceKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReferralSourceID
+		dataType: int64
+		formatString: 0
+		lineageTag: 94049bc7-8b49-4e12-820e-7a2e01b46d59
+		summarizeBy: none
+		sourceColumn: ReferralSourceID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 724e5b07-53d4-47b4-9c0e-1e79ad4b70e0
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 6b004c21-f8fc-4163-aab8-f066175b0817
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimReferralSource = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimReferralSource = Source{[Schema="dw",Item="DimReferralSource"]}[Data]
+				in
+				    dw_DimReferralSource
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

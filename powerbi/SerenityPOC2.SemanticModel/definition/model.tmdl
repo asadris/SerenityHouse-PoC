@@ -1,0 +1,32 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["DimBed","DimDate","DimHouse","DimRoom","FactStay","My Measures","DimResident","FactRentCharge","FactRentPayment","FactRentWaiver","FactFinancialAssistance","DimDonor","DimFundraisingEvent","FactDonation","DimReferralSource"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DimBed
+ref table DimDate
+ref table DimHouse
+ref table DimRoom
+ref table FactStay
+ref table 'My Measures'
+ref table DimResident
+ref table FactRentCharge
+ref table FactRentPayment
+ref table FactRentWaiver
+ref table FactFinancialAssistance
+ref table DimDonor
+ref table DimFundraisingEvent
+ref table FactDonation
+ref table DimReferralSource
+
+ref cultureInfo en-US
+

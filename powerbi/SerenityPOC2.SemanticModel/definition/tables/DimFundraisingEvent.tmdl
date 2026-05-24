@@ -1,0 +1,81 @@
+table DimFundraisingEvent
+	lineageTag: 752b4458-a280-4b83-b630-80340b8ed076
+
+	column EventName
+		dataType: string
+		lineageTag: 8c7eb7e2-2c5f-4cf8-b07a-83ac810bd537
+		summarizeBy: none
+		sourceColumn: EventName
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ce006926-c96e-48de-8757-00ad9e621dbd
+		summarizeBy: none
+		sourceColumn: EventDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IsGeneralFund
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 217b3a74-a23e-42ce-a70a-f69a3e7e12aa
+		summarizeBy: none
+		sourceColumn: IsGeneralFund
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d2390a66-afff-4cb4-b90f-3149b8163ec1
+		summarizeBy: none
+		sourceColumn: EventKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8009dd97-5429-4248-84ee-4a1d947592ec
+		summarizeBy: none
+		sourceColumn: EventID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventType
+		dataType: string
+		lineageTag: 8d420a70-dee8-45c5-b012-8d410c3655b2
+		summarizeBy: none
+		sourceColumn: EventType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Goal
+		dataType: double
+		lineageTag: 4eb81559-d59e-4afd-8b6d-9c3a24f39524
+		summarizeBy: none
+		sourceColumn: Goal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimFundraisingEvent = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimFundraisingEvent = Source{[Schema="dw",Item="DimFundraisingEvent"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dw_DimFundraisingEvent,{{"IsGeneralFund", type logical}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

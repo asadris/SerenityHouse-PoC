@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "0ae35da5f2766d8aac5b",
+  "displayName": "Behaviors",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

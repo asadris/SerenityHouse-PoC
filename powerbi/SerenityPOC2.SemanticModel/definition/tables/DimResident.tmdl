@@ -1,0 +1,192 @@
+table DimResident
+	lineageTag: 497af7f7-aae5-4fea-9fe8-1974be286b67
+
+	column FirstName
+		dataType: string
+		lineageTag: 897afcfb-4075-410a-a5fd-5a4da227cfd8
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: f5c0d4b1-0efd-4df9-a39d-194b74f59cd8
+		summarizeBy: none
+		sourceColumn: LastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 24823496-a9bf-4458-a5c4-02abe99382e2
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Race / Ethnicity'
+		dataType: string
+		lineageTag: 20824d60-8e15-49c6-a3ee-f39c9652faba
+		summarizeBy: none
+		sourceColumn: Race / Ethnicity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of Birth'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e3ebaacd-e781-4b61-9cf6-65399554227f
+		summarizeBy: none
+		sourceColumn: Date of Birth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Age At Intake'
+		dataType: int64
+		formatString: 0
+		lineageTag: e9c19004-a83e-4eff-a87b-ea91339ef0ac
+		summarizeBy: none
+		sourceColumn: Age At Intake
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Home City'
+		dataType: string
+		lineageTag: 5eb1d288-c106-4e4b-bffe-3ffa86cbbf0e
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: Home City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Home State'
+		dataType: string
+		lineageTag: 3c1f9ff8-cb4a-4805-942d-74cb51a5b615
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: Home State
+
+		annotation SummarizationSetBy = Automatic
+
+	column County
+		dataType: string
+		lineageTag: c4065fb6-18e0-4f2d-a321-6913007fb14c
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Origin City'
+		dataType: string
+		lineageTag: 4ab84f84-a9ae-4a5f-b8d1-77a6aa24778b
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: Origin City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Origin State'
+		dataType: string
+		lineageTag: 4a820c6c-b5cb-4ff6-ae9c-dfb21cf2a806
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: Origin State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Origin County'
+		dataType: string
+		lineageTag: 5653d542-c84f-4843-be96-372c4642ef8f
+		dataCategory: County
+		summarizeBy: none
+		sourceColumn: Origin County
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Name' = DimResident[FirstName] & " " & DimResident[LastName]
+		lineageTag: abae8a5b-22ed-4df5-a43e-491e0390b3f5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Location' = DimResident[Origin City] & ", " & DimResident[Origin State] & ", USA"
+		lineageTag: 8bdb4270-dc59-41dd-beb7-9ef61c6d4a13
+		dataCategory: Place
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original County and State' = DimResident[Origin County] & ", " & DimResident[Origin State] & ", USA"
+		lineageTag: f7bccfcb-e1c1-457a-a4f1-5ca85709aa0b
+		dataCategory: County
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResidentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: af30efb6-1fe8-48e6-9084-581124b14b27
+		summarizeBy: none
+		sourceColumn: ResidentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResidentID
+		dataType: int64
+		formatString: 0
+		lineageTag: d70b21a2-b832-4e9d-bca9-cf6a66cd2095
+		summarizeBy: none
+		sourceColumn: ResidentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band' =
+			
+			SWITCH(TRUE(),
+			    DimResident[Age At Intake] < 26, "18-25",
+			    DimResident[Age At Intake] < 36, "26-35",
+			    DimResident[Age At Intake] < 46, "36-45",
+			    DimResident[Age At Intake] < 56, "46-55",
+			    "55+"
+			)
+		lineageTag: c68dbc06-5162-4b23-b355-4ad89e6530d3
+		summarizeBy: none
+		sortByColumn: 'Age Band Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band Sort' =
+			
+			SWITCH(TRUE(),
+			    DimResident[Age At Intake] < 26, 1,
+			    DimResident[Age At Intake] < 36, 2,
+			    DimResident[Age At Intake] < 46, 3,
+			    DimResident[Age At Intake] < 56, 4,
+			    5
+			)
+		formatString: 0
+		lineageTag: aa6d4330-5678-4ec4-882b-711780ef57bd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimResident = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimParticipant = Source{[Schema="dw",Item="DimResident"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dw_DimParticipant,{{"OriginalCity", "Origin City"}, {"OriginalState", "Origin State"}, {"OriginalCounty", "Origin County"}, {"City", "Home City"}, {"StateProvince", "Home State"}, {"DateOfBirth", "Date of Birth"}, {"AgeAtIntake", "Age At Intake"}, {"ResidentID", "ResidentID"}, {"RaceEthnicity", "Race / Ethnicity"}, {"ResidentKey", "ResidentKey"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

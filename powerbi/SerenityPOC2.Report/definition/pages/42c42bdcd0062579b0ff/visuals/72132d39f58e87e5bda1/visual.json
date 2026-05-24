@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "72132d39f58e87e5bda1",
+  "position": {
+    "x": 716.47153167602244,
+    "y": 8.2117080994386527,
+    "z": 1000,
+    "height": 618.95749799518842,
+    "width": 563.52846832397756,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimResident"
+                    }
+                  },
+                  "Property": "Origin State"
+                }
+              },
+              "queryRef": "DimParticipant.Origin State",
+              "nativeQueryRef": "Origin State"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimResident"
+                    }
+                  },
+                  "Property": "Origin County"
+                }
+              },
+              "queryRef": "DimParticipant.Origin County",
+              "nativeQueryRef": "Origin County"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimResident"
+                    }
+                  },
+                  "Property": "Origin City"
+                }
+              },
+              "queryRef": "DimParticipant.Origin City",
+              "nativeQueryRef": "Origin City"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimResident"
+                        }
+                      },
+                      "Property": "ResidentID"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "DimParticipant.Resident ID",
+              "nativeQueryRef": "Count of Resident ID"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "DimResident"
+                      }
+                    },
+                    "Property": "ResidentID"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

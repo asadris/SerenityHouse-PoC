@@ -303,7 +303,40 @@ serenity-house-poc/
 
 ---
 
-## 10. Open Questions Before We Build
+## 10. Date Boundary Convention
+
+When writing SQL queries or DAX measures against stay dates, always apply the following convention consistently:
+
+**Serenity House uses CLOSED intervals: `[IntakeDate, ExitDate]`**
+
+```sql
+-- Active residents as of a given date:
+WHERE IntakeDate <= @Date AND ExitDate >= @Date
+```
+
+```dax
+-- Active residents in DAX:
+FactStay[IntakeDateKey] <= TodayKey && FactStay[ExitDateKey] >= TodayKey
+```
+
+This means:
+- A resident **is counted** on their IntakeDate (first day — they are in the house)
+- A resident **is counted** on their ExitDate (last day — they are still in the house, leaving by end of day)
+- If resident A exits and resident B intakes on the same day, **both are counted** on that day (bed briefly has two assignments — acceptable for this system)
+
+### Why this matters
+Date boundary inclusion comes up constantly in healthcare and social services:
+- **Length of stay**: `DATEDIFF(day, IntakeDate, ExitDate) + 1` includes both endpoints
+- **Rent charges**: charge generates on IntakeDate, last charge on the Saturday on or before ExitDate
+- **Drug tests / incidents**: records on ExitDate are part of the stay
+- **Bed occupancy**: a bed is occupied on both intake and exit day
+
+### Common mistake to avoid
+SQL `DATEDIFF` and Power BI `DATEDIFF` count the days *between* two dates by default — they do not include both endpoints. Always verify whether you need `+1` depending on context.
+
+---
+
+## 11. Open Questions Before We Build
 
 1. **Restaurant component** — What does this look like? What data needs to be tracked?
 2. **Cluster weights** — 50/25/25 (original docs) or 60/30/10 (final generator)? 

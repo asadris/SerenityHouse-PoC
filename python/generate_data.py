@@ -51,7 +51,7 @@ CONN_STRING  = (
 )
 
 SEED              = 42           # Reproducible results
-NUM_RESIDENTS  = 150
+NUM_RESIDENTS  = 500
 NUM_CASE_MANAGERS = 6
 NUM_HOUSES        = 1            # One house: Serenity House
 ROOMS_PER_HOUSE   = 15
@@ -61,7 +61,10 @@ TOTAL_BEDS        = ROOMS_PER_HOUSE * BEDS_PER_ROOM
 WEEKLY_RENT       = Decimal("105.00")
 
 START_DATE = date(2022, 1, 1)
-END_DATE   = date(2029, 12, 31)   # Future exit dates keep the dataset "live"
+END_DATE      = date(2029, 12, 31)   # Scheduling boundary for stay generation
+ACTIVE_EXPIRY = date(2027, 12, 31)   # ⚠️ ExitDate for all currently active stays.
+                                      # Dashboard "current resident" logic breaks after this date.
+                                      # Regenerate the dataset before 2027-12-31 if PoC still in use.
 
 # Fundraising scale
 NUM_DONORS      = 2000
@@ -406,8 +409,35 @@ def generate_stays(db: Connection, resident_ids, clusters,
     # Pool of residents not currently in a stay
     resident_last_exit: dict[int, date] = {pid: START_DATE for pid in resident_ids}
 
-    REFERRAL_WEIGHTS = [0.15, 0.18, 0.08, 0.20, 0.10, 0.08, 0.06, 0.05,
-                        0.03, 0.02, 0.02, 0.02, 0.005, 0.005, 0.005]
+    # Repeat stay constraints:
+    #   - Max 4 stays per resident
+    #   - ~25% of residents should have more than 1 stay (enforced naturally by
+    #     90-day min gap + large resident pool — new residents preferred over returnees)
+    MAX_STAYS_PER_RESIDENT = 4
+    resident_stay_count: dict[int, int] = {pid: 0 for pid in resident_ids}
+
+    # Weights must match order of sh.ReferralSource seed data (16 sources):
+    # Jail, Prison, Drug Court, Probation/Parole,
+    # Avenues, Sunrise, Hickory, Centerstone, True Healing, Life Springs, Hospital,
+    # Street, Self-Referral, Family/Friend, Other
+    REFERRAL_WEIGHTS = [
+        0.18,  # Jail
+        0.10,  # Prison
+        0.08,  # Drug Court
+        0.08,  # Probation / Parole
+        0.10,  # Avenues
+        0.08,  # Sunrise
+        0.07,  # Hickory
+        0.07,  # Centerstone
+        0.05,  # True Healing
+        0.05,  # Life Springs
+        0.04,  # Hospital
+        0.04,  # Street
+        0.03,  # Self-Referral
+        0.02,  # Family / Friend
+        0.01,  # Other
+    ]
+    # Note: weights sum to 1.0 — required for weighted_choice()
 
     EXIT_REASONS = {
         "Completed": "Successfully completed program",
@@ -421,13 +451,19 @@ def generate_stays(db: Connection, resident_ids, clusters,
     ]
 
     def pick_length_of_stay(cluster: str) -> int:
-        """Return length of stay in days based on cluster."""
+        """Return length of stay in days based on cluster.
+        Target weighted average ~5 months across all clusters (60/30/10 split):
+          Reliable:  ~6 months × 60% = 3.6
+          Struggling: ~4 months × 30% = 1.2
+          Chronic:   ~2 months × 10% = 0.2
+          Weighted average: ~5 months
+        """
         if cluster == "Reliable":
-            return int(random.gauss(270, 60))   # ~9 months average
+            return int(random.gauss(180, 45))   # ~6 months average
         elif cluster == "Struggling":
-            return int(random.gauss(180, 90))   # ~6 months
+            return int(random.gauss(120, 45))   # ~4 months
         else:
-            return int(random.gauss(90, 60))    # ~3 months (higher churn)
+            return int(random.gauss(60, 30))    # ~2 months (higher churn)
 
     def pick_exit_type(cluster: str):
         if cluster == "Reliable":
@@ -463,17 +499,26 @@ def generate_stays(db: Connection, resident_ids, clusters,
             random.shuffle(available_beds)
 
             # Find available residents (those who have been out long enough)
-            min_gap = 14  # at least 2 weeks between stays
+            # 90-day min gap between stays + large pool naturally keeps ~25% repeat rate
+            min_gap = 90  # at least 3 months between stays
             available_residents = [
                 (pid, clusters[resident_ids.index(pid)])
                 for pid in resident_ids
-                if resident_last_exit[pid] + timedelta(days=min_gap) <= current
+                if resident_stay_count[pid] < MAX_STAYS_PER_RESIDENT  # max 4 stays
+                and resident_last_exit[pid] + timedelta(days=min_gap) <= current
                 and bed_free.get(  # not currently assigned
                     next((s[4] for s in all_stays
                           if s[5] == pid and s[3] is not None and s[3] > current), None), date.min
                 ) <= current
             ]
-            random.shuffle(available_residents)
+            # Prefer residents who haven't had a stay yet — keeps repeat rate ~25%
+            available_residents.sort(key=lambda x: resident_stay_count[x[0]])
+            # Shuffle within same stay-count groups to avoid alphabetical bias
+            first_timers = [r for r in available_residents if resident_stay_count[r[0]] == 0]
+            returnees    = [r for r in available_residents if resident_stay_count[r[0]] > 0]
+            random.shuffle(first_timers)
+            random.shuffle(returnees)
+            available_residents = first_timers + returnees
 
             for bed_id, (pid, cluster) in zip(available_beds[:deficit], available_residents[:deficit]):
                 los = max(14, min(730, pick_length_of_stay(cluster)))
@@ -485,7 +530,9 @@ def generate_stays(db: Connection, resident_ids, clusters,
 
                 status = "Active" if (intake <= TODAY and exit_d > TODAY) else pick_exit_type(cluster)
                 if status == "Active":
-                    actual_exit = exit_d   # projected exit date; DAX uses intake/exit range for occupancy
+                    # Keep realistic varied exit dates but cap at ACTIVE_EXPIRY so the
+                    # dataset doesn't break as time moves forward past 2027-12-31.
+                    actual_exit = min(exit_d, ACTIVE_EXPIRY)
                 else:
                     actual_exit = exit_d
 
@@ -515,6 +562,7 @@ def generate_stays(db: Connection, resident_ids, clusters,
 
                 bed_free[bed_id] = exit_d + timedelta(days=1)        # use projected date for scheduling
                 resident_last_exit[pid] = exit_d                     # use projected date for scheduling
+                resident_stay_count[pid] += 1                        # track repeat stays (max 4)
                 all_stays.append((stay_id, status, intake, actual_exit,
                                    bed_id, pid, cluster, cm_id))
 
