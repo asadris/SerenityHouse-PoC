@@ -63,6 +63,24 @@ table FactFinancialAssistance
 
 		annotation SummarizationSetBy = Automatic
 
+	column ProgramType =
+			
+			SWITCH(
+			    FactFinancialAssistance[Source],
+			    "HUD Emergency Solutions Grant", "Federal",
+			    "Veterans Affairs VASH",         "Federal",
+			    "Recovery Works",                "State",
+			    "State Recovery Housing Fund",   "State",
+			    "County Housing Assistance",     "County",
+			    "Salvation Army Assistance",     "Nonprofit",
+			    "General Charity Fund",          "Nonprofit",
+			    "Other"
+			)
+		lineageTag: 266cce97-fe8a-4c74-9c35-86544e753709
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition FactFinancialAssistance = m
 		mode: import
 		source =

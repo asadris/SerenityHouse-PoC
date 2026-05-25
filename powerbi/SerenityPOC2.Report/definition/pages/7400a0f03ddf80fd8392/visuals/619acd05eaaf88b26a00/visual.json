@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "ba3f9870148c3d2651eb",
+  "name": "619acd05eaaf88b26a00",
   "position": {
-    "x": 10.607734806629836,
-    "y": 78.96869244935543,
-    "z": 1000,
-    "height": 121.39963167587477,
-    "width": 176.79558011049724,
-    "tabOrder": 1000
+    "x": 755.955955955956,
+    "y": 32.672672672672732,
+    "z": 3,
+    "height": 149.90990990990991,
+    "width": 244.08408408408411,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Total Intakes"
+                  "Property": "Avg Assistance Per Resident"
                 }
               },
-              "queryRef": "My Measures.Total Intakes",
-              "nativeQueryRef": "Total Intakes"
+              "queryRef": "My Measures.Avg Assistance Per Resident",
+              "nativeQueryRef": "Avg Assistance Per Resident"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Total Intakes"
+                "Property": "Avg Assistance Per Resident"
               }
             },
             "direction": "Descending"
@@ -64,7 +64,21 @@
             }
           },
           "selector": {
-            "metadata": "My Measures.Total Intakes"
+            "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Avg Assistance Per Resident"
           }
         }
       ]

@@ -33,12 +33,6 @@ relationship AutoDetected_f38f1f11-c0ff-4128-a8f6-f03fe2b22a9d
 	fromColumn: FactRentWaiver.StayKey
 	toColumn: FactStay.StayKey
 
-relationship AutoDetected_4ef8cd19-7060-46da-a562-ee6a091c57e4
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: FactFinancialAssistance.StayKey
-	toColumn: FactStay.StayKey
-
 relationship b98bbe38-56aa-a1b0-38a3-f9794206da28
 	isActive: false
 	fromColumn: FactRentCharge.ChargeDateKey
@@ -74,4 +68,9 @@ relationship d88b9e4c-ae2d-b926-19e5-e0333621d652
 relationship 8f002266-34b3-6f1e-ef26-a2d7112f2735
 	fromColumn: FactStay.ReferralSourceKey
 	toColumn: DimReferralSource.ReferralSourceKey
+
+relationship 5bf8a83b-846e-0389-366c-d18f07b8d01e
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactFinancialAssistance.StayKey
+	toColumn: FactStay.StayKey
 

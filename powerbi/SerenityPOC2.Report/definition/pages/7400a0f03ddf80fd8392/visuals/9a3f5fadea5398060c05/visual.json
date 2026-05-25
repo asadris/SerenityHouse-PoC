@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "9246eaa358cab41ae358",
+  "name": "9a3f5fadea5398060c05",
   "position": {
-    "x": 256.94290976058932,
-    "y": 78.96869244935543,
-    "z": 2000,
-    "height": 121.39963167587477,
-    "width": 176.79558011049724,
-    "tabOrder": 3000
+    "x": 299.81981981981977,
+    "y": 32.672672672672732,
+    "z": 1,
+    "height": 149.90990990990991,
+    "width": 244.08408408408411,
+    "tabOrder": 1
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Court Intake %"
+                  "Property": "Total Assistance"
                 }
               },
-              "queryRef": "My Measures.Court Intake %",
-              "nativeQueryRef": "Court Intake %"
+              "queryRef": "My Measures.Total Assistance",
+              "nativeQueryRef": "Total Assistance"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Court Intake %"
+                "Property": "Total Assistance"
               }
             },
             "direction": "Descending"
@@ -50,6 +50,31 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Total Assistance"
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

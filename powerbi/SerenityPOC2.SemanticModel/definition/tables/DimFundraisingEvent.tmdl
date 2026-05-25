@@ -65,6 +65,12 @@ table DimFundraisingEvent
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column FundType = IF(DimFundraisingEvent[IsGeneralFund] = TRUE(), "General Fund", "Event")
+		lineageTag: 21fe9552-d2d4-4cb9-bcd8-d3627a63caae
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition DimFundraisingEvent = m
 		mode: import
 		source =

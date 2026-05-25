@@ -576,7 +576,7 @@ cultureInfo en-US
 			    "dim_bed.total_assistance": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "DimBed",
+			          "ConceptualEntity": "My Measures",
 			          "ConceptualProperty": "Total Assistance"
 			        }
 			      },

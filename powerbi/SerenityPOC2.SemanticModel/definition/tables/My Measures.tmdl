@@ -148,9 +148,8 @@ table 'My Measures'
 		lineageTag: 6d9cf908-40d3-47f9-a6a6-371f7e577d49
 
 	measure 'Total Donations' = SUM(FactDonation[Amount])
+		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 62da3c8c-a53e-44f9-8130-a6392dc892de
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Total Donors' = DISTINCTCOUNT(FactDonation[DonorID])
 		formatString: #,0
@@ -273,6 +272,45 @@ table 'My Measures'
 			    )
 			)
 		lineageTag: e172e2ff-1121-422a-8093-ad9487855934
+
+	measure 'Recurring Donor %' =
+			
+			DIVIDE(
+			    CALCULATE(DISTINCTCOUNT(FactDonation[DonorID]), DimDonor[IsRecurring] = TRUE()),
+			    DISTINCTCOUNT(FactDonation[DonorID])
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 4a81c870-fd28-42e2-8efd-b32a07b81b57
+
+	measure 'Residents Assisted' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(DimResident[ResidentKey]),
+			    FactFinancialAssistance
+			)
+		formatString: #,0
+		lineageTag: 8a93e306-bd4e-425e-9a67-c7a48133a3d4
+
+	measure 'Avg Assistance Per Resident' =
+			
+			DIVIDE([Total Assistance], [Residents Assisted])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 45818b4b-5264-4c66-bd89-bc9723318266
+
+	measure 'Total Assistance' =
+			
+			SUM ( FactFinancialAssistance[Amount] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
+
+	measure 'Stays Assisted %' =
+			
+			DIVIDE(
+			    DISTINCTCOUNT(FactFinancialAssistance[StayKey]),
+			    COUNTROWS(FactStay)
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 81e569f2-14a3-4bab-ac02-6002f35da756
 
 	partition 'My Measures' = m
 		mode: import

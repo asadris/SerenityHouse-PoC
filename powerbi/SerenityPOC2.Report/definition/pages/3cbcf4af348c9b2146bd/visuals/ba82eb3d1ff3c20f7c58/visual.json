@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "9246eaa358cab41ae358",
+  "name": "ba82eb3d1ff3c20f7c58",
   "position": {
-    "x": 256.94290976058932,
-    "y": 78.96869244935543,
+    "x": 521.19402985074635,
+    "y": 0,
     "z": 2000,
-    "height": 121.39963167587477,
-    "width": 176.79558011049724,
-    "tabOrder": 3000
+    "height": 149.55223880597015,
+    "width": 257.0149253731343,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Court Intake %"
+                  "Property": "Average Donation"
                 }
               },
-              "queryRef": "My Measures.Court Intake %",
-              "nativeQueryRef": "Court Intake %"
+              "queryRef": "My Measures.Average Donation",
+              "nativeQueryRef": "Average Donation"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Court Intake %"
+                "Property": "Average Donation"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,32 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Average Donation"
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "af0b3273df423be52098"
 }

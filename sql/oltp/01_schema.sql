@@ -606,6 +606,7 @@ INSERT INTO sh.IncidentType (TypeName, Severity, Description) VALUES
 INSERT INTO sh.FinancialAssistanceProgram (ProgramName, ProgramType, Description) VALUES
 ('HUD Emergency Solutions Grant',    'Federal',   'Emergency housing assistance for homeless individuals'),
 ('Veterans Affairs VASH',            'Federal',   'HUD-VASH vouchers for veteran residents'),
+('Recovery Works',                   'State',     'Indiana program helping residents in recovery with employment-related expenses'),
 ('County Housing Assistance',        'County',    'County-funded transitional housing support'),
 ('State Recovery Housing Fund',      'State',     'State grant program for recovery residences'),
 ('Salvation Army Assistance',        'Nonprofit', 'Faith-based emergency housing aid'),

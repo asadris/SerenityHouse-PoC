@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "9246eaa358cab41ae358",
+  "name": "e070f9fea7dc65296eae",
   "position": {
-    "x": 256.94290976058932,
-    "y": 78.96869244935543,
-    "z": 2000,
-    "height": 121.39963167587477,
-    "width": 176.79558011049724,
+    "x": 781.79104477611952,
+    "y": 0,
+    "z": 3000,
+    "height": 149.55223880597015,
+    "width": 257.0149253731343,
     "tabOrder": 3000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Court Intake %"
+                  "Property": "Recurring Donor %"
                 }
               },
-              "queryRef": "My Measures.Court Intake %",
-              "nativeQueryRef": "Court Intake %"
+              "queryRef": "My Measures.Recurring Donor %",
+              "nativeQueryRef": "Recurring Donor %"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Court Intake %"
+                "Property": "Recurring Donor %"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,25 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Recurring Donor %"
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "af0b3273df423be52098"
 }

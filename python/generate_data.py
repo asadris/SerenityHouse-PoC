@@ -67,9 +67,9 @@ ACTIVE_EXPIRY = date(2027, 12, 31)   # ⚠️ ExitDate for all currently active 
                                       # Regenerate the dataset before 2027-12-31 if PoC still in use.
 
 # Fundraising scale
-NUM_DONORS      = 2000
-NUM_EVENTS      = 50
-NUM_DONATIONS   = 25000
+NUM_DONORS      = 300
+NUM_EVENTS      = 20
+NUM_DONATIONS   = 2500
 
 # Cluster weights
 CLUSTER_WEIGHTS = [0.60, 0.30, 0.10]   # Reliable, Struggling, Chronic
@@ -1097,20 +1097,21 @@ def generate_fundraising(db: Connection):
         donor_id = random.choice(donor_ids)
         don_date = fake.date_between(START_DATE, min(TODAY, END_DATE))
 
-        # Seasonal boost: Nov–Dec donations 3× more likely to be large
+        # Seasonal boost: Nov–Dec donations skew larger (year-end giving)
         if don_date.month in (11, 12):
             amount = round(random.choice([
-                random.uniform(25, 500),
-                random.uniform(100, 2500),
-                random.uniform(500, 10000),
+                random.uniform(25, 200),    # small
+                random.uniform(100, 500),   # medium
+                random.uniform(250, 1000),  # large (rare)
             ]), 2)
         else:
-            amount = round(random.uniform(10, 1000), 2)
+            amount = round(random.uniform(10, 250), 2)
 
-        # 30% tied to an event
-        if random.random() < 0.30 and event_ids:
-            # Pick event closest to donation date
-            event_id = random.choice(event_ids)
+        # 30% tied to an event — only pick events on or before the donation date
+        eligible_events = [eid for eid, edate in zip(event_ids, event_dates)
+                           if edate <= don_date]
+        if random.random() < 0.30 and eligible_events:
+            event_id = random.choice(eligible_events)
         else:
             event_id = None
 
@@ -1141,6 +1142,57 @@ def generate_fundraising(db: Connection):
         )
         db.commit()
     print(f"    {NUM_DONATIONS} donations created")
+
+
+def generate_financial_assistance(db: Connection, all_stays):
+    """
+    Generate third-party program payments for a subset of stays.
+    ~25% of stays receive 1-3 payments from a randomly selected program.
+    Amounts reflect realistic assistance: $200-$800 per payment.
+    Donation dates are always within the stay window.
+    """
+    print("  Generating financial assistance...")
+
+    # Fetch all program IDs
+    db.execute("SELECT ProgramID FROM sh.FinancialAssistanceProgram")
+    program_ids = [row[0] for row in db.fetchall()]
+    if not program_ids:
+        print("    No programs found — skipping.")
+        return
+
+    rows = []
+    for stay in all_stays:
+        stay_id    = stay[0]   # stay_id
+        intake     = stay[2]   # intake_date
+        exit_d     = stay[3]   # actual_exit
+
+        # Skip stays that haven't started yet
+        if intake > TODAY:
+            continue
+        # Payments can extend through the full stay window (including future for active stays)
+        pay_end = exit_d
+
+        # Only ~25% of stays receive assistance
+        if random.random() > 0.25:
+            continue
+
+        num_payments = random.randint(1, 3)
+        program_id   = random.choice(program_ids)
+
+        for _ in range(num_payments):
+            # Payment date falls within the stay window
+            pay_date = fake.date_between(intake, pay_end)
+            amount   = round(random.uniform(200, 800), 2)
+            notes    = None
+            rows.append((stay_id, program_id, pay_date, amount, notes))
+
+    db.executemany(
+        """INSERT INTO sh.ProgramPayment (StayID, ProgramID, PaymentDate, AmountPaid, Notes)
+           VALUES (?,?,?,?,?)""",
+        rows
+    )
+    db.commit()
+    print(f"    {len(rows)} program payments created")
 
 
 # ===========================================================================
@@ -1201,7 +1253,10 @@ def main():
         generate_rent(db, all_stays)
         generate_outcomes(db, all_stays)
 
-        print("\n[9/9] Fundraising")
+        print("\n[9/10] Financial assistance programs")
+        generate_financial_assistance(db, all_stays)
+
+        print("\n[10/10] Fundraising")
         generate_fundraising(db)
 
         print("\n" + "=" * 60)

@@ -1,13 +1,6 @@
 table DimBed
 	lineageTag: 1d3a4c5e-c459-49d7-93d3-95fc0b52fc57
 
-	measure 'Total Assistance' =
-			
-			SUM ( FactFinancialAssistance[Amount] )
-		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	measure Measure
 		lineageTag: 96a68318-fc36-4f59-9a24-146f3dfa5d22
 
