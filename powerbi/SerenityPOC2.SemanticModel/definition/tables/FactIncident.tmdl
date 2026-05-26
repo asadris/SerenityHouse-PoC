@@ -72,8 +72,6 @@ table FactIncident
 				in
 				    dw_FactIncident
 
-	changedProperty = Name
-
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table

@@ -629,24 +629,34 @@ def generate_incidents(db: Connection, all_stays, incident_type_ids_by_name):
     """
     print("  Generating incidents...")
 
-    CLUSTER_INCIDENT_RANGE = {
-        "Reliable":   (0, 1),
-        "Struggling": (0, 3),
-        "Chronic":    (1, 6),
-    }
+    # Incident count distribution per stay by cluster.
+    # Uses weighted sampling to produce a realistic skewed distribution:
+    #   - Most Reliable residents have 0 incidents (clean record)
+    #   - Struggling residents usually have a few, occasionally many
+    #   - Chronic residents always have incidents, some leading to discharge
+    # 60% of Reliable get 0, 40% get 1-3
+    # 20% of Struggling get 0, 80% get 1-8
+    # Chronic always get 3-20 (shorter stays already modeled in generator)
+    def pick_incident_count(cluster: str) -> int:
+        if cluster == "Reliable":
+            return 0 if random.random() < 0.60 else random.randint(1, 3)
+        elif cluster == "Struggling":
+            return 0 if random.random() < 0.20 else random.randint(1, 8)
+        else:  # Chronic
+            return random.randint(3, 20)
 
     # Map incident type names to IDs
-    meeting_type_id      = incident_type_ids_by_name.get("Meeting Non-Compliance")
+    meeting_type_id      = incident_type_ids_by_name.get("Incomplete Weekly Meetings")
     curfew_type_id       = incident_type_ids_by_name.get("Curfew Violation")
     drug_type_id         = incident_type_ids_by_name.get("Positive Drug Test")
     alcohol_type_id      = incident_type_ids_by_name.get("Positive Alcohol Test")
     employment_type_id   = incident_type_ids_by_name.get("Employment Non-Compliance")
     behavioral_type_id   = incident_type_ids_by_name.get("Disruptive Behavior")
-    house_meeting_id     = incident_type_ids_by_name.get("House Meeting Absence")
+    house_rule_id        = incident_type_ids_by_name.get("House Rule Violation")
     chore_type_id        = incident_type_ids_by_name.get("Chore Non-Compliance")
     other_type_id        = incident_type_ids_by_name.get("Other")
 
-    common_types = [curfew_type_id, meeting_type_id, house_meeting_id,
+    common_types = [curfew_type_id, meeting_type_id, house_rule_id,
                     chore_type_id, behavioral_type_id, other_type_id]
     common_types = [t for t in common_types if t]
 
@@ -663,8 +673,7 @@ def generate_incidents(db: Connection, all_stays, incident_type_ids_by_name):
     for stay_id, status, intake, exit_d, bed_id, pid, cluster, cm_id in all_stays:
         effective_exit = exit_d if exit_d is not None else TODAY
         stay_days = (effective_exit - intake).days
-        lo, hi = CLUSTER_INCIDENT_RANGE[cluster]
-        n_incidents = random.randint(lo, hi)
+        n_incidents = pick_incident_count(cluster)
 
         for _ in range(n_incidents):
             inc_date = intake + timedelta(days=random.randint(0, max(0, stay_days - 1)))
