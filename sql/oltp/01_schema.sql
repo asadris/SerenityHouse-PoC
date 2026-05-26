@@ -573,8 +573,6 @@ INSERT INTO sh.ReferralSource (SourceName, SourceCategory) VALUES
 
 -- Service Types (mandatory and optional programming)
 INSERT INTO sh.ServiceType (ServiceName, IsRequired, Description) VALUES
-('AA/NA Meeting',            1, 'Alcoholics/Narcotics Anonymous — Phase 1: daily, Phase 2: 4+/week'),
-('House Meeting',            1, 'Weekly mandatory all-resident house meeting'),
 ('Individual Counseling',    0, 'One-on-one counseling session with case manager or therapist'),
 ('Group Therapy',            1, 'Structured group therapy session'),
 ('Life Skills Workshop',     0, 'Budgeting, job readiness, and independent living skills'),
@@ -587,7 +585,7 @@ INSERT INTO sh.ServiceType (ServiceName, IsRequired, Description) VALUES
 -- Incident Types
 INSERT INTO sh.IncidentType (TypeName, Severity, Description) VALUES
 ('Curfew Violation',          'Medium',   'Resident returned after curfew without approved exception'),
-('Meeting Non-Compliance',    'Low',      'Missed required AA/NA or house meeting'),
+('Incomplete Weekly Meetings', 'Low',      'Resident failed to complete required number of AA/NA meetings for the week'),
 ('Positive Drug Test',        'High',     'Drug test returned positive result'),
 ('Positive Alcohol Test',     'High',     'Breathalyzer or test returned positive for alcohol'),
 ('Test Refusal',              'High',     'Resident refused mandatory drug/alcohol test'),
@@ -596,7 +594,7 @@ INSERT INTO sh.IncidentType (TypeName, Severity, Description) VALUES
 ('Property Damage',           'Medium',   'Damage to house property'),
 ('Chore Non-Compliance',      'Low',      'Failure to complete assigned chores'),
 ('Employment Non-Compliance', 'Medium',   'Failure to obtain or maintain employment within required timeframe'),
-('House Meeting Absence',     'Low',      'Absent from mandatory house meeting without excuse'),
+('House Rule Violation',      'Low',      'General violation of house rules not covered by other types'),
 ('Disruptive Behavior',       'Medium',   'Noise, disrespect, or disruptive conduct'),
 ('Theft',                     'Critical', 'Theft of property from residence or another resident'),
 ('Weapons Possession',        'Critical', 'Possession of prohibited weapons on premises'),

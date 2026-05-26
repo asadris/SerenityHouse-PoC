@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "3f34815ea4e6b17e7bf0",
+  "name": "f2df7ff7bb25cc59c278",
   "position": {
-    "x": 596.71175858480751,
-    "y": 27.970863683662852,
-    "z": 5000,
-    "height": 98.5639958376691,
-    "width": 239.75026014568161,
-    "tabOrder": 5000
+    "x": 279.85885885885887,
+    "y": 26.906906906906908,
+    "z": 1,
+    "height": 176.81681681681684,
+    "width": 271.95195195195197,
+    "tabOrder": 1
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "General Fund Donations"
+                  "Property": "Drug Tests Given"
                 }
               },
-              "queryRef": "My Measures.General Fund Donations",
-              "nativeQueryRef": "General Fund Donations"
+              "queryRef": "My Measures.Drug Tests Given",
+              "nativeQueryRef": "Drug Tests Given"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "General Fund Donations"
+                "Property": "Drug Tests Given"
               }
             },
             "direction": "Descending"
@@ -66,9 +66,41 @@
           "selector": {
             "id": "default"
           }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "My Measures.Drug Tests Given"
+          }
         }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1fcdaa91167412c625eb",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Drug Tests Given"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

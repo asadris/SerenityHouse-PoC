@@ -1,0 +1,80 @@
+table FactIncident
+	lineageTag: cfa783c7-69b6-4d9c-9f23-84b49be42650
+
+	column IncidentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f1ad50de-6d85-4287-b8ff-dde18427eae3
+		summarizeBy: count
+		sourceColumn: IncidentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncidentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8439b928-54ce-42a3-bd4d-3577887a06e8
+		summarizeBy: count
+		sourceColumn: IncidentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StayKey
+		dataType: int64
+		formatString: 0
+		lineageTag: fedef0e6-930c-4112-99af-dfd429084fd9
+		summarizeBy: none
+		sourceColumn: StayKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResidentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 521aa70e-957d-4e65-9ba1-c1b73445b55c
+		summarizeBy: count
+		sourceColumn: ResidentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncidentTypeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e4e6497-0fff-4b0b-8857-032fc43457e5
+		summarizeBy: none
+		sourceColumn: IncidentTypeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncidentDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 16f24632-bf16-4e55-a02b-8da76639fbee
+		summarizeBy: count
+		sourceColumn: IncidentDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 5fb1d88c-879d-4ed4-a5de-f577938db684
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactIncident = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_FactIncident = Source{[Schema="dw",Item="FactIncident"]}[Data]
+				in
+				    dw_FactIncident
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

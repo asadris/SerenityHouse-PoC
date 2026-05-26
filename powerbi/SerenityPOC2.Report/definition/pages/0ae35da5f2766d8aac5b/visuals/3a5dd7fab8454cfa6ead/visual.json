@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "827e90f69284cb4879e1",
+  "name": "3a5dd7fab8454cfa6ead",
   "position": {
-    "x": 382.26847034339232,
-    "y": 27.970863683662852,
-    "z": 2000,
-    "height": 98.5639958376691,
-    "width": 198.45993756503643,
-    "tabOrder": 2000
+    "x": 817.77777777777783,
+    "y": 25.945945945945947,
+    "z": 3,
+    "height": 176.81681681681684,
+    "width": 455.49549549549556,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,32 +23,14 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Average Donation"
+                  "Property": "Most Common Incident"
                 }
               },
-              "queryRef": "My Measures.Average Donation",
-              "nativeQueryRef": "Average Donation"
+              "queryRef": "My Measures.Most Common Incident",
+              "nativeQueryRef": "Most Common Incident"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "My Measures"
-                  }
-                },
-                "Property": "Average Donation"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -58,13 +40,13 @@
             "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'left'"
                 }
               }
             }
           },
           "selector": {
-            "id": "default"
+            "metadata": "My Measures.Most Common Incident"
           }
         }
       ]

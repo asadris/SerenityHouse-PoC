@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "641802a3f3bbf3236210",
+  "name": "6aaaba8cd4441ea077d9",
   "position": {
-    "x": 14.651404786680542,
-    "y": 27.970863683662852,
-    "z": 0,
-    "height": 98.5639958376691,
-    "width": 186.47242455775236,
-    "tabOrder": 0
+    "x": 544.8648648648649,
+    "y": 24.984984984984987,
+    "z": 2,
+    "height": 177.7777777777778,
+    "width": 272.91291291291293,
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Total Donations"
+                  "Property": "Positive Test Rate %"
                 }
               },
-              "queryRef": "My Measures.Total Donations",
-              "nativeQueryRef": "Total Donations"
+              "queryRef": "My Measures.Positive Test Rate %",
+              "nativeQueryRef": "Positive Test Rate %"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Total Donations"
+                "Property": "Positive Test Rate %"
               }
             },
             "direction": "Descending"
@@ -70,5 +70,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "82fd8844051faaca6f98",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Positive Test Rate %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

@@ -4,8 +4,8 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 465.07993858883549,
-        "y": 281.86662944777908
+        "x": 337.55465959507774,
+        "y": 0
       },
       "nodes": [
         {
@@ -19,7 +19,7 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 4
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 233.78265903679471,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 5
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 272,
             "width": 234
           },
-          "zIndex": 5
+          "zIndex": 6
         },
         {
           "location": {
@@ -58,7 +58,7 @@
             "height": 224,
             "width": 234
           },
-          "zIndex": 6
+          "zIndex": 7
         },
         {
           "location": {
@@ -71,7 +71,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 7
+          "zIndex": 8
         },
         {
           "location": {
@@ -84,7 +84,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 8
+          "zIndex": 9
         },
         {
           "location": {
@@ -97,7 +97,7 @@
             "height": 405.84531249075627,
             "width": 234
           },
-          "zIndex": 10
+          "zIndex": 11
         },
         {
           "location": {
@@ -110,7 +110,7 @@
             "height": 302.92265624537811,
             "width": 234
           },
-          "zIndex": 11
+          "zIndex": 12
         },
         {
           "location": {
@@ -123,7 +123,7 @@
             "height": 269.09866071164458,
             "width": 234
           },
-          "zIndex": 9
+          "zIndex": 10
         },
         {
           "location": {
@@ -136,7 +136,7 @@
             "height": 248,
             "width": 234
           },
-          "zIndex": 14
+          "zIndex": 15
         },
         {
           "location": {
@@ -149,7 +149,7 @@
             "height": 373.28532365642252,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 2
         },
         {
           "location": {
@@ -162,7 +162,7 @@
             "height": 311.4199916257503,
             "width": 234
           },
-          "zIndex": 12
+          "zIndex": 13
         },
         {
           "location": {
@@ -175,7 +175,7 @@
             "height": 281.82399553373352,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 3
         },
         {
           "location": {
@@ -188,7 +188,7 @@
             "height": 171.7459104813999,
             "width": 234
           },
-          "zIndex": 13
+          "zIndex": 14
         },
         {
           "location": {
@@ -199,6 +199,45 @@
           "nodeLineageTag": "71aa1b3b-d11f-49aa-8234-fe84f78f8c22",
           "size": {
             "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 887.30988668706993,
+            "y": 305.77624065471571
+          },
+          "nodeIndex": "FactIncident",
+          "nodeLineageTag": "cfa783c7-69b6-4d9c-9f23-84b49be42650",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1163.5391835458931,
+            "y": 293.85891364859322
+          },
+          "nodeIndex": "DimIncidentType",
+          "nodeLineageTag": "8673582a-306f-49f5-82ab-d1c809bb2d44",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 864.76055633124747,
+            "y": 602.42019990003382
+          },
+          "nodeIndex": "FactDrugTest",
+          "nodeLineageTag": "93607065-4e49-4009-bc27-62a003cc38a8",
+          "size": {
+            "height": 272,
             "width": 234
           },
           "zIndex": 0

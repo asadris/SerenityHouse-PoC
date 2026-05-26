@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "3740365742c7167f7626",
+  "name": "85211814fe6fa15d3781",
   "position": {
-    "x": 793.75375375375381,
-    "y": 181.62162162162164,
-    "z": 6,
-    "height": 224.86486486486487,
-    "width": 471.83183183183189,
-    "tabOrder": 6
+    "x": 836.83848797250857,
+    "y": 203.43642611683848,
+    "z": 5,
+    "height": 273.81443298969072,
+    "width": 421.16838487972507,
+    "tabOrder": 5
   },
   "visual": {
     "visualType": "donutChart",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "FactFinancialAssistance"
+                      "Entity": "FactDrugTest"
                     }
                   },
-                  "Property": "ProgramType"
+                  "Property": "Result"
                 }
               },
-              "queryRef": "FactFinancialAssistance.ProgramType",
-              "nativeQueryRef": "ProgramType",
+              "queryRef": "FactDrugTest.Result",
+              "nativeQueryRef": "Result",
               "active": true
             }
           ]
@@ -42,11 +42,12 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Total Assistance"
+                  "Property": "Drug Tests Given"
                 }
               },
-              "queryRef": "My Measures.Total Assistance",
-              "nativeQueryRef": "Total Assistance"
+              "queryRef": "My Measures.Drug Tests Given",
+              "nativeQueryRef": "Drug Tests Given",
+              "format": "#,0"
             }
           ]
         }
@@ -61,7 +62,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Total Assistance"
+                "Property": "Drug Tests Given"
               }
             },
             "direction": "Descending"
@@ -83,6 +84,19 @@
             }
           }
         }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -92,7 +106,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Assistance by Program Type'"
+                  "Value": "'Drug Test Results'"
                 }
               }
             },
@@ -112,21 +126,21 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "5bf2d39c8fcd802c166e",
+        "name": "70c9b7fa2857c6f7331d",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "FactFinancialAssistance"
+                "Entity": "FactDrugTest"
               }
             },
-            "Property": "ProgramType"
+            "Property": "Result"
           }
         },
         "type": "Categorical"
       },
       {
-        "name": "c93f7569cbf45871fa60",
+        "name": "6a86d88a00128cc4dc45",
         "field": {
           "Measure": {
             "Expression": {
@@ -134,7 +148,7 @@
                 "Entity": "My Measures"
               }
             },
-            "Property": "Total Assistance"
+            "Property": "Drug Tests Given"
           }
         },
         "type": "Advanced"

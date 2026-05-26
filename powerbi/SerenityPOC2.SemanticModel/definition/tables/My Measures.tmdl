@@ -312,6 +312,56 @@ table 'My Measures'
 		formatString: 0%;-0%;0%
 		lineageTag: 81e569f2-14a3-4bab-ac02-6002f35da756
 
+	measure 'Total Incidents' =
+			
+			CALCULATE(
+			    COUNTROWS(FactIncident),
+			    USERELATIONSHIP(DimDate[DateKey], FactIncident[IncidentDateKey]),
+			    DimDate[FullDate] <= TODAY()
+			)
+		formatString: #,0
+		lineageTag: 1f7fa0cc-298a-4e8c-8f9b-03211a6164c8
+
+	measure 'Drug Tests Given' =
+			
+			CALCULATE(
+			    COUNTROWS(FactDrugTest),
+			    USERELATIONSHIP(DimDate[DateKey], FactDrugTest[TestDateKey]),
+			    DimDate[FullDate] <= TODAY()
+			)
+		formatString: #,0
+		lineageTag: da243c61-9f44-4fe4-8056-523cdadb5a53
+
+	measure 'Positive Test Rate %' =
+			
+			CALCULATE(
+			    DIVIDE(
+			        CALCULATE(COUNTROWS(FactDrugTest), FactDrugTest[Result] = "Positive"),
+			        COUNTROWS(FactDrugTest)
+			    ),
+			    USERELATIONSHIP(DimDate[DateKey], FactDrugTest[TestDateKey]),
+			    DimDate[FullDate] <= TODAY()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6608fe25-761a-4b9c-8416-338b22523fa3
+
+	measure 'Most Common Incident' =
+			
+			CALCULATE(
+			    SELECTEDVALUE(DimIncidentType[IncidentName]),
+			    TOPN(1, ALL(DimIncidentType), CALCULATE(COUNTROWS(FactIncident)))
+			)
+		lineageTag: 7b04cd86-6dd1-44df-809b-dc347bd86575
+
+	measure 'Incidents Trend' =
+			
+			CALCULATE(
+			    COUNTROWS(FactIncident),
+			    USERELATIONSHIP(DimDate[DateKey], FactIncident[IncidentDateKey])
+			)
+		formatString: 0
+		lineageTag: 5e73e7ac-da6d-4258-85ba-cf716f4d0c77
+
 	partition 'My Measures' = m
 		mode: import
 		source =

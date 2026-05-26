@@ -74,3 +74,35 @@ relationship 5bf8a83b-846e-0389-366c-d18f07b8d01e
 	fromColumn: FactFinancialAssistance.StayKey
 	toColumn: FactStay.StayKey
 
+relationship 1a77d41b-8953-8c5f-e516-d4e949b08337
+	fromColumn: FactIncident.StayKey
+	toColumn: FactStay.StayKey
+
+relationship 6f7537bc-4c61-c67a-dca9-b32deaff9776
+	isActive: false
+	fromColumn: FactIncident.ResidentKey
+	toColumn: DimResident.ResidentKey
+
+relationship 5ec2e014-1fb9-5ed3-11e4-00f5936d1e83
+	fromColumn: FactIncident.IncidentTypeKey
+	toColumn: DimIncidentType.IncidentTypeKey
+
+relationship 46ff4223-987a-23e8-76d3-ecc7237c8ca9
+	isActive: false
+	fromColumn: FactIncident.IncidentDateKey
+	toColumn: DimDate.DateKey
+
+relationship 7d7ef844-051d-f355-47e1-2c8d08b918cc
+	fromColumn: FactDrugTest.StayKey
+	toColumn: FactStay.StayKey
+
+relationship de2349ad-2c17-1249-fb1e-e9e043fd73d7
+	isActive: false
+	fromColumn: FactDrugTest.ResidentKey
+	toColumn: DimResident.ResidentKey
+
+relationship 2ff2f142-4fde-3c98-f825-c9785474875e
+	isActive: false
+	fromColumn: FactDrugTest.TestDateKey
+	toColumn: DimDate.DateKey
+

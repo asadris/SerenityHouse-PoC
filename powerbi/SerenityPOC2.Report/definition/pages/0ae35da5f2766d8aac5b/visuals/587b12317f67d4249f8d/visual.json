@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f012db02f1a40eb84cdb",
+  "name": "587b12317f67d4249f8d",
   "position": {
-    "x": 852.44536940686794,
-    "y": 27.970863683662852,
-    "z": 3000,
-    "height": 98.5639958376691,
-    "width": 230.42663891779398,
-    "tabOrder": 3000
+    "x": 14.804804804804803,
+    "y": 25.945945945945944,
+    "z": 0,
+    "height": 177,
+    "width": 272,
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Anonymous Donations"
+                  "Property": "Total Incidents"
                 }
               },
-              "queryRef": "My Measures.Anonymous Donations",
-              "nativeQueryRef": "Anonymous Donations"
+              "queryRef": "My Measures.Total Incidents",
+              "nativeQueryRef": "Total Incidents"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "My Measures"
                   }
                 },
-                "Property": "Anonymous Donations"
+                "Property": "Total Incidents"
               }
             },
             "direction": "Descending"
@@ -64,11 +64,29 @@
             }
           },
           "selector": {
-            "id": "default"
+            "metadata": "My Measures.Total Incidents"
           }
         }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "24b5d9f0471b3084c9e2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Total Incidents"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

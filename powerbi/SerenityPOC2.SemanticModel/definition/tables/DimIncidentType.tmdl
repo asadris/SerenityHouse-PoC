@@ -1,0 +1,50 @@
+table DimIncidentType
+	lineageTag: 8673582a-306f-49f5-82ab-d1c809bb2d44
+
+	column IncidentTypeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d970604c-5a6c-4d17-be14-a5deab91f114
+		summarizeBy: none
+		sourceColumn: IncidentTypeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncidentTypeID
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c717094-5930-4716-964d-b14479391693
+		summarizeBy: none
+		sourceColumn: IncidentTypeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncidentName
+		dataType: string
+		lineageTag: fbb8145f-e0e6-42ce-99df-06fb616c4b79
+		summarizeBy: none
+		sourceColumn: IncidentName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SeverityLevel
+		dataType: string
+		lineageTag: 68ac0101-d90f-4d03-8925-f1c2d159f65b
+		summarizeBy: none
+		sourceColumn: SeverityLevel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimIncidentType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    dw_DimBed = Source{[Schema="dw",Item="DimIncidentType"]}[Data]
+				in
+				    dw_DimBed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
