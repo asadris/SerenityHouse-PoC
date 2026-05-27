@@ -2,6 +2,10 @@
 python/config.py
 *.env
 
+# Paginated reports — credentials are embedded (temporary dev login, not production)
+# TODO-SECURITY: sweep entire repo for credentials/secrets before any production deployment
+# reports/  ← removed from ignore so RDL is version-controlled
+
 # Power BI — binary files (large, don't diff well; add back when ready to version)
 *.pbix
 
@@ -11,20 +15,3 @@ powerbi/**/.pbi/cache.abf
 
 # VS Code / SSMS project files
 .vs/
-*.suo
-*.user
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Database files (no SQLite in repo)
-*.sqlite
-*.db
-*.bak
-*.dacpac
