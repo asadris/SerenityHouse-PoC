@@ -15,3 +15,20 @@ powerbi/**/.pbi/cache.abf
 
 # VS Code / SSMS project files
 .vs/
+*.suo
+*.user
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database files (no SQLite in repo)
+*.sqlite
+*.db
+*.bak
+*.dacpac

@@ -552,12 +552,12 @@ def generate_stays(db: Connection, resident_ids, clusters,
                     """INSERT INTO sh.Stay
                        (ResidentID, BedID, CaseManagerID, ReferralSourceID,
                         IntakeDate, ExitDate, StayStatus, ExitReason,
-                        MeetingRequirement)
+                        MeetingRequirement, BehavioralCluster)
                        OUTPUT INSERTED.StayID
-                       VALUES (?,?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?,?,?)""",
                     (pid, bed_id, cm_id, ref_id,
                      intake, actual_exit, status, exit_reason,
-                     "Phase1")
+                     "Phase1", cluster)
                 )
 
                 bed_free[bed_id] = exit_d + timedelta(days=1)        # use projected date for scheduling

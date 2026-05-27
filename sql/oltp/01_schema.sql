@@ -6,8 +6,8 @@
 -- Notes:
 --   • Drop/create approach for development — wrap in transaction
 --   • All foreign keys defined at end for clean creation order
---   • Behavioral clusters are NOT stored — inferred at query time from
---     PaymentRatio: Reliable ≥0.85, Struggling 0.40–0.84, Chronic <0.40
+--   • BehavioralCluster stored on sh.Stay (Reliable/Struggling/Chronic)
+--     Assigned by generator at stay creation; reflects case manager classification
 --   • Identity masking via SecurityIdentityMap (UUID ↔ ResidentID)
 --   • Meeting compliance tracked as incidents (not a separate table)
 --   • Case notes stored as NoteText/NoteDate on Stay (simplified for PoC)
@@ -196,6 +196,12 @@ CREATE TABLE sh.Stay (
                                MeetingRequirement IN ('Phase1','Phase2') OR MeetingRequirement IS NULL),
     -- Phase1: first 90 days — 1 AA/NA meeting per day required
     -- Phase2: after 90 days  — minimum 4 meetings per week
+
+    -- Behavioral cluster assigned at intake by case manager (stored for reporting)
+    -- Reliable = low risk, Struggling = moderate, Chronic = high frequency
+    BehavioralCluster  NVARCHAR(20)   NULL
+                           CONSTRAINT CK_Stay_Cluster CHECK (
+                               BehavioralCluster IN ('Reliable','Struggling','Chronic') OR BehavioralCluster IS NULL),
 
     CreatedAt          DATETIME2      NOT NULL DEFAULT SYSUTCDATETIME()
 );
