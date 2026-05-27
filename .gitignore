@@ -1,3 +1,7 @@
+# Internal working notes (content preserved in docs/reference/)
+AI_Notes.txt
+Serenity Activity and Misc Notes.txt
+
 # Connection strings / secrets
 python/config.py
 *.env
