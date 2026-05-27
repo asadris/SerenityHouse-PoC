@@ -63,11 +63,18 @@ table FactIncident
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Is Future Incident'
+	column 'Is Future Incident' = FactIncident[IncidentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
 		lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 		summarizeBy: none
-		expression: FactIncident[IncidentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Incident Date' = DATE(INT(FactIncident[IncidentDateKey] / 10000), INT(MOD(FactIncident[IncidentDateKey], 10000) / 100), MOD(FactIncident[IncidentDateKey], 100))
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e5f6a7b8-c9d0-1234-efab-234567890004
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 

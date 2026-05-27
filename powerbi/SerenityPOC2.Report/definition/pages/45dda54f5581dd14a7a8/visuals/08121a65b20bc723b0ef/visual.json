@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "08121a65b20bc723b0ef",
   "position": {
-    "x": 483.40425531914894,
-    "y": 209.11854103343467,
+    "x": 452.12954549351076,
+    "y": 0,
     "z": 13,
     "height": 117.68996960486322,
     "width": 216.89969604863222,
@@ -143,5 +143,24 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "1cbabfbb2593864315aa",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "100d26c5c87359e4a49e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Current Stay Arrears"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

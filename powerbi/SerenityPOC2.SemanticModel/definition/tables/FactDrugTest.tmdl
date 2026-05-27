@@ -70,11 +70,10 @@ table FactDrugTest
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Is Future Test'
+	column 'Is Future Test' = FactDrugTest[TestDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
 		lineageTag: c3d4e5f6-a7b8-9012-cdef-012345678902
 		summarizeBy: none
-		expression: FactDrugTest[TestDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 
 		annotation SummarizationSetBy = Automatic
 

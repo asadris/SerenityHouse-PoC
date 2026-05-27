@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "660651061fa0099792d2",
   "position": {
-    "x": 640.55220017256249,
-    "y": 351.19930974978428,
+    "x": 632.17603911980439,
+    "y": 351.55664221678893,
     "z": 12,
-    "height": 354.51251078515958,
-    "width": 618.46419327006038,
+    "height": 354.68622656886714,
+    "width": 633.21923390383051,
     "tabOrder": 12
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "FactIncident"
                     }
                   },
-                  "Property": "IncidentDateKey"
+                  "Property": "Incident Date"
                 }
               },
-              "queryRef": "CountNonNull(FactIncident.IncidentDateKey)",
-              "nativeQueryRef": "IncidentDateKey"
+              "queryRef": "FactIncident.Incident Date",
+              "nativeQueryRef": "Incident Date"
             },
             {
               "field": {
@@ -41,7 +41,8 @@
                 }
               },
               "queryRef": "DimIncidentType.IncidentName",
-              "nativeQueryRef": "IncidentName"
+              "nativeQueryRef": "Incident",
+              "displayName": "Incident"
             },
             {
               "field": {
@@ -55,7 +56,8 @@
                 }
               },
               "queryRef": "DimIncidentType.SeverityLevel",
-              "nativeQueryRef": "SeverityLevel"
+              "nativeQueryRef": "Severity",
+              "displayName": "Severity"
             },
             {
               "field": {
@@ -73,6 +75,23 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactIncident"
+                  }
+                },
+                "Property": "Incident Date"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -107,7 +126,8 @@
             "Property": "IncidentDateKey"
           }
         },
-        "type": "Advanced"
+        "type": "Advanced",
+        "howCreated": "User"
       },
       {
         "name": "3e014ddb2243415e593b",
@@ -140,76 +160,73 @@
         "type": "Categorical"
       },
       {
-        "name": "fb732ae78a45ccec85a3",
+        "name": "c0a44ac0948ed95c35a9",
         "ordinal": 4,
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "DimDate"
+                "Entity": "FactIncident"
               }
             },
-            "Property": "FullDate"
+            "Property": "Is Future Incident"
           }
         },
-        "type": "RelativeDate",
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
             {
-              "Name": "d",
-              "Entity": "DimDate",
+              "Name": "f",
+              "Entity": "FactIncident",
               "Type": 0
             }
           ],
           "Where": [
             {
               "Condition": {
-                "Between": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "d"
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "Is Future Incident"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "false"
                         }
-                      },
-                      "Property": "FullDate"
-                    }
-                  },
-                  "LowerBound": {
-                    "DateSpan": {
-                      "Expression": {
-                        "DateAdd": {
-                          "Expression": {
-                            "DateAdd": {
-                              "Expression": {
-                                "Now": {}
-                              },
-                              "Amount": 1,
-                              "TimeUnit": 0
-                            }
-                          },
-                          "Amount": -100,
-                          "TimeUnit": 3
-                        }
-                      },
-                      "TimeUnit": 0
-                    }
-                  },
-                  "UpperBound": {
-                    "DateSpan": {
-                      "Expression": {
-                        "Now": {}
-                      },
-                      "TimeUnit": 0
-                    }
-                  }
+                      }
+                    ]
+                  ]
                 }
               }
             }
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "93854e4cf8bd3ce136b4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactIncident"
+              }
+            },
+            "Property": "Incident Date"
+          }
+        },
+        "type": "Categorical"
       }
     ],
     "filterSortOrder": "Custom"

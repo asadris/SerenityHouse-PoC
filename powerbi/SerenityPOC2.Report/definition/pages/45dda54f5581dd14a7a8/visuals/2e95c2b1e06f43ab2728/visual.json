@@ -23,11 +23,11 @@
                       "Entity": "FactRentPayment"
                     }
                   },
-                  "Property": "PaymentDateKey"
+                  "Property": "Payment Date"
                 }
               },
-              "queryRef": "CountNonNull(FactRentPayment.PaymentDateKey)",
-              "nativeQueryRef": "PaymentDateKey"
+              "queryRef": "FactRentPayment.Payment Date",
+              "nativeQueryRef": "Payment Date"
             },
             {
               "field": {
@@ -55,10 +55,28 @@
                 }
               },
               "queryRef": "FactRentPayment.PaymentMethod",
-              "nativeQueryRef": "PaymentMethod"
+              "nativeQueryRef": "Payment Method",
+              "displayName": "Payment Method"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactRentPayment"
+                  }
+                },
+                "Property": "Payment Date"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -94,7 +112,7 @@
         "type": "Advanced"
       },
       {
-        "name": "50eeb872fc1911da61f7",
+        "name": "99dd24600fd2825986f7",
         "field": {
           "Column": {
             "Expression": {
@@ -102,10 +120,64 @@
                 "Entity": "FactRentPayment"
               }
             },
-            "Property": "PaymentDateKey"
+            "Property": "Is Future Payment"
           }
         },
-        "type": "Advanced"
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "FactRentPayment",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "Is Future Payment"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "false"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "5cabb994d6938bba472a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactRentPayment"
+              }
+            },
+            "Property": "Payment Date"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

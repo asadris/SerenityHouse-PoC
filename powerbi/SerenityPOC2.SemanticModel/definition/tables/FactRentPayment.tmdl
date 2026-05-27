@@ -54,11 +54,18 @@ table FactRentPayment
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Is Future Payment'
+	column 'Is Future Payment' = FactRentPayment[PaymentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
 		lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
 		summarizeBy: none
-		expression: FactRentPayment[PaymentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Date' = DATE(INT(FactRentPayment[PaymentDateKey] / 10000), INT(MOD(FactRentPayment[PaymentDateKey], 10000) / 100), MOD(FactRentPayment[PaymentDateKey], 100))
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d4e5f6a7-b8c9-0123-defa-123456789003
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 
