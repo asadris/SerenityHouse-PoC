@@ -63,6 +63,14 @@ table FactIncident
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Is Future Incident'
+		dataType: boolean
+		lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+		summarizeBy: none
+		expression: FactIncident[IncidentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+
+		annotation SummarizationSetBy = Automatic
+
 	partition FactIncident = m
 		mode: import
 		source =

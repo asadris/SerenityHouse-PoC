@@ -25,7 +25,7 @@ Python Generator → SQL Server OLTP (sh schema) → ETL → DW Star Schema (dw 
 - **Database:** `Serenity1`
 - **OLTP schema:** `sh`  
 - **DW schema:** `dw`
-- **Power BI file:** `SerenityPOC2.pbix` / `SerenityPOC2.pbip` (PBIP format in DevopsTestSerenity/)
+- **Power BI file:** `SerenityPOC2.pbix` / `SerenityPOC2.pbip` (PBIP format in `powerbi/SerenityPOC2.Report` + `powerbi/SerenityPOC2.SemanticModel`)
 
 ---
 
@@ -238,7 +238,7 @@ The user mentioned this is a "combination halfway or transitional house/restaura
 | `SerenityPOC_DW/create Star schema.sql` | Canonical DW schema |
 | `SerenityPOC_DW/SQL ETL into star schema.sql` | ETL logic |
 | `Serenity House Scripts/5th generation *.sql` (validation queries) | Useful for QA |
-| `SerenityPBI/DevopsTestSerenity/` | PBIP format — best for source control |
+| `powerbi/SerenityPOC2.Report/` + `powerbi/SerenityPOC2.SemanticModel/` | PBIP format — best for source control (DevopsTestSerenity was an older copy, moved to archive) |
 | `SerenityPBI/SerenityPOC2.pbix` | Working Power BI file |
 | All `.docx` documents | Requirements/documentation source |
 

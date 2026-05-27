@@ -39,19 +39,26 @@ table FactRentPayment
 
 	column Amount
 		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		lineageTag: 3c46039a-e424-4c12-92d2-05704456cdcb
 		summarizeBy: sum
 		sourceColumn: Amount
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	column PaymentMethod
 		dataType: string
 		lineageTag: 1977aab4-f0eb-4ff4-9073-ac9d4c9ddea6
 		summarizeBy: none
 		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Future Payment'
+		dataType: boolean
+		lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
+		summarizeBy: none
+		expression: FactRentPayment[PaymentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 
 		annotation SummarizationSetBy = Automatic
 

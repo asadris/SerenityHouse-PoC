@@ -170,5 +170,79 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e77dac89ce12df944a32",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimResident"
+              }
+            },
+            "Property": "Full Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "43bc13e6286e25247fdc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Arrears"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a4049f2c40bd624a0a86",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Total Charges"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "523d957d07bbb1db9627",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Total Waivers"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "35853e4122bb1d3c7c56",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Total Payments"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

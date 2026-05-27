@@ -119,6 +119,13 @@ table FactStay
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Is Future Intake' = FactStay[IntakeDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+		dataType: boolean
+		lineageTag: b2d4e6f8-1a3c-4d7e-9b2f-5c8a1e4d7f0b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition FactStay = m
 		mode: import
 		source =

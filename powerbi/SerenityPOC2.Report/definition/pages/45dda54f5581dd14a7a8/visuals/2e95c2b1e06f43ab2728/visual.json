@@ -1,0 +1,112 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "2e95c2b1e06f43ab2728",
+  "position": {
+    "x": 26.817082997582595,
+    "y": 352.74778404512489,
+    "z": 11,
+    "height": 353.77921031426268,
+    "width": 347.59065269943596,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactRentPayment"
+                    }
+                  },
+                  "Property": "PaymentDateKey"
+                }
+              },
+              "queryRef": "CountNonNull(FactRentPayment.PaymentDateKey)",
+              "nativeQueryRef": "PaymentDateKey"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactRentPayment"
+                    }
+                  },
+                  "Property": "Amount"
+                }
+              },
+              "queryRef": "Sum(FactRentPayment.Amount)",
+              "nativeQueryRef": "Amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactRentPayment"
+                    }
+                  },
+                  "Property": "PaymentMethod"
+                }
+              },
+              "queryRef": "FactRentPayment.PaymentMethod",
+              "nativeQueryRef": "PaymentMethod"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "954fa4dc093290efbbdf",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactRentPayment"
+              }
+            },
+            "Property": "PaymentMethod"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f68b43748e7757c3a89f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactRentPayment"
+              }
+            },
+            "Property": "Amount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "50eeb872fc1911da61f7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactRentPayment"
+              }
+            },
+            "Property": "PaymentDateKey"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -76,9 +76,11 @@ table 'My Measures'
 			    - [Total Payments]
 			    - [Total Waivers]
 			    - [Total Assistance]
-		formatString: \$#,0;(\$#,0);\$#,0
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Rent
 		lineageTag: 51e3829b-6e16-49cd-910e-2f0ef488836a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	measure 'Resident Charges' = ```
 			
@@ -129,10 +131,9 @@ table 'My Measures'
 			    - [Resident Payments]
 			    - [Resident Waivers]
 			    - [Resident Assistance]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Rent
 		lineageTag: e92a2eb3-24a1-4e14-80ee-776d98133ac1
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Daily Occupancy' =
 			
@@ -361,6 +362,64 @@ table 'My Measures'
 			)
 		formatString: 0
 		lineageTag: 5e73e7ac-da6d-4258-85ba-cf716f4d0c77
+
+	measure 'Days in Program' =
+			VAR LatestIntakeKey =
+			    CALCULATE(MAX(FactStay[IntakeDateKey]))
+			VAR LatestExitKey =
+			    CALCULATE(
+			        MAX(FactStay[ExitDateKey]),
+			        FactStay[IntakeDateKey] = LatestIntakeKey
+			    )
+			VAR IsActive =
+			    CALCULATE(
+			        MAX(FactStay[Is Current Stay]),
+			        FactStay[IntakeDateKey] = LatestIntakeKey
+			    )
+			VAR IntakeDate =
+			    LOOKUPVALUE(DimDate[FullDate], DimDate[DateKey], LatestIntakeKey)
+			VAR ExitDate =
+			    LOOKUPVALUE(DimDate[FullDate], DimDate[DateKey], LatestExitKey)
+			VAR EndDate =
+			    IF(IsActive = 1, TODAY(), ExitDate)
+			RETURN
+			IF(
+			    NOT ISBLANK(IntakeDate),
+			    DATEDIFF(IntakeDate, EndDate, DAY) + 1,
+			    BLANK()
+			)
+		formatString: #,0
+		displayFolder: Resident
+		lineageTag: a3f2c1d4-7e85-4b9a-9c3d-1f2e8b5a6d7c
+
+	measure 'Intake Date' =
+			
+			VAR LatestIntakeKey = CALCULATE(MAX(FactStay[IntakeDateKey]))
+			RETURN
+			LOOKUPVALUE(DimDate[FullDate], DimDate[DateKey], LatestIntakeKey)
+		formatString: Short Date
+		lineageTag: e2426b74-bd61-4f83-8ec4-6580a2267a99
+
+	measure 'Program Status' =
+			
+			IF(
+			    CALCULATE(MAX(FactStay[Is Current Stay])) = 1,
+			    "Active",
+			    "Exited"
+			)
+		lineageTag: 713f909a-55f9-489b-be8b-e0afd3fc43ce
+
+	measure 'Current Stay Arrears' =
+			
+			CALCULATE(
+			    [Arrears],
+			    FactStay[Is Current Stay] = 1
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Resident
+		lineageTag: b5c8e2a1-9d4f-4b7c-8e3a-2f1c6d9e0b5a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	partition 'My Measures' = m
 		mode: import

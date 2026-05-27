@@ -1,0 +1,217 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "660651061fa0099792d2",
+  "position": {
+    "x": 640.55220017256249,
+    "y": 351.19930974978428,
+    "z": 12,
+    "height": 354.51251078515958,
+    "width": 618.46419327006038,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactIncident"
+                    }
+                  },
+                  "Property": "IncidentDateKey"
+                }
+              },
+              "queryRef": "CountNonNull(FactIncident.IncidentDateKey)",
+              "nativeQueryRef": "IncidentDateKey"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimIncidentType"
+                    }
+                  },
+                  "Property": "IncidentName"
+                }
+              },
+              "queryRef": "DimIncidentType.IncidentName",
+              "nativeQueryRef": "IncidentName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimIncidentType"
+                    }
+                  },
+                  "Property": "SeverityLevel"
+                }
+              },
+              "queryRef": "DimIncidentType.SeverityLevel",
+              "nativeQueryRef": "SeverityLevel"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactIncident"
+                    }
+                  },
+                  "Property": "Description"
+                }
+              },
+              "queryRef": "FactIncident.Description",
+              "nativeQueryRef": "Description"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5bb7c54076409a0544ab",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactIncident"
+              }
+            },
+            "Property": "Description"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f854f57c0c8eff7ebac2",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactIncident"
+              }
+            },
+            "Property": "IncidentDateKey"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3e014ddb2243415e593b",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimIncidentType"
+              }
+            },
+            "Property": "IncidentName"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e94a3cebfe7fc15f2a71",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimIncidentType"
+              }
+            },
+            "Property": "SeverityLevel"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "fb732ae78a45ccec85a3",
+        "ordinal": 4,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimDate"
+              }
+            },
+            "Property": "FullDate"
+          }
+        },
+        "type": "RelativeDate",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DimDate",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Between": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "d"
+                        }
+                      },
+                      "Property": "FullDate"
+                    }
+                  },
+                  "LowerBound": {
+                    "DateSpan": {
+                      "Expression": {
+                        "DateAdd": {
+                          "Expression": {
+                            "DateAdd": {
+                              "Expression": {
+                                "Now": {}
+                              },
+                              "Amount": 1,
+                              "TimeUnit": 0
+                            }
+                          },
+                          "Amount": -100,
+                          "TimeUnit": 3
+                        }
+                      },
+                      "TimeUnit": 0
+                    }
+                  },
+                  "UpperBound": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Now": {}
+                      },
+                      "TimeUnit": 0
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}
