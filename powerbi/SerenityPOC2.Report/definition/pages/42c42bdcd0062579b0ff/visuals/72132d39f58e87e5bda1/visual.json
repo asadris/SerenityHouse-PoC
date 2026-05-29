@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "72132d39f58e87e5bda1",
   "position": {
-    "x": 716.47153167602244,
-    "y": 8.2117080994386527,
+    "x": 741.0526315789474,
+    "y": 0,
     "z": 1000,
-    "height": 618.95749799518842,
-    "width": 563.52846832397756,
+    "height": 375.78947368421052,
+    "width": 514.73684210526324,
     "tabOrder": 1000
   },
   "visual": {
@@ -102,6 +102,86 @@
         ]
       }
     },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f68bb0fb3c4c54ebe0c3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimResident"
+              }
+            },
+            "Property": "Origin State"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "74cf040aa8efd366500c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimResident"
+              }
+            },
+            "Property": "Origin County"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "95aca8ed251c05a9f2f4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimResident"
+              }
+            },
+            "Property": "Origin City"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "bf6ebaa673623f585ef1",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimResident"
+                  }
+                },
+                "Property": "ResidentID"
+              }
+            },
+            "Function": 5
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

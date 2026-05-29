@@ -176,6 +176,12 @@ table DimResident
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Origin County State' = DimResident[Origin County] & ", " & DimResident[Origin State]
+		lineageTag: 4223107a-b6e3-4787-bb6c-2c1b3e2a2266
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition DimResident = m
 		mode: import
 		source =

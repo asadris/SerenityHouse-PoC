@@ -52,5 +52,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5b3600a4bcf31afd5e33",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Most Common Incident"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

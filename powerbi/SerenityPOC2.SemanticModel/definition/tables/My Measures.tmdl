@@ -35,27 +35,24 @@ table 'My Measures'
 			IF(IsOccupied > 0, "Occupied", "Available")
 		lineageTag: c39ff145-d426-403a-8431-8322cb43a4c6
 
-	measure 'Total Charges' = ```
+	measure 'Total Charges' =
 			
 			CALCULATE(
 			    SUM(FactRentCharge[Amount]),
-			    USERELATIONSHIP(FactRentCharge[ChargeDateKey], DimDate[DateKey])
+			    USERELATIONSHIP(FactRentCharge[ChargeDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] <= TODAY()
 			)
-			
-			
-			```
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Rent
 		lineageTag: 4e4040dd-53f6-48bd-96c6-47fd0e28d788
 
-	measure 'Total Payments' = ```
+	measure 'Total Payments' =
 			
 			CALCULATE(
 			    SUM(FactRentPayment[Amount]),
-			    USERELATIONSHIP(FactRentPayment[PaymentDateKey], DimDate[DateKey])
+			    USERELATIONSHIP(FactRentPayment[PaymentDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] <= TODAY()
 			)
-			
-			```
 		formatString: \$#,0;(\$#,0);\$#,0
 		displayFolder: Rent
 		lineageTag: 6ea2236b-d573-4966-872c-738adc64da16
@@ -64,7 +61,8 @@ table 'My Measures'
 			
 			CALCULATE(
 			    SUM(FactRentWaiver[Amount]),
-			    USERELATIONSHIP(FactRentWaiver[WaiverDateKey], DimDate[DateKey])
+			    USERELATIONSHIP(FactRentWaiver[WaiverDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Rent
@@ -258,19 +256,29 @@ table 'My Measures'
 			
 			CALCULATE(
 			    SELECTEDVALUE(DimReferralSource[Name]),
-			    TOPN(1, ALL(DimReferralSource), CALCULATE(COUNTROWS(FactStay)))
+			    TOPN(
+			        1,
+			        ALL(DimReferralSource),
+			        CALCULATE(
+			            COUNTROWS(FactStay),
+			            FactStay[Is Future Intake] = FALSE()
+			        )
+			    )
 			)
 		lineageTag: 0c39a5d6-3aaa-4692-9eda-c093b7e8f409
 
 	measure 'Top Treatment Referral' =
 			
-			CALCULATE(
-			    SELECTEDVALUE(DimReferralSource[Name]),
+			MAXX(
 			    TOPN(
 			        1,
 			        FILTER(ALL(DimReferralSource), DimReferralSource[Category] = "Treatment"),
-			        CALCULATE(COUNTROWS(FactStay))
-			    )
+			        CALCULATE(
+			            COUNTROWS(FactStay),
+			            FactStay[Is Future Intake] = FALSE()
+			        )
+			    ),
+			    DimReferralSource[Name]
 			)
 		lineageTag: e172e2ff-1121-422a-8093-ad9487855934
 
@@ -300,9 +308,13 @@ table 'My Measures'
 
 	measure 'Total Assistance' =
 			
-			SUM ( FactFinancialAssistance[Amount] )
-		formatString: \$#,0;(\$#,0);\$#,0
+			CALCULATE(
+			    SUM(FactFinancialAssistance[Amount]),
+			    FactFinancialAssistance[AssistanceDateKey] <= VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+			)
 		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Stays Assisted %' =
 			
@@ -546,6 +558,16 @@ table 'My Measures'
 			IF([Missed Meetings Last 30 Days] > 0, 1, 0)
 		formatString: 0
 		lineageTag: b45af14c-5614-4e83-9de5-9222cf6e3051
+
+	measure 'Incidents Per Month' =
+			
+			CALCULATE(
+			    COUNTROWS(FactIncident),
+			    USERELATIONSHIP(FactIncident[IncidentDateKey], DimDate[DateKey]),
+			    FactIncident[Is Future Incident] = FALSE()
+			)
+		formatString: 0
+		lineageTag: 4fe3eb53-058f-499c-8432-cbeebd059022
 
 	partition 'My Measures' = m
 		mode: import
