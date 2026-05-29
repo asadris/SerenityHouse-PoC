@@ -4,10 +4,10 @@
   "position": {
     "x": 793.75375375375381,
     "y": 181.62162162162164,
-    "z": 6,
+    "z": 6000,
     "height": 224.86486486486487,
     "width": 471.83183183183189,
-    "tabOrder": 6
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "donutChart",
@@ -108,37 +108,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5bf2d39c8fcd802c166e",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactFinancialAssistance"
-              }
-            },
-            "Property": "ProgramType"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "c93f7569cbf45871fa60",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Assistance"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

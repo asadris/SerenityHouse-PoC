@@ -70,23 +70,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "24b5d9f0471b3084c9e2",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Incidents"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -93,37 +93,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ae89ae28e0a5aef4fc3b",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactDonation"
-              }
-            },
-            "Property": "PaymentMethod"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "7b12a2330821f2d8b2e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Donations"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

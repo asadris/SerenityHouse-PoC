@@ -4,10 +4,10 @@
   "position": {
     "x": 49.6048632218845,
     "y": 19.45288753799392,
-    "z": 1,
+    "z": 1000,
     "height": 150.75987841945289,
     "width": 636.10942249240122,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -73,28 +73,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "743cc7f2e78a4de9c8ce",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "DimResident"
-                  }
-                },
-                "Property": "Full Name"
-              }
-            },
-            "Function": 3
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "c0365cb02d35c8ec291c",
   "position": {
-    "x": 74.8936170212766,
-    "y": 29.179331306990882,
-    "z": 2,
+    "x": 169.24012158054711,
+    "y": 28.206686930091188,
+    "z": 2000,
     "height": 116.71732522796353,
     "width": 172.15805471124619,
-    "tabOrder": 2
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -139,28 +139,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "48a18451ee598cfb51c8",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "FactStay"
-                  }
-                },
-                "Property": "Is Current Stay"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -93,37 +93,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ceb2ebaf0221be38a145",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimDate"
-              }
-            },
-            "Property": "FullDate"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "3e85718d27fbe7065c5b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Donations"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

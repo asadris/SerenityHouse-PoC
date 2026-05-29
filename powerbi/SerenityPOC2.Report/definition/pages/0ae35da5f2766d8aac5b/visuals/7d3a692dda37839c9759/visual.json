@@ -4,10 +4,10 @@
   "position": {
     "x": 14.295532646048109,
     "y": 203.43642611683848,
-    "z": 4,
+    "z": 4000,
     "height": 273.81443298969072,
     "width": 822.5429553264604,
-    "tabOrder": 4
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "barChart",
@@ -179,51 +179,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c1f62fd1875e137c883c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimIncidentType"
-              }
-            },
-            "Property": "IncidentName"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "0f9b9e671fa21966522d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Incidents"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c9529aeb9d38e0d7d480",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimIncidentType"
-              }
-            },
-            "Property": "SeverityLevel"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

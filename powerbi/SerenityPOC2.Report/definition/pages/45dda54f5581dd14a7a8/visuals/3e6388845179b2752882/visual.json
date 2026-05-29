@@ -4,10 +4,10 @@
   "position": {
     "x": 225.76501448728723,
     "y": 0,
-    "z": 8,
+    "z": 1000,
     "height": 117.5825946817083,
     "width": 216.59951651893635,
-    "tabOrder": 8
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -144,23 +144,5 @@
     },
     "drillFilterOtherVisuals": true
   },
-  "parentGroupName": "1cbabfbb2593864315aa",
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c8c586d78acf0b0d1160",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Arrears"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
-  }
+  "parentGroupName": "1cbabfbb2593864315aa"
 }

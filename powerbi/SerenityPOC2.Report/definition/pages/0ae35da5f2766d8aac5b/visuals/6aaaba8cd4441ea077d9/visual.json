@@ -4,10 +4,10 @@
   "position": {
     "x": 544.8648648648649,
     "y": 24.984984984984987,
-    "z": 2,
+    "z": 2000,
     "height": 177.7777777777778,
     "width": 272.91291291291293,
-    "tabOrder": 2
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -70,23 +70,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "82fd8844051faaca6f98",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Positive Test Rate %"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

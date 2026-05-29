@@ -4,10 +4,10 @@
   "position": {
     "x": 885.65805471124622,
     "y": 19.45288753799392,
-    "z": 5,
+    "z": 3000,
     "height": 117,
     "width": 173,
-    "tabOrder": 5
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -129,23 +129,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5c0d1f5cc01ed0920b0f",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Intake Date"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -4,10 +4,10 @@
   "position": {
     "x": 632.17603911980439,
     "y": 351.55664221678893,
-    "z": 12,
+    "z": 6000,
     "height": 354.68622656886714,
     "width": 633.21923390383051,
-    "tabOrder": 12
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "tableEx",
@@ -213,20 +213,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "93854e4cf8bd3ce136b4",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactIncident"
-              }
-            },
-            "Property": "Incident Date"
-          }
-        },
-        "type": "Categorical"
       }
     ],
     "filterSortOrder": "Custom"

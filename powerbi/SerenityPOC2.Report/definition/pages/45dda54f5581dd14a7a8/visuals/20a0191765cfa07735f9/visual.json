@@ -4,10 +4,10 @@
   "position": {
     "x": 904.55927051671745,
     "y": 0,
-    "z": 10,
+    "z": 3000,
     "height": 117.68996960486322,
     "width": 216,
-    "tabOrder": 10
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -130,23 +130,5 @@
     },
     "drillFilterOtherVisuals": true
   },
-  "parentGroupName": "1cbabfbb2593864315aa",
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "0ce43a711b3e42cff8c6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Drug Tests Given"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
-  }
+  "parentGroupName": "1cbabfbb2593864315aa"
 }

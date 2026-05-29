@@ -135,37 +135,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c62a6401a7676ac193ec",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Donations"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e22ae75d708ca55b6979",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimFundraisingEvent"
-              }
-            },
-            "Property": "FundType"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

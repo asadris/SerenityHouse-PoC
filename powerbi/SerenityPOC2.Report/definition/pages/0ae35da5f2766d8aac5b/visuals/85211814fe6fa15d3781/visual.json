@@ -4,10 +4,10 @@
   "position": {
     "x": 836.83848797250857,
     "y": 203.43642611683848,
-    "z": 5,
+    "z": 5000,
     "height": 273.81443298969072,
     "width": 421.16838487972507,
-    "tabOrder": 5
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "donutChart",
@@ -122,37 +122,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "70c9b7fa2857c6f7331d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactDrugTest"
-              }
-            },
-            "Property": "Result"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "6a86d88a00128cc4dc45",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Drug Tests Given"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

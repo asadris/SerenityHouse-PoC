@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "662fb070ea123d84518f",
+  "position": {
+    "x": 120.60790273556232,
+    "y": 628.32826747720367,
+    "z": 4000,
+    "height": 66.139817629179333,
+    "width": 1089.3617021276596,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Risk Score",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " rates each resident on a 0–6 scale based on activity in the last 30 days. Incidents (+2) and positive drug tests (+2) are weighted most heavily as they indicate immediate safety and recovery concerns. Missed house meetings (+1) and climbing arrears above two weeks' rent (+1) serve as early behavioral warnings. Residents with a score of 2 or higher are recommended for case manager follow-up."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

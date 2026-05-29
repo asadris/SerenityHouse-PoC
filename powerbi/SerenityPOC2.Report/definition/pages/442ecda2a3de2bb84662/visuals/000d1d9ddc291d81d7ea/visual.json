@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "000d1d9ddc291d81d7ea",
   "position": {
-    "x": 74.847457627118644,
-    "y": 227.79661016949152,
-    "z": 3,
-    "height": 438.23728813559325,
-    "width": 1123.7966101694915,
-    "tabOrder": 3
+    "x": 113.68421052631579,
+    "y": 155.78947368421052,
+    "z": 3000,
+    "height": 438.94736842105266,
+    "width": 1037.8947368421052,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "tableEx",
@@ -437,6 +437,57 @@
                                   },
                                   "Right": {
                                     "Literal": {
+                                      "Value": "5D"
+                                    }
+                                  }
+                                }
+                              },
+                              "Right": {
+                                "Comparison": {
+                                  "ComparisonKind": 3,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "My Measures"
+                                        }
+                                      },
+                                      "Property": "Risk Score"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
+                                      "Value": "1000D"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#FF4444'"
+                            }
+                          }
+                        },
+                        {
+                          "Condition": {
+                            "And": {
+                              "Left": {
+                                "Comparison": {
+                                  "ComparisonKind": 2,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "My Measures"
+                                        }
+                                      },
+                                      "Property": "Risk Score"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
                                       "Value": "3D"
                                     }
                                   }
@@ -457,7 +508,7 @@
                                   },
                                   "Right": {
                                     "Literal": {
-                                      "Value": "100D"
+                                      "Value": "5D"
                                     }
                                   }
                                 }
@@ -466,7 +517,7 @@
                           },
                           "Value": {
                             "Literal": {
-                              "Value": "'#D64550'"
+                              "Value": "'#FFAA00'"
                             }
                           }
                         },
@@ -493,7 +544,7 @@
                           },
                           "Value": {
                             "Literal": {
-                              "Value": "'#DAAE46'"
+                              "Value": "'#FFEB9C'"
                             }
                           }
                         },
@@ -520,7 +571,7 @@
                           },
                           "Value": {
                             "Literal": {
-                              "Value": "'#f0e199'"
+                              "Value": "'#FFEB9C'"
                             }
                           }
                         }
@@ -540,6 +591,40 @@
               }
             ],
             "metadata": "My Measures.Risk Score"
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "184.22187829484633D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DimResident.Full Name"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]
@@ -716,7 +801,41 @@
             "Property": "Risk Score"
           }
         },
-        "type": "Advanced"
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "My Measures",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "Risk Score"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
       }
     ],
     "filterSortOrder": "Custom"

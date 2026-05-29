@@ -4,10 +4,10 @@
   "position": {
     "x": 26.817082997582595,
     "y": 352.74778404512489,
-    "z": 11,
+    "z": 5000,
     "height": 353.77921031426268,
     "width": 347.59065269943596,
-    "tabOrder": 11
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "tableEx",
@@ -84,34 +84,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "954fa4dc093290efbbdf",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactRentPayment"
-              }
-            },
-            "Property": "PaymentMethod"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "f68b43748e7757c3a89f",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactRentPayment"
-              }
-            },
-            "Property": "Amount"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
         "name": "99dd24600fd2825986f7",
         "field": {
           "Column": {
@@ -164,20 +136,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "5cabb994d6938bba472a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactRentPayment"
-              }
-            },
-            "Property": "Payment Date"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

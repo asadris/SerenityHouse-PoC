@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "34d1847d8f28a4c190fc",
   "position": {
-    "x": 1085.4711246200609,
-    "y": 19.45288753799392,
+    "x": 944.43768996960489,
+    "y": 28.206686930091188,
     "z": 0,
-    "height": 117,
-    "width": 173,
+    "height": 116.71732522796353,
+    "width": 172,
     "tabOrder": 0
   },
   "visual": {
@@ -23,16 +23,31 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Program Status"
+                  "Property": "% of House At Risk"
                 }
               },
-              "queryRef": "My Measures.Program Status",
-              "nativeQueryRef": "Program Status"
+              "queryRef": "My Measures.% of House At Risk",
+              "nativeQueryRef": "% of House At Risk"
             }
           ]
         }
       },
       "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "My Measures"
+                  }
+                },
+                "Property": "% of House At Risk"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
         "isDefaultSort": true
       }
     },
@@ -114,23 +129,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "04e37835c6b9a41e4c5d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Program Status"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

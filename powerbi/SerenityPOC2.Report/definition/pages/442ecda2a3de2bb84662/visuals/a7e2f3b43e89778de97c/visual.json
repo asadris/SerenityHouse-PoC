@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "a7e2f3b43e89778de97c",
   "position": {
-    "x": 553.43465045592711,
+    "x": 556.91793313069911,
     "y": 28.206686930091188,
-    "z": 1,
-    "height": 117.68996960486322,
-    "width": 173.13069908814592,
-    "tabOrder": 1
+    "z": 1000,
+    "height": 116,
+    "width": 172,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,16 +23,31 @@
                       "Entity": "My Measures"
                     }
                   },
-                  "Property": "Program Status"
+                  "Property": "Residents Flagged"
                 }
               },
-              "queryRef": "My Measures.Program Status",
-              "nativeQueryRef": "Program Status"
+              "queryRef": "My Measures.Residents Flagged",
+              "nativeQueryRef": "Residents Flagged"
             }
           ]
         }
       },
       "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "My Measures"
+                  }
+                },
+                "Property": "Residents Flagged"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
         "isDefaultSort": true
       }
     },
@@ -74,6 +89,17 @@
           "selector": {
             "id": "default"
           }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -114,23 +140,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "bca05c0e48d0f1e8e685",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Program Status"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

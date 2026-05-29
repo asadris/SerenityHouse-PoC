@@ -490,13 +490,9 @@ table 'My Measures'
 			```
 		lineageTag: 0b5ba0b5-0b0c-4491-8cd5-0e92d3daa2c8
 
-	measure 'Risk Score' = ```
+	measure 'Risk Score' =
 			
-			    IF([Incidents Last 30 Days] > 0, 1, 0)
-			    + IF([Arrears] > [Arrears 30 Days Ago], 1, 0)
-			    + IF([Positive Tests Last 30 Days] > 0, 1, 0)
-			    + IF([Missed Meetings Last 30 Days] > 0, 1, 0)
-			```
+			[Arrears Flag] + [Incidents Flag] + [Positive Tests Flag] + [Missed Meetings Flag]
 		formatString: 0
 		lineageTag: 4b74ffd4-2d36-4fbc-af91-3f7f8d78e4bf
 
@@ -509,6 +505,47 @@ table 'My Measures'
 			    IF([Arrears] > [Arrears 30 Days Ago], "#FFB3B3", "#B3FFB3")
 			```
 		lineageTag: c7087154-93af-4c65-bb8d-83e4cef7bae4
+
+	measure 'Residents Flagged' =
+			
+			COUNTROWS(
+			    FILTER(
+			        VALUES(DimResident[ResidentKey]),
+			        [Risk Score] > 0
+			    )
+			)
+		formatString: #,0
+		lineageTag: 63d86c3c-5d8a-444d-aeff-c97b39be27e0
+
+	measure '% of House At Risk' =
+			
+			DIVIDE([Residents Flagged], [Current Residents], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: 4dbf009d-0abd-4bc0-adb1-b9a25c4756f1
+
+	measure 'Arrears Flag' =
+			
+			IF([Arrears Trend] = "↑ Climbing" && [Arrears] > 210, 1, 0)
+		formatString: 0
+		lineageTag: 3db27850-68ce-434f-973a-98736262bc8e
+
+	measure 'Incidents Flag' =
+			
+			IF([Incidents Last 30 Days] > 0, 2, 0)
+		formatString: 0
+		lineageTag: e046731d-e42c-4d83-9b12-c2b2b052f306
+
+	measure 'Positive Tests Flag' =
+			
+			IF([Positive Tests Last 30 Days] > 0, 2, 0)
+		formatString: 0
+		lineageTag: 6e4da74e-e2cf-49ed-a0c7-6ac067d02284
+
+	measure 'Missed Meetings Flag' =
+			
+			IF([Missed Meetings Last 30 Days] > 0, 1, 0)
+		formatString: 0
+		lineageTag: b45af14c-5614-4e83-9de5-9222cf6e3051
 
 	partition 'My Measures' = m
 		mode: import
