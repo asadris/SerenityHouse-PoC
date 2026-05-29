@@ -421,6 +421,95 @@ table 'My Measures'
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
+	measure 'Incidents Last 30 Days' =
+			CALCULATE(
+			    COUNTROWS(FactIncident),
+			    USERELATIONSHIP(FactIncident[IncidentDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] >= TODAY() - 30,
+			    DimDate[FullDate] <= TODAY()
+			)
+		formatString: #,0
+		displayFolder: Early Warning
+		lineageTag: cad20bc5-3db9-4901-94af-dd1fce0ed4e7
+
+	measure 'Arrears 30 Days Ago' =
+			VAR DateKey30 = VALUE(FORMAT(TODAY() - 30, "YYYYMMDD"))
+			RETURN
+			CALCULATE(
+			    SUM(FactRentCharge[Amount]),
+			    USERELATIONSHIP(FactRentCharge[ChargeDateKey], DimDate[DateKey]),
+			    FactRentCharge[ChargeDateKey] <= DateKey30
+			)
+			- CALCULATE(
+			    SUM(FactRentPayment[Amount]),
+			    USERELATIONSHIP(FactRentPayment[PaymentDateKey], DimDate[DateKey]),
+			    FactRentPayment[PaymentDateKey] <= DateKey30
+			)
+			- CALCULATE(
+			    SUM(FactRentWaiver[Amount]),
+			    USERELATIONSHIP(FactRentWaiver[WaiverDateKey], DimDate[DateKey]),
+			    FactRentWaiver[WaiverDateKey] <= DateKey30
+			)
+			- CALCULATE(
+			    SUM(FactFinancialAssistance[Amount]),
+			    FactFinancialAssistance[AssistanceDateKey] <= DateKey30
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Early Warning
+		lineageTag: 270bebdc-0a3c-4a5d-b330-2c2daa2dad70
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Positive Tests Last 30 Days' =
+			CALCULATE(
+			    COUNTROWS(FactDrugTest),
+			    USERELATIONSHIP(FactDrugTest[TestDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] >= TODAY() - 30,
+			    DimDate[FullDate] <= TODAY(),
+			    FactDrugTest[Result] = "Positive"
+			)
+		formatString: #,0
+		displayFolder: Early Warning
+		lineageTag: df409686-666a-4229-9761-d301aa943233
+
+	measure 'Missed Meetings Last 30 Days' =
+			CALCULATE(
+			    COUNTROWS(FactIncident),
+			    USERELATIONSHIP(FactIncident[IncidentDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] >= TODAY() - 30,
+			    DimDate[FullDate] <= TODAY(),
+			    DimIncidentType[IncidentName] = "Incomplete Weekly Meeting"
+			)
+		formatString: #,0
+		displayFolder: Early Warning
+		lineageTag: 3583dcff-90bf-4e34-a54f-9a10b1f985bd
+
+	measure 'Arrears Trend' = ```
+			
+			    IF([Arrears] > [Arrears 30 Days Ago], "↑ Climbing", "Stable")
+			```
+		lineageTag: 0b5ba0b5-0b0c-4491-8cd5-0e92d3daa2c8
+
+	measure 'Risk Score' = ```
+			
+			    IF([Incidents Last 30 Days] > 0, 1, 0)
+			    + IF([Arrears] > [Arrears 30 Days Ago], 1, 0)
+			    + IF([Positive Tests Last 30 Days] > 0, 1, 0)
+			    + IF([Missed Meetings Last 30 Days] > 0, 1, 0)
+			```
+		formatString: 0
+		lineageTag: 4b74ffd4-2d36-4fbc-af91-3f7f8d78e4bf
+
+	measure 'Current Residents' = SUM(FactStay[Is Current Stay])
+		formatString: 0
+		lineageTag: 8ffdb647-3f40-458e-b91b-7984fedc4473
+
+	measure 'Arrears Trend Color' = ```
+			
+			    IF([Arrears] > [Arrears 30 Days Ago], "#FFB3B3", "#B3FFB3")
+			```
+		lineageTag: c7087154-93af-4c65-bb8d-83e4cef7bae4
+
 	partition 'My Measures' = m
 		mode: import
 		source =
