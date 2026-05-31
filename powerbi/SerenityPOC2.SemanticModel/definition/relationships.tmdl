@@ -74,6 +74,11 @@ relationship 5bf8a83b-846e-0389-366c-d18f07b8d01e
 	fromColumn: FactFinancialAssistance.StayKey
 	toColumn: FactStay.StayKey
 
+relationship a1b2c3d4-e5f6-7890-abcd-111122223333
+	isActive: false
+	fromColumn: FactFinancialAssistance.AssistanceDateKey
+	toColumn: DimDate.DateKey
+
 relationship 1a77d41b-8953-8c5f-e516-d4e949b08337
 	fromColumn: FactIncident.StayKey
 	toColumn: FactStay.StayKey

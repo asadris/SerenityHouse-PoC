@@ -23,11 +23,11 @@
                       "Entity": "DimDate"
                     }
                   },
-                  "Property": "FullDate"
+                  "Property": "Year Quarter"
                 }
               },
-              "queryRef": "DimDate.FullDate",
-              "nativeQueryRef": "FullDate",
+              "queryRef": "DimDate.Year Quarter",
+              "nativeQueryRef": "Year Quarter",
               "active": true
             }
           ]
@@ -61,7 +61,7 @@
                     "Entity": "DimDate"
                   }
                 },
-                "Property": "FullDate"
+                "Property": "YearQuarterSort"
               }
             },
             "direction": "Ascending"
@@ -69,6 +69,21 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [
@@ -78,6 +93,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Assistance Over Time'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
                 }
               }
             }

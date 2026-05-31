@@ -308,16 +308,19 @@ table 'My Measures'
 		lineageTag: 4a81c870-fd28-42e2-8efd-b32a07b81b57
 
 	measure 'Residents Assisted' =
-			
+
 			CALCULATE(
 			    DISTINCTCOUNT(DimResident[ResidentKey]),
-			    FactFinancialAssistance
+			    FILTER(
+			        FactFinancialAssistance,
+			        FactFinancialAssistance[AssistanceDateKey] <= VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+			    )
 			)
 		formatString: #,0
 		lineageTag: 8a93e306-bd4e-425e-9a67-c7a48133a3d4
 
 	measure 'Avg Assistance Per Resident' =
-			
+
 			DIVIDE([Total Assistance], [Residents Assisted])
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 45818b4b-5264-4c66-bd89-bc9723318266
@@ -326,16 +329,19 @@ table 'My Measures'
 
 			CALCULATE(
 			    SUM(FactFinancialAssistance[Amount]),
-			    FactFinancialAssistance[AssistanceDateKey] <= VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+			    USERELATIONSHIP(FactFinancialAssistance[AssistanceDateKey], DimDate[DateKey]),
+			    DimDate[FullDate] <= TODAY()
 			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	measure 'Stays Assisted %' =
-			
+
 			DIVIDE(
-			    DISTINCTCOUNT(FactFinancialAssistance[StayKey]),
+			    CALCULATE(
+			        DISTINCTCOUNT(FactFinancialAssistance[StayKey]),
+			        FactFinancialAssistance[AssistanceDateKey] <= VALUE(FORMAT(TODAY(), "YYYYMMDD"))
+			    ),
 			    COUNTROWS(FactStay)
 			)
 		formatString: 0%;-0%;0%
@@ -487,6 +493,7 @@ table 'My Measures'
 			)
 			- CALCULATE(
 			    SUM(FactFinancialAssistance[Amount]),
+			    USERELATIONSHIP(FactFinancialAssistance[AssistanceDateKey], DimDate[DateKey]),
 			    FactFinancialAssistance[AssistanceDateKey] <= DateKey30
 			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00

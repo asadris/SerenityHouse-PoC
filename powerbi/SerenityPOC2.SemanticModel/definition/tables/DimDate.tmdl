@@ -112,12 +112,44 @@ table DimDate
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Quarter Label' = "Q" & DimDate[Quarter]
+		dataType: string
+		lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+		summarizeBy: none
+		sortByColumn: Quarter
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Quarter' = FORMAT(DimDate[Year], "0") & " Q" & FORMAT(DimDate[Quarter], "0")
+		dataType: string
+		lineageTag: c3d4e5f6-a7b8-9012-cdef-234567890123
+		summarizeBy: none
+		sortByColumn: YearQuarterSort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarterSort = DimDate[Year] * 10 + DimDate[Quarter]
+		dataType: int64
+		isHidden
+		lineageTag: d4e5f6a7-b8c9-0123-defa-345678901234
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	hierarchy 'Year Hierarchy'
 		lineageTag: 9fe9a20f-54a6-4568-9977-ed7338062d6d
 
 		level Year
 			lineageTag: 8838bf46-6fc7-4930-b2e2-9d09d3c39340
 			column: Year
+
+		level 'Quarter Label'
+			lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
+			column: 'Quarter Label'
 
 		level 'Month Name'
 			lineageTag: ea7cecfe-60ef-4882-bb85-65ae985a0e11

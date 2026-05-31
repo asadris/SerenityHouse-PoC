@@ -475,7 +475,7 @@ def generate_stays(db: Connection, resident_ids, clusters,
             else:           return "Transferred"
         elif cluster == "Struggling":
             r = random.random()
-            if r < 0.45:    return "Completed"
+            if r < 0.40:    return "Completed"   # 40% target (was 45%)
             elif r < 0.85:  return "Terminated"
             else:           return "Transferred"
         else:  # Chronic
@@ -974,7 +974,23 @@ def generate_rent(db: Connection, all_stays):
 
 
 def generate_outcomes(db: Connection, all_stays):
-    """Generate exit outcomes for completed stays."""
+    """Generate exit outcomes for completed stays.
+
+    IsSuccessfulExit (Program Completion = Yes/No) is probability-based:
+    - Base probability = 1.0 for Completed stays
+    - Modified by behavior during the stay:
+        - Each incident reduces probability by 0.10
+        - Rent arrears > $210 (2+ weeks) reduces by 0.20
+        - Rent arrears $1–$210 reduces by 0.08
+        - No arrears (paid up or ahead) adds 0.05
+    - Probability clamped to [0.10, 1.00]
+    - Non-Completed stays always get Program Completion = No
+
+    Target aggregate success rates by cluster:
+        Reliable ~75%, Struggling ~40%, Chronic ~15%
+    These match cluster completion rates in pick_exit_type; behavior adds
+    within-cluster variance so high-incident residents succeed less often.
+    """
     print("  Generating outcomes...")
 
     DESTINATIONS = [
@@ -989,6 +1005,52 @@ def generate_outcomes(db: Connection, all_stays):
     ]
     DEST_NAMES    = [d[0] for d in DESTINATIONS]
     DEST_WEIGHTS  = [d[1] for d in DESTINATIONS]
+
+    # ------------------------------------------------------------------
+    # Pre-fetch behavior data for success probability calculation.
+    # Note: generate_financial_assistance runs AFTER this function,
+    # so only rent data (charges, payments, waivers) is available here.
+    # ------------------------------------------------------------------
+
+    # Incident count per stay
+    db.execute("SELECT StayID, COUNT(*) FROM sh.Incident GROUP BY StayID")
+    incident_counts = {row[0]: row[1] for row in db.fetchall()}
+
+    # Rent arrears per stay (charges - payments - waivers)
+    db.execute("""
+        SELECT
+            s.StayID,
+            ISNULL(rc.charges,  0)
+            - ISNULL(rp.payments, 0)
+            - ISNULL(rw.waivers,  0) AS Arrears
+        FROM sh.Stay s
+        LEFT JOIN (SELECT StayID, SUM(AmountCharged) AS charges
+                   FROM sh.RentCharge GROUP BY StayID)  rc ON rc.StayID = s.StayID
+        LEFT JOIN (SELECT StayID, SUM(AmountPaid)    AS payments
+                   FROM sh.RentPayment GROUP BY StayID) rp ON rp.StayID = s.StayID
+        LEFT JOIN (SELECT StayID, SUM(AmountWaived)  AS waivers
+                   FROM sh.RentWaiver GROUP BY StayID)  rw ON rw.StayID = s.StayID
+    """)
+    arrears_by_stay = {row[0]: float(row[1]) for row in db.fetchall()}
+
+    def success_probability(stay_id: int) -> float:
+        """Compute behavior-adjusted success probability for a Completed stay."""
+        prob = 1.0
+
+        # Incident penalty
+        incidents = incident_counts.get(stay_id, 0)
+        prob -= incidents * 0.10
+
+        # Arrears penalty / bonus
+        arrears = arrears_by_stay.get(stay_id, 0.0)
+        if arrears > 210:
+            prob -= 0.20
+        elif arrears > 0:
+            prob -= 0.08
+        else:
+            prob += 0.05  # paid up — small bonus
+
+        return max(0.10, min(1.00, prob))
 
     rows = []
     for stay_id, status, intake, exit_d, bed_id, pid, cluster, cm_id in all_stays:
@@ -1013,9 +1075,11 @@ def generate_outcomes(db: Connection, all_stays):
         los = (effective_exit - intake).days
         rows.append((stay_id, exit_d, "Sobriety Length (Days)", str(los), None))
 
-        # Program completion flag
+        # Program completion — probability-based for Completed stays
         if status == "Completed":
-            rows.append((stay_id, exit_d, "Program Completion", "Yes", None))
+            prob = success_probability(stay_id)
+            outcome_value = "Yes" if random.random() < prob else "No"
+            rows.append((stay_id, exit_d, "Program Completion", outcome_value, None))
 
     if rows:
         db.executemany(
@@ -1271,4 +1335,15 @@ def main():
         generate_fundraising(db)
 
         print("\n" + "=" * 60)
-      
+        print("Generation complete.")
+        print("=" * 60)
+
+    except Exception as e:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    main()

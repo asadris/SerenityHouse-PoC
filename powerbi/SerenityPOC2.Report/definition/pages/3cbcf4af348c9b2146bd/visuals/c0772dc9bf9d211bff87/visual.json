@@ -17,42 +17,17 @@
           "projections": [
             {
               "field": {
-                "HierarchyLevel": {
+                "Column": {
                   "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "DimDate"
-                        }
-                      },
-                      "Hierarchy": "Year Hierarchy"
+                    "SourceRef": {
+                      "Entity": "DimDate"
                     }
                   },
-                  "Level": "Year"
+                  "Property": "Year Quarter"
                 }
               },
-              "queryRef": "DimDate.Year Hierarchy.Year",
-              "nativeQueryRef": "Year Hierarchy Year",
-              "active": true
-            },
-            {
-              "field": {
-                "HierarchyLevel": {
-                  "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "DimDate"
-                        }
-                      },
-                      "Hierarchy": "Year Hierarchy"
-                    }
-                  },
-                  "Level": "Month Name"
-                }
-              },
-              "queryRef": "DimDate.Year Hierarchy.Month Name",
-              "nativeQueryRef": "Year Hierarchy Month Name",
+              "queryRef": "DimDate.Year Quarter",
+              "nativeQueryRef": "Year Quarter",
               "active": true
             }
           ]
@@ -144,44 +119,6 @@
           }
         },
         "type": "Advanced"
-      },
-      {
-        "name": "1af13f258fe394bbef30",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "DimDate"
-                  }
-                },
-                "Hierarchy": "Year Hierarchy"
-              }
-            },
-            "Level": "Year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "935a198234efe9fa3869",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "DimDate"
-                  }
-                },
-                "Hierarchy": "Year Hierarchy"
-              }
-            },
-            "Level": "Month Name"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }
