@@ -3,6 +3,7 @@ table DimRoom
 
 	column RoomKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f04167cb-e61a-4887-b9f6-7bc557b467ea
 		summarizeBy: count
@@ -12,6 +13,7 @@ table DimRoom
 
 	column RoomID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: e799a068-061f-40c1-84bc-fe8c934db155
 		summarizeBy: none
@@ -21,6 +23,7 @@ table DimRoom
 
 	column HouseID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 0b3b7169-ff23-4f2e-94fc-82bc03611fce
 		summarizeBy: none

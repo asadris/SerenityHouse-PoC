@@ -3,6 +3,7 @@ table FactIncident
 
 	column IncidentKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f1ad50de-6d85-4287-b8ff-dde18427eae3
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactIncident
 
 	column IncidentID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 8439b928-54ce-42a3-bd4d-3577887a06e8
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactIncident
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: fedef0e6-930c-4112-99af-dfd429084fd9
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactIncident
 
 	column ResidentKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 521aa70e-957d-4e65-9ba1-c1b73445b55c
 		summarizeBy: count
@@ -39,6 +43,7 @@ table FactIncident
 
 	column IncidentTypeKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 0e4e6497-0fff-4b0b-8857-032fc43457e5
 		summarizeBy: none
@@ -48,6 +53,7 @@ table FactIncident
 
 	column IncidentDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 16f24632-bf16-4e55-a02b-8da76639fbee
 		summarizeBy: count
@@ -65,6 +71,7 @@ table FactIncident
 
 	column 'Is Future Incident' = FactIncident[IncidentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
+		isHidden
 		lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 		summarizeBy: none
 

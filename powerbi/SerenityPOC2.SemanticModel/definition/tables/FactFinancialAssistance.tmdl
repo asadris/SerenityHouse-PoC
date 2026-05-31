@@ -3,6 +3,7 @@ table FactFinancialAssistance
 
 	column FinancialAssistanceKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 62c62c1a-bc37-4511-a4e0-5a6ba9bafb8e
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactFinancialAssistance
 
 	column FinancialAssistanceID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 24711ad8-dc5f-4fbe-bc24-1ffa2b9e046c
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactFinancialAssistance
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f835378a-ebfe-460b-a2a9-7b9dbf8e6563
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactFinancialAssistance
 
 	column AssistanceDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 35a53c37-84fd-42bf-9615-afa56a217eb7
 		summarizeBy: count

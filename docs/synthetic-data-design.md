@@ -133,3 +133,21 @@ When regenerating, ensure `ACTIVE_EXPIRY = END_DATE` in generate_data.py.
 5. `sql\dw\02_etl.sql`
 
 Then refresh the Power BI semantic model.
+
+---
+
+## Identity Mapping (PII Protection — Not Implemented in PoC)
+
+The data model includes a `SecurityIdentityMap` design that maps each `ResidentID` to a UUID (`PublicResidentID`). In a production deployment, external reports and exports would use `PublicResidentID` only — never the internal `ResidentID` — to prevent exposure of personally identifying information.
+
+**This is intentionally omitted from the PoC demo.** The synthetic data uses generated names and no real personal information, so the mapping layer adds no value in a demo context and would complicate the report unnecessarily.
+
+When this system moves toward production with real resident data, the identity mapping layer must be activated before any report is shared outside the organization.
+
+---
+
+## Project Repository
+
+GitHub: https://github.com/peter-c-smith/SerenityHouse-PoC
+
+The Python data generator, SQL schema scripts, ETL, and Power BI PBIP files are all version-controlled in this repository.

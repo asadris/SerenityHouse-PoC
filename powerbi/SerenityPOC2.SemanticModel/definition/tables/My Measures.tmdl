@@ -10,16 +10,19 @@ table 'My Measures'
 			    FactStay[IntakeDateKey] <= TodayKey,
 			    FactStay[ExitDateKey] >= TodayKey
 			)
+		displayFolder: Occupancy
 		lineageTag: 6e6b6a33-ab99-4d19-9e10-7b3740757059
 
 	measure 'Total Beds' = COUNTROWS(DimBed)
 		formatString: 0
+		displayFolder: Occupancy
 		lineageTag: 16b19fe8-98a0-47fc-ba6f-96a67d4ecc6c
 
 	measure 'Occupancy %' =
 			
 			DIVIDE([Active Beds Today], [Total Beds])
 		formatString: 0%;-0%;0%
+		displayFolder: Occupancy
 		lineageTag: 85fdf655-bed7-494f-8eda-a48e5cbe5166
 
 	measure 'Bed Status' =
@@ -33,6 +36,7 @@ table 'My Measures'
 			    )
 			RETURN
 			IF(IsOccupied > 0, "Occupied", "Available")
+		displayFolder: Occupancy
 		lineageTag: c39ff145-d426-403a-8431-8322cb43a4c6
 
 	measure 'Total Charges' =
@@ -119,6 +123,7 @@ table 'My Measures'
 			
 			
 			```
+		displayFolder: Funding
 		lineageTag: c8d6dca3-f067-444d-af88-0ddfc2774bda
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -144,6 +149,7 @@ table 'My Measures'
 			    REMOVEFILTERS(DimDate)
 			)),0)
 		formatString: 0
+		displayFolder: Occupancy
 		lineageTag: 6d9cf908-40d3-47f9-a6a6-371f7e577d49
 
 	measure 'Total Donations' =
@@ -152,6 +158,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Donations
 		lineageTag: 62da3c8c-a53e-44f9-8130-a6392dc892de
 
 	measure 'Total Donors' =
@@ -160,6 +167,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: #,0
+		displayFolder: Donations
 		lineageTag: ce0e9c39-63e3-46d6-81ff-c4e4dbd8b852
 
 	measure 'Total Events' =
@@ -168,6 +176,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: 0
+		displayFolder: Donations
 		lineageTag: b4805643-44c4-4a07-a7eb-a68f25e92264
 
 	measure 'Average Donation' =
@@ -176,6 +185,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Donations
 		lineageTag: 3e5754e2-314a-4899-8dc5-5b707b64e696
 
 	measure 'General Fund Donations' =
@@ -185,6 +195,7 @@ table 'My Measures'
 			    DimFundraisingEvent[IsGeneralFund] = TRUE()
 			)
 		formatString: 0
+		displayFolder: Donations
 		lineageTag: ae688d18-5d3b-4666-8e76-e304353e61e5
 
 	measure 'Event Donations' =
@@ -194,12 +205,14 @@ table 'My Measures'
 			    DimFundraisingEvent[IsGeneralFund] = 0
 			)
 		formatString: 0
+		displayFolder: Donations
 		lineageTag: f787f4d4-5f1c-4e11-87d3-82ecbfe25862
 
 	measure '% General Fund' =
 			
 			DIVIDE([General Fund Donations], [Total Donations])
 		formatString: 0%;-0%;0%
+		displayFolder: Donations
 		lineageTag: f8fd40c9-31fb-42f1-8375-774f4160c007
 
 	measure 'Anonymous Donations' =
@@ -209,6 +222,7 @@ table 'My Measures'
 			    DimDonor[IsAnonymous] = TRUE()
 			)
 		formatString: 0
+		displayFolder: Donations
 		lineageTag: dd8dcf04-0f7d-404e-9bae-445dd8e4c999
 
 	measure 'YoY Donation Growth' =
@@ -221,6 +235,7 @@ table 'My Measures'
 			    )
 			RETURN
 			DIVIDE(CurrentYear - PriorYear, PriorYear)
+		displayFolder: Donations
 		lineageTag: db6780fd-aac5-41d5-b5e2-e004786c595a
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -239,6 +254,7 @@ table 'My Measures'
 			    )
 			)
 		formatString: 0
+		displayFolder: Rent
 		lineageTag: f6dfa0c3-b35c-4a4d-a54e-c110bae67b65
 
 	measure 'Total Intakes' = ```
@@ -248,6 +264,7 @@ table 'My Measures'
 			
 			```
 		formatString: #,0
+		displayFolder: Demographics
 		lineageTag: 7bf8f727-4699-4214-96e1-e17acb3736df
 
 	measure 'Court Intake %' =
@@ -257,6 +274,7 @@ table 'My Measures'
 			    COUNTROWS(FactStay)
 			)
 		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Demographics
 		lineageTag: 7db252f8-9b39-4c23-8a29-f44a3efc302a
 
 	measure 'Successful Exit Rate' =
@@ -266,6 +284,7 @@ table 'My Measures'
 			    CALCULATE(COUNTROWS(FactStay), FactStay[Is Current Stay] = 0)
 			)
 		formatString: 0%;-0%;0%
+		displayFolder: Demographics
 		lineageTag: 79e5c5ed-b286-4e07-8774-5ebda41b54c0
 
 	measure 'Top Referral Source' =
@@ -281,6 +300,7 @@ table 'My Measures'
 			    ),
 			    DimReferralSource[Name]
 			)
+		displayFolder: Referrals
 		lineageTag: 0c39a5d6-3aaa-4692-9eda-c093b7e8f409
 
 	measure 'Top Treatment Referral' =
@@ -296,6 +316,7 @@ table 'My Measures'
 			    ),
 			    DimReferralSource[Name]
 			)
+		displayFolder: Referrals
 		lineageTag: e172e2ff-1121-422a-8093-ad9487855934
 
 	measure 'Recurring Donor %' =
@@ -305,6 +326,7 @@ table 'My Measures'
 			    DISTINCTCOUNT(FactDonation[DonorID])
 			)
 		formatString: 0%;-0%;0%
+		displayFolder: Donations
 		lineageTag: 4a81c870-fd28-42e2-8efd-b32a07b81b57
 
 	measure 'Residents Assisted' =
@@ -317,12 +339,14 @@ table 'My Measures'
 			    )
 			)
 		formatString: #,0
+		displayFolder: Funding
 		lineageTag: 8a93e306-bd4e-425e-9a67-c7a48133a3d4
 
 	measure 'Avg Assistance Per Resident' =
 			
 			DIVIDE([Total Assistance], [Residents Assisted])
 		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Funding
 		lineageTag: 45818b4b-5264-4c66-bd89-bc9723318266
 
 	measure 'Total Assistance' =
@@ -333,6 +357,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Funding
 		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
 
 	measure 'Stays Assisted %' =
@@ -345,6 +370,7 @@ table 'My Measures'
 			    COUNTROWS(FactStay)
 			)
 		formatString: 0%;-0%;0%
+		displayFolder: Funding
 		lineageTag: 81e569f2-14a3-4bab-ac02-6002f35da756
 
 	measure 'Total Incidents' =
@@ -355,6 +381,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: #,0
+		displayFolder: Behaviors
 		lineageTag: 1f7fa0cc-298a-4e8c-8f9b-03211a6164c8
 
 	measure 'Drug Tests Given' =
@@ -365,6 +392,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: #,0
+		displayFolder: Behaviors
 		lineageTag: da243c61-9f44-4fe4-8056-523cdadb5a53
 
 	measure 'Positive Test Rate %' =
@@ -378,6 +406,7 @@ table 'My Measures'
 			    DimDate[FullDate] <= TODAY()
 			)
 		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Behaviors
 		lineageTag: 6608fe25-761a-4b9c-8416-338b22523fa3
 
 	measure 'Most Common Incident' =
@@ -393,6 +422,7 @@ table 'My Measures'
 			    ),
 			    DimIncidentType[IncidentName]
 			)
+		displayFolder: Behaviors
 		lineageTag: 7b04cd86-6dd1-44df-809b-dc347bd86575
 
 	measure 'Incidents Trend' =
@@ -402,6 +432,7 @@ table 'My Measures'
 			    USERELATIONSHIP(DimDate[DateKey], FactIncident[IncidentDateKey])
 			)
 		formatString: 0
+		displayFolder: Behaviors
 		lineageTag: 5e73e7ac-da6d-4258-85ba-cf716f4d0c77
 
 	measure 'Days in Program' =
@@ -439,6 +470,7 @@ table 'My Measures'
 			RETURN
 			LOOKUPVALUE(DimDate[FullDate], DimDate[DateKey], LatestIntakeKey)
 		formatString: Short Date
+		displayFolder: Resident
 		lineageTag: e2426b74-bd61-4f83-8ec4-6580a2267a99
 
 	measure 'Program Status' =
@@ -448,6 +480,7 @@ table 'My Measures'
 			    "Active",
 			    "Exited"
 			)
+		displayFolder: Resident
 		lineageTag: 713f909a-55f9-489b-be8b-e0afd3fc43ce
 
 	measure 'Current Stay Arrears' =
@@ -530,22 +563,26 @@ table 'My Measures'
 			
 			    IF([Arrears] > [Arrears 30 Days Ago], "↑ Climbing", "Stable")
 			```
+		displayFolder: Early Warning
 		lineageTag: 0b5ba0b5-0b0c-4491-8cd5-0e92d3daa2c8
 
 	measure 'Risk Score' =
 			
 			[Arrears Flag] + [Incidents Flag] + [Positive Tests Flag] + [Missed Meetings Flag]
 		formatString: 0
+		displayFolder: Early Warning
 		lineageTag: 4b74ffd4-2d36-4fbc-af91-3f7f8d78e4bf
 
 	measure 'Current Residents' = SUM(FactStay[Is Current Stay])
 		formatString: 0
+		displayFolder: Occupancy
 		lineageTag: 8ffdb647-3f40-458e-b91b-7984fedc4473
 
 	measure 'Arrears Trend Color' = ```
 			
 			    IF([Arrears] > [Arrears 30 Days Ago], "#FFB3B3", "#B3FFB3")
 			```
+		displayFolder: Early Warning
 		lineageTag: c7087154-93af-4c65-bb8d-83e4cef7bae4
 
 	measure 'Residents Flagged' =
@@ -557,36 +594,42 @@ table 'My Measures'
 			    )
 			)
 		formatString: #,0
+		displayFolder: Early Warning
 		lineageTag: 63d86c3c-5d8a-444d-aeff-c97b39be27e0
 
 	measure '% of House At Risk' =
 			
 			DIVIDE([Residents Flagged], [Current Residents], 0)
 		formatString: 0%;-0%;0%
+		displayFolder: Early Warning
 		lineageTag: 4dbf009d-0abd-4bc0-adb1-b9a25c4756f1
 
 	measure 'Arrears Flag' =
 			
 			IF([Arrears Trend] = "↑ Climbing" && [Arrears] > 210, 1, 0)
 		formatString: 0
+		displayFolder: Early Warning
 		lineageTag: 3db27850-68ce-434f-973a-98736262bc8e
 
 	measure 'Incidents Flag' =
 			
 			IF([Incidents Last 30 Days] > 0, 2, 0)
 		formatString: 0
+		displayFolder: Early Warning
 		lineageTag: e046731d-e42c-4d83-9b12-c2b2b052f306
 
 	measure 'Positive Tests Flag' =
 			
 			IF([Positive Tests Last 30 Days] > 0, 2, 0)
 		formatString: 0
+		displayFolder: Early Warning
 		lineageTag: 6e4da74e-e2cf-49ed-a0c7-6ac067d02284
 
 	measure 'Missed Meetings Flag' =
 			
 			IF([Missed Meetings Last 30 Days] > 0, 1, 0)
 		formatString: 0
+		displayFolder: Early Warning
 		lineageTag: b45af14c-5614-4e83-9de5-9222cf6e3051
 
 	measure 'Incidents Per Month' =
@@ -597,6 +640,7 @@ table 'My Measures'
 			    FactIncident[Is Future Incident] = FALSE()
 			)
 		formatString: 0
+		displayFolder: Behaviors
 		lineageTag: 4fe3eb53-058f-499c-8432-cbeebd059022
 
 	partition 'My Measures' = m

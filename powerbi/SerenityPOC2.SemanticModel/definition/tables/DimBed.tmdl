@@ -8,6 +8,7 @@ table DimBed
 
 	column BedKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: e5509901-84a0-4e2f-bb07-3a3d748e2b18
 		summarizeBy: none
@@ -17,6 +18,7 @@ table DimBed
 
 	column BedID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 57f0b0b1-7cc6-4cbf-b9a1-7e901714041e
 		summarizeBy: count
@@ -26,6 +28,7 @@ table DimBed
 
 	column RoomID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 753dbece-28ec-4a9d-8ad7-9d90d4ebbf2e
 		summarizeBy: none

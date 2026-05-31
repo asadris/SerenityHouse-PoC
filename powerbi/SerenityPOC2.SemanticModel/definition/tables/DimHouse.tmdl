@@ -3,6 +3,7 @@ table DimHouse
 
 	column HouseKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 199dc486-26c8-4a2d-9d36-edb87a15641b
 		summarizeBy: none
@@ -12,6 +13,7 @@ table DimHouse
 
 	column HouseID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: b574b6ad-9216-4207-ac3a-3b6ee9a1fd2b
 		summarizeBy: none

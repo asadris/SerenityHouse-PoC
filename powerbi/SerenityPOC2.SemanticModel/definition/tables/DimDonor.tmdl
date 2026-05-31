@@ -3,6 +3,7 @@ table DimDonor
 
 	column DonorKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 660446c2-9659-4641-8bfc-0835633c2b16
 		summarizeBy: none
@@ -12,6 +13,7 @@ table DimDonor
 
 	column DonorID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: a41e984d-aa44-4035-9f6c-056e43d93a80
 		summarizeBy: none

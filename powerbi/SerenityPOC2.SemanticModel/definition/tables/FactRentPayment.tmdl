@@ -3,6 +3,7 @@ table FactRentPayment
 
 	column RentPaymentKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 80f6b614-80c7-4fd7-ae68-9a747d58c139
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactRentPayment
 
 	column RentPaymentID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: cba68844-51cf-4745-81ee-24a284576545
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactRentPayment
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 4cc16ded-097a-451a-b48b-b7de49767310
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactRentPayment
 
 	column PaymentDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 432c26ef-7942-48e9-bf30-e9a70e701b0f
 		summarizeBy: count
@@ -56,6 +60,7 @@ table FactRentPayment
 
 	column 'Is Future Payment' = FactRentPayment[PaymentDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
+		isHidden
 		lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
 		summarizeBy: none
 

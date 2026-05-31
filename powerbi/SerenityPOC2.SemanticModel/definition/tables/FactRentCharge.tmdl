@@ -3,6 +3,7 @@ table FactRentCharge
 
 	column RentChargeKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: ce69ceef-5c83-4031-8bf9-fce285964b09
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactRentCharge
 
 	column RentChargeID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 1ed1a5f2-991d-40ab-8498-19821dc3e312
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactRentCharge
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d2fe6474-a026-4aa1-9b27-7628cbdd9a88
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactRentCharge
 
 	column ChargeDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 13c7161e-1c6b-4682-99ae-fa8d6c89a1ef
 		summarizeBy: count
@@ -48,6 +52,7 @@ table FactRentCharge
 
 	column WeekNumber
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: a6a051b6-3f8e-456b-8806-529437531154
 		summarizeBy: sum

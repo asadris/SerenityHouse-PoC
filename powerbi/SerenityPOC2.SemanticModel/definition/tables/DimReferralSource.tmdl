@@ -3,6 +3,7 @@ table DimReferralSource
 
 	column ReferralSourceKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 5041ba91-4b07-4100-9baa-94ce93c28bd3
 		summarizeBy: none
@@ -12,6 +13,7 @@ table DimReferralSource
 
 	column ReferralSourceID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 94049bc7-8b49-4e12-820e-7a2e01b46d59
 		summarizeBy: none

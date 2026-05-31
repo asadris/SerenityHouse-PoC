@@ -128,6 +128,7 @@ table DimResident
 
 	column ResidentKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: af30efb6-1fe8-48e6-9084-581124b14b27
 		summarizeBy: none
@@ -137,6 +138,7 @@ table DimResident
 
 	column ResidentID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d70b21a2-b832-4e9d-bca9-cf6a66cd2095
 		summarizeBy: none

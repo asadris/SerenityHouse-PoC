@@ -3,6 +3,7 @@ table FactStay
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: db8a89fd-6ddc-4274-9028-4d7066b54fd7
 		summarizeBy: none
@@ -12,6 +13,7 @@ table FactStay
 
 	column StayID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 8abe9af9-8b4f-4a4a-b5d2-f76b9a937582
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactStay
 
 	column BedKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 9819db63-424b-421b-b5de-615c428c8a69
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactStay
 
 	column CaseManagerKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 7228bf56-9186-4732-83c3-b3c2222671ff
 		summarizeBy: count
@@ -39,6 +43,7 @@ table FactStay
 
 	column ReferralSourceKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 59f0a253-4fba-432c-aeee-6e515f46674e
 		summarizeBy: none
@@ -48,6 +53,7 @@ table FactStay
 
 	column IntakeDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 1cf683bb-8f6b-417f-88e9-3d7c00cbd2c0
 		summarizeBy: none
@@ -57,6 +63,7 @@ table FactStay
 
 	column ExitDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 63323b7a-da43-423f-b57d-e3c728d5c85b
 		summarizeBy: count
@@ -99,6 +106,7 @@ table FactStay
 
 	column ResidentKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 3cc9405f-e099-42b3-baf6-dce68b78a8ef
 		summarizeBy: none
@@ -113,6 +121,7 @@ table FactStay
 			    && FactStay[ExitDateKey] >= VALUE(FORMAT(TODAY(), "YYYYMMDD")),
 			    1, 0
 			)
+		isHidden
 		formatString: 0
 		lineageTag: 079db4d8-5b72-44b0-b9e0-094c8fba87f9
 		summarizeBy: sum
@@ -121,6 +130,7 @@ table FactStay
 
 	column 'Is Future Intake' = FactStay[IntakeDateKey] > VALUE(FORMAT(TODAY(), "YYYYMMDD"))
 		dataType: boolean
+		isHidden
 		lineageTag: b2d4e6f8-1a3c-4d7e-9b2f-5c8a1e4d7f0b
 		summarizeBy: none
 

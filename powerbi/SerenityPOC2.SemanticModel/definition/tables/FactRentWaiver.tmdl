@@ -3,6 +3,7 @@ table FactRentWaiver
 
 	column RentWaiverKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 27df5a41-4e5b-4f30-8c10-4ecee4c43d6d
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactRentWaiver
 
 	column RentWaiverID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: a5bc595b-8821-421e-aee5-5cea9060ec46
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactRentWaiver
 
 	column StayKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 3ef69a59-07c9-40e6-8ee9-a1cdf8b73489
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactRentWaiver
 
 	column WaiverDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 46538fb4-8f2d-4c8f-9a7c-7b7daf1f12cd
 		summarizeBy: count

@@ -31,6 +31,7 @@ table DimFundraisingEvent
 
 	column EventKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d2390a66-afff-4cb4-b90f-3149b8163ec1
 		summarizeBy: none
@@ -40,6 +41,7 @@ table DimFundraisingEvent
 
 	column EventID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 8009dd97-5429-4248-84ee-4a1d947592ec
 		summarizeBy: none

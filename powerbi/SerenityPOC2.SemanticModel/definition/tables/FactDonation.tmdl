@@ -3,6 +3,7 @@ table FactDonation
 
 	column DonationKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 949ce7e3-53ff-4377-a610-a14034f096fa
 		summarizeBy: count
@@ -12,6 +13,7 @@ table FactDonation
 
 	column DonationID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 9123e804-39b4-4b87-8afb-1bb50fb1cab7
 		summarizeBy: count
@@ -21,6 +23,7 @@ table FactDonation
 
 	column DonorID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 6fbc770a-fa83-4803-b444-94c5a9bacf3a
 		summarizeBy: none
@@ -30,6 +33,7 @@ table FactDonation
 
 	column FundraisingEventID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d062213a-d9c8-4de5-9ee9-cfe1ffd6413e
 		summarizeBy: none
@@ -39,6 +43,7 @@ table FactDonation
 
 	column DonationDateKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 6ffa8966-f4a6-4396-8930-6f29c2ec77ad
 		summarizeBy: none

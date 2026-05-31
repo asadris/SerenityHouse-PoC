@@ -3,6 +3,7 @@ table DimIncidentType
 
 	column IncidentTypeKey
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d970604c-5a6c-4d17-be14-a5deab91f114
 		summarizeBy: none
@@ -12,6 +13,7 @@ table DimIncidentType
 
 	column IncidentTypeID
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 4c717094-5930-4716-964d-b14479391693
 		summarizeBy: none
