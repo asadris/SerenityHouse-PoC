@@ -62,9 +62,11 @@ WEEKLY_RENT       = Decimal("105.00")
 
 START_DATE = date(2022, 1, 1)
 END_DATE      = date(2029, 12, 31)   # Scheduling boundary for stay generation
-ACTIVE_EXPIRY = date(2027, 12, 31)   # ⚠️ ExitDate for all currently active stays.
-                                      # Dashboard "current resident" logic breaks after this date.
-                                      # Regenerate the dataset before 2027-12-31 if PoC still in use.
+ACTIVE_EXPIRY = date(2029, 12, 31)   # ⚠️ ExitDate for all currently active stays.
+                                      # Must equal END_DATE. Active stays get this as their ExitDate
+                                      # so "current resident" logic (IntakeDateKey <= TODAY and
+                                      # ExitDateKey >= TODAY) works correctly until END_DATE.
+                                      # Regenerate the dataset before 2029-12-31 if PoC still in use.
 
 # Fundraising scale
 NUM_DONORS      = 300
@@ -1269,15 +1271,4 @@ def main():
         generate_fundraising(db)
 
         print("\n" + "=" * 60)
-        print("Generation complete.")
-        print("=" * 60)
-
-    except Exception as e:
-        db.rollback()
-        raise
-    finally:
-        db.close()
-
-
-if __name__ == "__main__":
-    main()
+      

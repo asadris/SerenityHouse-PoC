@@ -146,19 +146,35 @@ table 'My Measures'
 		formatString: 0
 		lineageTag: 6d9cf908-40d3-47f9-a6a6-371f7e577d49
 
-	measure 'Total Donations' = SUM(FactDonation[Amount])
+	measure 'Total Donations' =
+			CALCULATE(
+			    SUM(FactDonation[Amount]),
+			    DimDate[FullDate] <= TODAY()
+			)
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 62da3c8c-a53e-44f9-8130-a6392dc892de
 
-	measure 'Total Donors' = DISTINCTCOUNT(FactDonation[DonorID])
+	measure 'Total Donors' =
+			CALCULATE(
+			    DISTINCTCOUNT(FactDonation[DonorID]),
+			    DimDate[FullDate] <= TODAY()
+			)
 		formatString: #,0
 		lineageTag: ce0e9c39-63e3-46d6-81ff-c4e4dbd8b852
 
-	measure 'Total Events' = DISTINCTCOUNT(FactDonation[FundraisingEventID])
+	measure 'Total Events' =
+			CALCULATE(
+			    DISTINCTCOUNT(FactDonation[FundraisingEventID]),
+			    DimDate[FullDate] <= TODAY()
+			)
 		formatString: 0
 		lineageTag: b4805643-44c4-4a07-a7eb-a68f25e92264
 
-	measure 'Average Donation' = AVERAGE(FactDonation[Amount])
+	measure 'Average Donation' =
+			CALCULATE(
+			    AVERAGE(FactDonation[Amount]),
+			    DimDate[FullDate] <= TODAY()
+			)
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 3e5754e2-314a-4899-8dc5-5b707b64e696
 
@@ -254,8 +270,7 @@ table 'My Measures'
 
 	measure 'Top Referral Source' =
 			
-			CALCULATE(
-			    SELECTEDVALUE(DimReferralSource[Name]),
+			MAXX(
 			    TOPN(
 			        1,
 			        ALL(DimReferralSource),
@@ -263,7 +278,8 @@ table 'My Measures'
 			            COUNTROWS(FactStay),
 			            FactStay[Is Future Intake] = FALSE()
 			        )
-			    )
+			    ),
+			    DimReferralSource[Name]
 			)
 		lineageTag: 0c39a5d6-3aaa-4692-9eda-c093b7e8f409
 
@@ -307,7 +323,7 @@ table 'My Measures'
 		lineageTag: 45818b4b-5264-4c66-bd89-bc9723318266
 
 	measure 'Total Assistance' =
-			
+
 			CALCULATE(
 			    SUM(FactFinancialAssistance[Amount]),
 			    FactFinancialAssistance[AssistanceDateKey] <= VALUE(FORMAT(TODAY(), "YYYYMMDD"))
@@ -360,9 +376,16 @@ table 'My Measures'
 
 	measure 'Most Common Incident' =
 			
-			CALCULATE(
-			    SELECTEDVALUE(DimIncidentType[IncidentName]),
-			    TOPN(1, ALL(DimIncidentType), CALCULATE(COUNTROWS(FactIncident)))
+			MAXX(
+			    TOPN(
+			        1,
+			        ALL(DimIncidentType),
+			        CALCULATE(
+			            COUNTROWS(FactIncident),
+			            FactIncident[Is Future Incident] = FALSE()
+			        )
+			    ),
+			    DimIncidentType[IncidentName]
 			)
 		lineageTag: 7b04cd86-6dd1-44df-809b-dc347bd86575
 
@@ -490,7 +513,7 @@ table 'My Measures'
 			    USERELATIONSHIP(FactIncident[IncidentDateKey], DimDate[DateKey]),
 			    DimDate[FullDate] >= TODAY() - 30,
 			    DimDate[FullDate] <= TODAY(),
-			    DimIncidentType[IncidentName] = "Incomplete Weekly Meeting"
+			    DimIncidentType[IncidentName] = "Incomplete Weekly Meetings"
 			)
 		formatString: #,0
 		displayFolder: Early Warning
