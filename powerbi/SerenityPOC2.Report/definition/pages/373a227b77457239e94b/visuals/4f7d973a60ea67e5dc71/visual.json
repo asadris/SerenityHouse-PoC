@@ -37,23 +37,5 @@
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "a4b60b90e2db0055eeba",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Top Treatment Referral"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "8675877e406e7f81eeea",
+  "position": {
+    "x": 684.36513383665067,
+    "y": 57.103637611530544,
+    "z": 5001,
+    "height": 35.140700068634182,
+    "width": 369.8558682223748,
+    "tabOrder": 5001
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "💡 Right-click a resident name → Drill through → Resident Profile",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": {
+                        "solid": {
+                          "color": "#666666"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

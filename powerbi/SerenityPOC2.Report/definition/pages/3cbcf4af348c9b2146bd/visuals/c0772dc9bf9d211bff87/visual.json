@@ -103,23 +103,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c1b2385edbcc998c2e50",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "My Measures"
-              }
-            },
-            "Property": "Total Donations"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

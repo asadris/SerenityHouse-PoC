@@ -4,10 +4,10 @@
   "position": {
     "x": 898.72340425531922,
     "y": 199.39209726443769,
-    "z": 2003,
+    "z": 3000,
     "height": 83.647416413373861,
     "width": 319.02735562310033,
-    "tabOrder": 2003
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "textSlicer",
@@ -54,23 +54,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "f1c546f420b4642d2cd7",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactStay"
-              }
-            },
-            "Property": "Resident Full Name"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

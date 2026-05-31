@@ -4,10 +4,10 @@
   "position": {
     "x": 946.38297872340434,
     "y": 56.413373860182375,
-    "z": 2002,
+    "z": 2000,
     "height": 142.97872340425533,
     "width": 189.66565349544075,
-    "tabOrder": 2002
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "slicer",
@@ -143,23 +143,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "3f7c00d2932978fc5b4c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "FactStay"
-              }
-            },
-            "Property": "Roster Status"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }
