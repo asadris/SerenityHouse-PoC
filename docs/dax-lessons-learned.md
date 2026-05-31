@@ -139,3 +139,43 @@ column 'Is Future Incident' = FactIncident[IncidentDateKey] > VALUE(FORMAT(TODAY
 **Fix:** Use `[Arrears]` directly on the drillthrough page. It respects the existing filter context without needing ALLEXCEPT.
 
 **Rule of thumb:** ALLEXCEPT is for "ignore all filters except this one column." In a drillthrough scenario, the filter IS on that column — so ALLEXCEPT fights the context instead of helping it.
+
+---
+
+## Pattern: Slicers Require Columns, Not Measures
+
+**Used on:** Master Roster page (Roster Status slicer)
+
+### Why slicers can't use measures
+
+A slicer needs to enumerate a fixed list of values to display as buttons or list items. Measures have no fixed list — they evaluate dynamically in filter context. A calculated column has a pre-computed value for every row, so Power BI can enumerate its distinct values.
+
+**Wrong:** putting a measure like `[Program Status]` (which returns "Active" or "Exited") into a slicer — Power BI rejects it.
+
+**Right:** use a calculated column on the fact table:
+```dax
+column 'Roster Status' = IF(FactStay[Is Current Stay] = 1, "Active", "Exited")
+```
+This gives slicer values of "Active" and "Exited" with no ambiguity.
+
+### Why all columns in a table visual should come from one table
+
+When a table visual mixes columns from DimResident and FactStay, Power BI has to join them using the active relationship. In practice this causes fan-out: every FactStay row ends up shown for every DimResident row because the visual query doesn't apply the relationship as a row-level filter.
+
+**Fix:** pull all display columns into FactStay as calculated columns using RELATED/LOOKUPVALUE:
+```dax
+column 'Resident Full Name' = RELATED(DimResident[Full Name])
+column 'Bed Label'          = RELATED(DimBed[BedLabel])
+column 'Room Number'        = LOOKUPVALUE(DimRoom[RoomNumber], DimRoom[RoomID], RELATED(DimBed[RoomID]))
+```
+Then the table only uses FactStay — one row per stay, guaranteed.
+
+### Best approaches for an Active/Exited toggle (ranked)
+
+| Approach | How | Trade-off |
+|---|---|---|
+| **Bookmark buttons** | Create two bookmarks (Active filter on/off), add Button visuals to the page | Most polished UX; requires manual setup in Desktop |
+| **Filters pane** | Add `Roster Status` to Filters on this page, set default to "Active" | Simple; user must open Filters pane to change |
+| **Slicer (calculated column)** | `FactStay[Roster Status]` on a slicer visual | Works correctly; positioning can be tricky in PBIP format since Desktop may reposition visuals on save |
+
+For the Master Roster, the Filters pane approach is the lowest friction option since the roster is primarily used to view active residents — the filter default handles the common case and the pane is accessible when needed.

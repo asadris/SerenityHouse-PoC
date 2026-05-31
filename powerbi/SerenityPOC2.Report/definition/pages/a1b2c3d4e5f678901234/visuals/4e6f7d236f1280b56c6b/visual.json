@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "4e6f7d236f1280b56c6b",
+  "position": {
+    "x": 898.72340425531922,
+    "y": 199.39209726443769,
+    "z": 2003,
+    "height": 83.647416413373861,
+    "width": 319.02735562310033,
+    "tabOrder": 2003
+  },
+  "visual": {
+    "visualType": "textSlicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Resident Full Name"
+                }
+              },
+              "queryRef": "FactStay.Resident Full Name",
+              "nativeQueryRef": "Resident Full Name"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "general": [
+        {
+          "properties": {}
+        }
+      ],
+      "dropdown": [
+        {
+          "properties": {
+            "filterMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Filter_Starts_With_Any'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f1c546f420b4642d2cd7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Resident Full Name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

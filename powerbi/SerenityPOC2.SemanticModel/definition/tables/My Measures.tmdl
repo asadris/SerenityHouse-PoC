@@ -308,7 +308,7 @@ table 'My Measures'
 		lineageTag: 4a81c870-fd28-42e2-8efd-b32a07b81b57
 
 	measure 'Residents Assisted' =
-
+			
 			CALCULATE(
 			    DISTINCTCOUNT(DimResident[ResidentKey]),
 			    FILTER(
@@ -320,13 +320,13 @@ table 'My Measures'
 		lineageTag: 8a93e306-bd4e-425e-9a67-c7a48133a3d4
 
 	measure 'Avg Assistance Per Resident' =
-
+			
 			DIVIDE([Total Assistance], [Residents Assisted])
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 45818b4b-5264-4c66-bd89-bc9723318266
 
 	measure 'Total Assistance' =
-
+			
 			CALCULATE(
 			    SUM(FactFinancialAssistance[Amount]),
 			    USERELATIONSHIP(FactFinancialAssistance[AssistanceDateKey], DimDate[DateKey]),
@@ -336,7 +336,7 @@ table 'My Measures'
 		lineageTag: 0db37151-ab35-4fec-8b6a-670ead30a84f
 
 	measure 'Stays Assisted %' =
-
+			
 			DIVIDE(
 			    CALCULATE(
 			        DISTINCTCOUNT(FactFinancialAssistance[StayKey]),

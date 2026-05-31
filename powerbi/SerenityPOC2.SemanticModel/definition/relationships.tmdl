@@ -74,11 +74,6 @@ relationship 5bf8a83b-846e-0389-366c-d18f07b8d01e
 	fromColumn: FactFinancialAssistance.StayKey
 	toColumn: FactStay.StayKey
 
-relationship a1b2c3d4-e5f6-7890-abcd-111122223333
-	isActive: false
-	fromColumn: FactFinancialAssistance.AssistanceDateKey
-	toColumn: DimDate.DateKey
-
 relationship 1a77d41b-8953-8c5f-e516-d4e949b08337
 	fromColumn: FactIncident.StayKey
 	toColumn: FactStay.StayKey
@@ -109,5 +104,10 @@ relationship de2349ad-2c17-1249-fb1e-e9e043fd73d7
 relationship 2ff2f142-4fde-3c98-f825-c9785474875e
 	isActive: false
 	fromColumn: FactDrugTest.TestDateKey
+	toColumn: DimDate.DateKey
+
+relationship a1b2c3d4-e5f6-7890-abcd-111122223333
+	isActive: false
+	fromColumn: FactFinancialAssistance.AssistanceDateKey
 	toColumn: DimDate.DateKey
 

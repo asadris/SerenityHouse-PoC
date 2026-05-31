@@ -1,0 +1,306 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "5c5b7495bc42dbf882d6",
+  "position": {
+    "x": 41.823708206686931,
+    "y": 66.139817629179333,
+    "z": 2001,
+    "height": 499.93920972644378,
+    "width": 772.27963525835867,
+    "tabOrder": 2001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Resident Full Name"
+                }
+              },
+              "queryRef": "FactStay.Resident Full Name",
+              "nativeQueryRef": "Resident Full Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Room Number"
+                }
+              },
+              "queryRef": "FactStay.Room Number",
+              "nativeQueryRef": "Room Number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Bed Label"
+                }
+              },
+              "queryRef": "FactStay.Bed Label",
+              "nativeQueryRef": "Bed Label"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Intake Date"
+                }
+              },
+              "queryRef": "FactStay.Intake Date",
+              "nativeQueryRef": "Intake Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Exit Date"
+                }
+              },
+              "queryRef": "FactStay.Exit Date",
+              "nativeQueryRef": "Exit Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "Roster Status"
+                }
+              },
+              "queryRef": "FactStay.Roster Status",
+              "nativeQueryRef": "Roster Status"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "My Measures"
+                    }
+                  },
+                  "Property": "Arrears"
+                }
+              },
+              "queryRef": "My Measures.Arrears",
+              "nativeQueryRef": "Arrears"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "My Measures"
+                    }
+                  },
+                  "Property": "Risk Score"
+                }
+              },
+              "queryRef": "My Measures.Risk Score",
+              "nativeQueryRef": "Risk Score"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactStay"
+                  }
+                },
+                "Property": "Roster Status"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Master Roster'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f7a8bc0bc700f27e98cb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Resident Full Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4b82795c9f7c7a3cb853",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Room Number"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e18c339cbfd16fa5cb46",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Bed Label"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e7cbfd52ec92f2036d8f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Intake Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9d8fc98d98f992286106",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Exit Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d05038d1f3087a7271dd",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactStay"
+              }
+            },
+            "Property": "Roster Status"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d28d418be499265ea7fc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Arrears"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9de8c9b2af0ee035c9c1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "My Measures"
+              }
+            },
+            "Property": "Risk Score"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

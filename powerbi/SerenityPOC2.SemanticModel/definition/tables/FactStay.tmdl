@@ -126,6 +126,50 @@ table FactStay
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Intake Date' = DATE(INT(FactStay[IntakeDateKey]/10000), INT(MOD(FactStay[IntakeDateKey],10000)/100), MOD(FactStay[IntakeDateKey],100))
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560001
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Exit Date' = IF(FactStay[Is Current Stay] = 1, BLANK(), DATE(INT(FactStay[ExitDateKey]/10000), INT(MOD(FactStay[ExitDateKey],10000)/100), MOD(FactStay[ExitDateKey],100)))
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560002
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Roster Status' = IF(FactStay[Is Current Stay] = 1, "Active", "Exited")
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560003
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resident Full Name' = RELATED(DimResident[Full Name])
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560006
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bed Label' = RELATED(DimBed[BedLabel])
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560004
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Room Number' = LOOKUPVALUE(DimRoom[RoomNumber], DimRoom[RoomID], RELATED(DimBed[RoomID]))
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-abcd-ef1234560005
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition FactStay = m
 		mode: import
 		source =
