@@ -641,7 +641,56 @@ table 'My Measures'
 			)
 		formatString: 0
 		displayFolder: Behaviors
-		lineageTag: 4fe3eb53-058f-499c-8432-cbeebd059022
+		lineageTag: 4fe3eb53-058f-459c-8432-cbeebd059022
+
+	measure 'Total Exits' =
+			CALCULATE(
+			    COUNTROWS(FactStay),
+			    FactStay[Is Current Stay] = 0,
+			    FactStay[Is Future Intake] = FALSE()
+			)
+		formatString: #,0
+		displayFolder: Program Outcomes
+		lineageTag: b1c2d3e4-f5a6-7890-abcd-ef1234560101
+
+	measure 'Avg Length of Stay' =
+			AVERAGEX(
+			    FILTER(
+			        FactStay,
+			        FactStay[Is Current Stay] = 0 && FactStay[Is Future Intake] = FALSE()
+			    ),
+			    DATEDIFF(FactStay[Intake Date], FactStay[Exit Date], DAY) + 1
+			)
+		formatString: #,0
+		displayFolder: Program Outcomes
+		lineageTag: b2c3d4e5-f6a7-8901-bcde-f01234560102
+
+	measure 'Employed at Exit %' =
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS(FactStay),
+			        FactStay[Is Current Stay] = 0,
+			        FactStay[Is Future Intake] = FALSE(),
+			        FactStay[EmploymentStatusAtExit] <> "Unemployed",
+			        NOT ISBLANK(FactStay[EmploymentStatusAtExit])
+			    ),
+			    [Total Exits]
+			)
+		formatString: 0%;-0%;0%
+		displayFolder: Program Outcomes
+		lineageTag: b3c4d5e6-f7a8-9012-cdef-012345560103
+
+	measure 'Exit Count' =
+			CALCULATE(
+			    COUNTROWS(FactStay),
+			    USERELATIONSHIP(FactStay[ExitDateKey], DimDate[DateKey]),
+			    FactStay[Is Current Stay] = 0,
+			    FactStay[Is Future Intake] = FALSE(),
+			    DimDate[FullDate] <= TODAY()
+			)
+		formatString: #,0
+		displayFolder: Program Outcomes
+		lineageTag: b4c5d6e7-f8a9-0123-def0-123456560104
 
 	partition 'My Measures' = m
 		mode: import

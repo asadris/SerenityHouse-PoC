@@ -1,5 +1,5 @@
 """
-Serenity House PoC — Synthetic Data Generator (v6)
+Serenity House PoC — Synthetic Data Generator (v7)
 ====================================================
 Generates realistic synthetic data for the Serenity House analytics PoC.
 
@@ -405,7 +405,9 @@ def generate_stays(db: Connection, resident_ids, clusters,
 
     # Track next-available date per bed
     bed_free: dict[int, date] = {bid: START_DATE for bid in bed_ids}
-    # Track all stays created: list of (StayID, StayStatus, IntakeDate, ExitDate, BedID, ResidentID, cluster)
+    # Track all stays created: list of (StayID, StayStatus, IntakeDate, ExitDate, BedID, ResidentID, cluster, CaseManagerID)
+    # Note: StayStatus for non-Active stays is a preliminary value;
+    # finalize_exit_outcomes() overwrites it with the behavior-driven outcome.
     all_stays = []
 
     # Pool of residents not currently in a stay
@@ -973,25 +975,43 @@ def generate_rent(db: Connection, all_stays):
     print("    Rent records complete")
 
 
-def generate_outcomes(db: Connection, all_stays):
-    """Generate exit outcomes for completed stays.
-
-    IsSuccessfulExit (Program Completion = Yes/No) is probability-based:
-    - Base probability = 1.0 for Completed stays
-    - Modified by behavior during the stay:
-        - Each incident reduces probability by 0.10
-        - Rent arrears > $210 (2+ weeks) reduces by 0.20
-        - Rent arrears $1–$210 reduces by 0.08
-        - No arrears (paid up or ahead) adds 0.05
-    - Probability clamped to [0.10, 1.00]
-    - Non-Completed stays always get Program Completion = No
-
-    Target aggregate success rates by cluster:
-        Reliable ~75%, Struggling ~40%, Chronic ~15%
-    These match cluster completion rates in pick_exit_type; behavior adds
-    within-cluster variance so high-incident residents succeed less often.
+def finalize_exit_outcomes(db: Connection, all_stays):
     """
-    print("  Generating outcomes...")
+    Post-process: compute behavior-driven exit type for all exited stays,
+    then generate outcome records.
+
+    Called AFTER all behavior data (drug tests, incidents, rent) is generated.
+    Active stays (currently between intake and exit dates) are skipped —
+    they have no exit outcome yet; the report uses Is Current Stay for
+    active/exited determination rather than StayStatus.
+
+    Behavior score components (additive modifiers on top of cluster base):
+        Reliable base=0.75, Struggling base=0.40, Chronic base=0.15
+
+        Payment rate (payments / charges):
+            >= 90%: +0.12    |   60–89%: +0.05
+            30–59%: -0.10    |   < 30%:  -0.20
+
+        Incident count:
+            0 incidents: +0.10   |   1–2: no change
+            Each incident above 2: -0.10
+
+        Drug test positive rate:
+            < 5%: +0.08   |   30–50%: -0.12   |   > 50%: -0.20
+
+    Final probability clamped to [0.05, 0.95].
+    Exit type: Completed / Terminated / Transferred drawn from that probability.
+    Completed stays always receive Program Completion = Yes.
+    """
+    print("  Finalizing exit outcomes (behavior-driven)...")
+
+    BASE_PROB = {"Reliable": 0.75, "Struggling": 0.40, "Chronic": 0.15}
+
+    TERMINATION_REASONS = [
+        "Positive drug test", "Curfew violation", "Non-payment of rent",
+        "Behavioral issues", "Left against advice", "Incarceration",
+        "Unknown / AWOL",
+    ]
 
     DESTINATIONS = [
         ("Independent Housing",   0.30),
@@ -1003,92 +1023,148 @@ def generate_outcomes(db: Connection, all_stays):
         ("Homeless",              0.05),
         ("Unknown",               0.03),
     ]
-    DEST_NAMES    = [d[0] for d in DESTINATIONS]
-    DEST_WEIGHTS  = [d[1] for d in DESTINATIONS]
+    DEST_NAMES   = [d[0] for d in DESTINATIONS]
+    DEST_WEIGHTS = [d[1] for d in DESTINATIONS]
 
     # ------------------------------------------------------------------
-    # Pre-fetch behavior data for success probability calculation.
-    # Note: generate_financial_assistance runs AFTER this function,
-    # so only rent data (charges, payments, waivers) is available here.
+    # Fetch behavior data — all three signals available at this point
     # ------------------------------------------------------------------
 
     # Incident count per stay
     db.execute("SELECT StayID, COUNT(*) FROM sh.Incident GROUP BY StayID")
     incident_counts = {row[0]: row[1] for row in db.fetchall()}
 
-    # Rent arrears per stay (charges - payments - waivers)
+    # Rent payment rate per stay (arrears + total charges)
     db.execute("""
         SELECT
             s.StayID,
-            ISNULL(rc.charges,  0)
-            - ISNULL(rp.payments, 0)
-            - ISNULL(rw.waivers,  0) AS Arrears
+            ISNULL(rc.charges,  0) AS TotalCharges,
+            ISNULL(rp.payments, 0) + ISNULL(rw.waivers, 0) AS TotalPaid
         FROM sh.Stay s
         LEFT JOIN (SELECT StayID, SUM(AmountCharged) AS charges
-                   FROM sh.RentCharge GROUP BY StayID)  rc ON rc.StayID = s.StayID
+                   FROM sh.RentCharge  GROUP BY StayID) rc ON rc.StayID = s.StayID
         LEFT JOIN (SELECT StayID, SUM(AmountPaid)    AS payments
                    FROM sh.RentPayment GROUP BY StayID) rp ON rp.StayID = s.StayID
         LEFT JOIN (SELECT StayID, SUM(AmountWaived)  AS waivers
-                   FROM sh.RentWaiver GROUP BY StayID)  rw ON rw.StayID = s.StayID
+                   FROM sh.RentWaiver  GROUP BY StayID) rw ON rw.StayID = s.StayID
     """)
-    arrears_by_stay = {row[0]: float(row[1]) for row in db.fetchall()}
+    rent_data = {row[0]: (float(row[1]), float(row[2])) for row in db.fetchall()}
 
-    def success_probability(stay_id: int) -> float:
-        """Compute behavior-adjusted success probability for a Completed stay."""
-        prob = 1.0
+    # Drug test positive rate per stay
+    db.execute("""
+        SELECT StayID,
+               COUNT(*) AS total_tests,
+               SUM(CASE WHEN Result = 'Positive' THEN 1 ELSE 0 END) AS positives
+        FROM sh.DrugTest
+        GROUP BY StayID
+    """)
+    drug_data = {row[0]: (row[1], row[2]) for row in db.fetchall()}
 
-        # Incident penalty
+    # ------------------------------------------------------------------
+    # Behavior score → exit probability
+    # ------------------------------------------------------------------
+
+    def compute_exit_prob(stay_id: int, cluster: str) -> float:
+        prob = BASE_PROB[cluster]
+
+        # Incident modifier
         incidents = incident_counts.get(stay_id, 0)
-        prob -= incidents * 0.10
+        if incidents == 0:
+            prob += 0.10
+        elif incidents > 2:
+            prob -= 0.10 * (incidents - 2)
 
-        # Arrears penalty / bonus
-        arrears = arrears_by_stay.get(stay_id, 0.0)
-        if arrears > 210:
-            prob -= 0.20
-        elif arrears > 0:
-            prob -= 0.08
-        else:
-            prob += 0.05  # paid up — small bonus
+        # Rent payment rate modifier
+        total_charges, total_paid = rent_data.get(stay_id, (0.0, 0.0))
+        if total_charges > 0:
+            pay_rate = total_paid / total_charges
+            if pay_rate >= 0.90:
+                prob += 0.12
+            elif pay_rate >= 0.60:
+                prob += 0.05
+            elif pay_rate < 0.30:
+                prob -= 0.20
+            else:
+                prob -= 0.10
 
-        return max(0.10, min(1.00, prob))
+        # Drug test modifier
+        total_tests, positives = drug_data.get(stay_id, (0, 0))
+        if total_tests > 0:
+            pos_rate = positives / total_tests
+            if pos_rate < 0.05:
+                prob += 0.08
+            elif pos_rate > 0.50:
+                prob -= 0.20
+            elif pos_rate > 0.30:
+                prob -= 0.12
 
-    rows = []
+        return max(0.05, min(0.95, prob))
+
+    # ------------------------------------------------------------------
+    # For each exited stay: determine final outcome, update DB, write records
+    # ------------------------------------------------------------------
+
+    update_rows  = []
+    outcome_rows = []
+
     for stay_id, status, intake, exit_d, bed_id, pid, cluster, cm_id in all_stays:
-        if status not in ("Completed", "Terminated", "Transferred"):
-            continue
+        if status == "Active":
+            continue  # currently-active stays have no exit outcome yet
 
-        # Primary: exit destination
-        destination = weighted_choice(DEST_NAMES, DEST_WEIGHTS)
-        rows.append((stay_id, exit_d, "Exit Destination", destination, None))
-
-        # Employment at exit
-        if cluster == "Reliable":
-            emp_at_exit = "Employed Full-Time" if random.random() < 0.65 else "Employed Part-Time"
-        elif cluster == "Struggling":
-            emp_at_exit = "Employed" if random.random() < 0.45 else "Unemployed"
+        prob = compute_exit_prob(stay_id, cluster)
+        r = random.random()
+        if r < prob:
+            new_status  = "Completed"
+            exit_reason = "Successfully completed program"
+        elif r < prob + (1 - prob) * 0.88:
+            new_status  = "Terminated"
+            exit_reason = random.choice(TERMINATION_REASONS)
         else:
-            emp_at_exit = "Employed" if random.random() < 0.15 else "Unemployed"
-        rows.append((stay_id, exit_d, "Employment at Exit", emp_at_exit, None))
+            new_status  = "Transferred"
+            exit_reason = "Transferred to another facility"
 
-        # Sobriety length
-        effective_exit = exit_d if exit_d is not None else TODAY
-        los = (effective_exit - intake).days
-        rows.append((stay_id, exit_d, "Sobriety Length (Days)", str(los), None))
+        update_rows.append((new_status, exit_reason, stay_id))
 
-        # Program completion — probability-based for Completed stays
-        if status == "Completed":
-            prob = success_probability(stay_id)
-            outcome_value = "Yes" if random.random() < prob else "No"
-            rows.append((stay_id, exit_d, "Program Completion", outcome_value, None))
+        # Outcome records
+        outcome_rows.append((stay_id, exit_d, "Exit Destination",
+                             weighted_choice(DEST_NAMES, DEST_WEIGHTS), None))
 
-    if rows:
+        if cluster == "Reliable":
+            emp = "Employed Full-Time" if random.random() < 0.65 else "Employed Part-Time"
+        elif cluster == "Struggling":
+            emp = "Employed" if random.random() < 0.45 else "Unemployed"
+        else:
+            emp = "Employed" if random.random() < 0.15 else "Unemployed"
+        outcome_rows.append((stay_id, exit_d, "Employment at Exit", emp, None))
+
+        los = (exit_d - intake).days
+        outcome_rows.append((stay_id, exit_d, "Sobriety Length (Days)", str(los), None))
+
+        # Completed → Yes; Terminated/Transferred → No
+        outcome_rows.append((stay_id, exit_d, "Program Completion",
+                             "Yes" if new_status == "Completed" else "No", None))
+
+    # Batch UPDATE StayStatus and ExitReason
+    db.executemany(
+        "UPDATE sh.Stay SET StayStatus = ?, ExitReason = ? WHERE StayID = ?",
+        update_rows
+    )
+
+    # Batch INSERT outcome records
+    if outcome_rows:
         db.executemany(
             """INSERT INTO sh.Outcome (StayID, OutcomeDate, OutcomeType, OutcomeValue, Notes)
                VALUES (?,?,?,?,?)""",
-            rows
+            outcome_rows
         )
-        db.commit()
-    print(f"    {len(rows)} outcome records created")
+
+    db.commit()
+
+    completed   = sum(1 for r in update_rows if r[0] == "Completed")
+    terminated  = sum(1 for r in update_rows if r[0] == "Terminated")
+    transferred = sum(1 for r in update_rows if r[0] == "Transferred")
+    print(f"    Exit outcomes: {completed} Completed, {terminated} Terminated, {transferred} Transferred")
+    print(f"    {len(outcome_rows)} outcome records created")
 
 
 def generate_fundraising(db: Connection):
@@ -1290,7 +1366,7 @@ def fetch_id_list(db: Connection, table: str, id_col: str) -> list:
 
 def main():
     print("=" * 60)
-    print("Serenity House Synthetic Data Generator v6")
+    print("Serenity House Synthetic Data Generator v7")
     print(f"  Residents: {NUM_RESIDENTS}")
     print(f"  Date range:   {START_DATE} → {END_DATE}")
     print(f"  Donors:       {NUM_DONORS} | Events: {NUM_EVENTS} | Donations: {NUM_DONATIONS}")
@@ -1323,10 +1399,10 @@ def main():
         service_type_ids_by_name = fetch_lookup_ids(db, "ServiceType", "ServiceTypeID", "ServiceName")
         generate_service_encounters(db, all_stays, service_type_ids_by_name)
 
-        print("\n[8/9] Employment, rent, outcomes")
+        print("\n[8/9] Employment, rent, exit outcomes")
         generate_employment(db, all_stays)
         generate_rent(db, all_stays)
-        generate_outcomes(db, all_stays)
+        finalize_exit_outcomes(db, all_stays)
 
         print("\n[9/10] Financial assistance programs")
         generate_financial_assistance(db, all_stays)

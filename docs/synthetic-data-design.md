@@ -33,14 +33,20 @@ This means:
 | Constant | Value | Meaning |
 |---|---|---|
 | `START_DATE` | 2022-01-01 | Earliest possible intake date |
-| `END_DATE` | 2029-12-31 | Latest possible exit / scheduling boundary |
-| `ACTIVE_EXPIRY` | 2029-12-31 | ExitDate assigned to all currently active stays — **must equal END_DATE** |
+| `END_DATE` | 2029-10-31 | Last date the scheduler starts new stays (no intakes after this) |
+| `ACTIVE_EXPIRY` | 2029-12-31 | Cap on exit dates for currently-active stays |
 | `WEEKLY_RENT` | $105.00 | Rent charge per 7-day period |
 | `NUM_RESIDENTS` | 500 | Resident pool (seed=42) |
 
-### ACTIVE_EXPIRY must always equal END_DATE
+### Exit date design
 
-Active stays (residents whose natural exit would be beyond the generation date) are assigned `ExitDate = ACTIVE_EXPIRY`. Setting ACTIVE_EXPIRY < END_DATE would cause some active stays to appear artificially exited before their time, breaking the "current resident" date-range logic.
+Every stay has a realistic, computed exit date based on intake date + length of stay. There is no sentinel "9999" or fixed placeholder.
+
+- **Active stays** (currently between intake and exit as of generation date) get their natural computed exit date, capped at `ACTIVE_EXPIRY` (2029-12-31). This means some active residents may have exit dates slightly past 2029-12-31 if their stay length carries them there — that is acceptable.
+- **No new intakes after 2029-10-31** — modeled as Serenity House winding down operations around end of 2029. Residents who intake in late 2029 may have exit dates into early 2030.
+- **Historical stays** (exit date already passed) get Completed/Terminated/Transferred as determined by `finalize_exit_outcomes()`.
+
+`StayStatus = 'Active'` in the database reflects the generation-time snapshot only. For all report logic, use `Is Current Stay` (date-based calculated column) — not `StayStatus`.
 
 ---
 
@@ -64,9 +70,9 @@ IntakeDateKey <= TODAY  AND  ExitDateKey >= TODAY
 | **Power BI** (page filter) | `FactStay[Is Current Stay] = 1` applied at the page level |
 | **SQL validation** | `fs.IntakeDateKey <= @TodayKey AND fs.ExitDateKey >= @TodayKey` |
 
-### Why active stays get ExitDate = 2029-12-31
+### Why active stays need a future ExitDate
 
-Residents currently in the program need a future ExitDate so that `ExitDateKey >= TODAY` remains true no matter when the report is viewed. ACTIVE_EXPIRY (= END_DATE = 2029-12-31) is that sentinel. The report will work correctly on any date before 2029-12-31.
+Residents currently in the program need a future ExitDate so that `ExitDateKey >= TODAY` remains true when the report is viewed. Each active stay's exit date is its realistic computed date (intake + length of stay), capped at ACTIVE_EXPIRY (2029-12-31) so the dataset doesn't produce nonsensical far-future dates. The report will work correctly on any viewing date before those exit dates pass.
 
 ---
 

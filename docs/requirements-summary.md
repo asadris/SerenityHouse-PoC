@@ -1,5 +1,5 @@
 # Serenity House PoC — Requirements Summary
-*Synthesized from all project documents, Copilot conversation history, SQL schemas, Python generators, and Power BI semantic model. Prepared: 2026-05-20*
+*Synthesized from all project documents, Copilot conversation history, SQL schemas, Python generators, and Power BI semantic model. Prepared: 2026-05-20. Updated: 2026-06-01*
 
 ---
 
@@ -85,10 +85,12 @@ The generator uses **in-memory only** clusters — not stored in the database:
 - Struggling: PaymentRatio 0.40–0.84
 - Chronic: PaymentRatio < 0.40
 
-### Known generator bugs to fix:
-1. **All stays get an ExitDate** — active residents should have `ExitDate = NULL`
-2. **Cluster weights** in the final script are 60/30/10, but some docs say 50/25/25 — need to decide canonical weights
-3. **Two separate fundraising generators** (main script has 20 donors/4 events/100 donations; fundraising.py has 2000 donors/50 events/25000 donations) — need to merge or choose one
+### Generator design decisions (resolved):
+1. **All stays have a realistic exit date** — `ExitDate = NULL` was rejected. Active stays get their computed future exit date (capped at ACTIVE_EXPIRY = 2029-12-31). `Is Current Stay` (date-based DAX calculated column) drives active/exited logic in all reports — never `StayStatus` or `OutcomeCategory`.
+2. **Cluster weights** — canonical weights are 60/30/10 (Reliable/Struggling/Chronic). Resolved.
+3. **Fundraising generator** — merged into main `generate_data.py`. Resolved.
+4. **No intake dates after 2029-10-31** — modeled as Serenity House winding down; exit dates may extend into early 2030.
+5. **Behavior-driven exit outcomes (v7)** — `finalize_exit_outcomes()` replaces `generate_outcomes()`. Exit type (Completed/Terminated/Transferred) is determined after all behavior data is generated, using actual incident counts, rent payment rate, and drug test positive rate per stay.
 
 ---
 
@@ -97,16 +99,28 @@ The generator uses **in-memory only** clusters — not stored in the database:
 ### Semantic model tables (current)
 DimBed, DimDate, DimDonor, DimFundraisingEvent, DimHouse, DimResident, DimRoom, FactDonation, FactFinancialAssistance, FactRentCharge, FactRentPayment, FactRentWaiver, FactStay, My Measures
 
-### Dashboard pages required (from POC Description doc)
+### Note on report structure
+The dashboard pages are currently organized as a single Power BI report for the PoC. In a production deployment, these would likely be split into multiple focused reports by audience — e.g., an executive summary report, an operational/case management report, a financial report, and a fundraising report. The page structure here reflects content grouping, not a final report design.
 
-| Page | Key Visuals |
-|---|---|
-| 1. Engagement Overview | Attendance rates, required vs optional, by house and case manager |
-| 2. Behavior & Stability | Incident trends, drug test positivity, combined risk indicators |
-| 3. Financial Responsibility | Rent charges vs payments, waivers, assistance, compliance patterns, arrears |
-| 4. Employment Progress | Employment snapshots, wage/hours bands, employment at exit |
-| 5. Program Outcomes | Successful exits, destination types, length of stay, referral source performance |
-| 6. Fundraising | Total donations, donor segmentation, event ROI, YoY growth *(exists in model, needs page)* |
+### Dashboard pages — current status
+
+| Page | Status | Notes |
+|---|---|---|
+| Synthetic Data Notice | ✅ Complete | Formerly "Read First" |
+| Areas Served | ✅ Complete | Origin counties map + Top 10 Counties bar chart |
+| Rent | ✅ Complete | Date filters verified; test slicer to remove before final commit |
+| Arrears | ✅ Complete | SQL-verified ($4,909.26 total, 19 residents) |
+| Demographics | ✅ Complete | |
+| Referrals | ✅ Complete | TOPN measures fixed (MAXX pattern) |
+| Donations | ✅ Complete | Year Quarter trend chart |
+| Funding | ✅ Complete | Fixed 4 measures; Year Quarter chart |
+| Behaviors | ✅ Complete | Incident trends, drug test positivity, Most Common Incident fixed |
+| Resident Profile | ✅ Complete | Drillthrough — right-click resident name → Drill through |
+| Early Warning | ✅ Complete | Weighted Risk Score 0–6, KPIs, for April's weekly case manager review |
+| Master Roster | ✅ Complete | Stay-level roster, Active/Exited slicer, name search |
+| **Employment Progress** | ⬜ Not built | Employment snapshots, wage/hours, employment at exit — **to discuss** |
+| **Program Outcomes** | ⬜ Not built | Successful exits, destination types, LOS, referral source performance — **to discuss** |
+| Individual Resident Report (RDL) | Deprioritized | Replaced by Resident Profile drillthrough |
 
 ### DAX Measures (current — keep these)
 - Active Beds Today, Total Beds, Occupancy %, Bed Status
@@ -115,9 +129,10 @@ DimBed, DimDate, DimDonor, DimFundraisingEvent, DimHouse, DimResident, DimRoom, 
 - Resident-level financial measures
 - Donation measures (Total Donations, Total Donors, YoY Growth, etc.)
 
-### Known DAX bugs to fix:
-1. **Daily Occupancy** — broken because generator always sets ExitDate. The measure itself (`DISTINCTCOUNT(FactStay[StayID])` filtered by IntakeDateKey ≤ DateKey ≤ ExitDateKey) is logically correct — the bug is upstream in the data. Fix the generator first, then the measure works.
-2. **Active Beds Today** uses `ExitDateKey` — same root cause. Once ExitDate is NULL for active stays, need a NULL-safe version.
+### DAX notes:
+- All known DAX measure bugs have been resolved. See `docs/dax-lessons-learned.md` for patterns and gotchas.
+- All date relationships from fact tables to DimDate are INACTIVE (except FactDonation). Always use USERELATIONSHIP in measures that touch dates.
+- Never use `OutcomeCategory = 'Active'` in DAX — use `Is Current Stay = 1` instead.
 
 ### Relationships (current — mostly correct)
 - FactStay → DimDate (IntakeDateKey active, ExitDateKey inactive) — this is correct pattern

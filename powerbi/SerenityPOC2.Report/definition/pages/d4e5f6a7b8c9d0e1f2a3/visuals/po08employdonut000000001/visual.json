@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "po08employdonut000000001",
+  "position": {
+    "x": 640,
+    "y": 440,
+    "z": 3000,
+    "height": 270,
+    "width": 630,
+    "tabOrder": 3001
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactStay"
+                    }
+                  },
+                  "Property": "EmploymentStatusAtExit"
+                }
+              },
+              "queryRef": "FactStay.EmploymentStatusAtExit",
+              "nativeQueryRef": "EmploymentStatusAtExit",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "My Measures"
+                    }
+                  },
+                  "Property": "Total Exits"
+                }
+              },
+              "queryRef": "My Measures.Total Exits",
+              "nativeQueryRef": "Total Exits"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "My Measures"
+                  }
+                },
+                "Property": "Total Exits"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Employment at Exit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
