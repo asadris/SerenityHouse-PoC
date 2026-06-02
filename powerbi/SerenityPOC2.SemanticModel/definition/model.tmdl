@@ -8,12 +8,9 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["DimBed","DimDate","DimHouse","DimRoom","FactStay","My Measures","DimResident","FactRentCharge","FactRentPayment","FactRentWaiver","FactFinancialAssistance","DimDonor","DimFundraisingEvent","FactDonation","DimReferralSource","FactIncident","DimIncidentType","FactDrugTest"]
+annotation PBI_QueryOrder = ["DimBed","DimDate","DimHouse","DimRoom","FactStay","My Measures","DimResident","FactRentCharge","FactRentPayment","FactRentWaiver","FactFinancialAssistance","DimDonor","DimFundraisingEvent","FactDonation","DimReferralSource","FactIncident","DimIncidentType","FactDrugTest","ServerName","DatabaseName"]
 
 annotation PBI_ProTooling = ["DevMode"]
-
-ref expression ServerName
-ref expression DatabaseName
 
 ref table DimBed
 ref table DimDate

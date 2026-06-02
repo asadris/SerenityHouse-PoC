@@ -1397,7 +1397,7 @@ def main():
     print("=" * 60)
     print("Serenity House Synthetic Data Generator v7")
     print(f"  Residents: {NUM_RESIDENTS}")
-    print(f"  Date range:   {START_DATE} → {END_DATE}")
+    print(f"  Date range:   {START_DATE} to {END_DATE}")
     print(f"  Donors:       {NUM_DONORS} | Events: {NUM_EVENTS} | Donations: {NUM_DONATIONS}")
     print("=" * 60)
 
@@ -1424,9 +1424,10 @@ def main():
         incident_type_ids_by_name = fetch_lookup_ids(db, "IncidentType", "IncidentTypeID", "TypeName")
         generate_incidents(db, all_stays, incident_type_ids_by_name)
 
-        print("\n[7/9] Service encounters")
-        service_type_ids_by_name = fetch_lookup_ids(db, "ServiceType", "ServiceTypeID", "ServiceName")
-        generate_service_encounters(db, all_stays, service_type_ids_by_name)
+        # [7/9] Service encounters — skipped (not used in DW or reports; ~1M rows, slow over network)
+        # service_type_ids_by_name = fetch_lookup_ids(db, "ServiceType", "ServiceTypeID", "ServiceName")
+        # generate_service_encounters(db, all_stays, service_type_ids_by_name)
+        print("\n[7/9] Service encounters — skipped (not ETL'd to DW, not used in reports)")
 
         print("\n[8/9] Employment, rent, exit outcomes")
         generate_employment(db, all_stays)

@@ -13,7 +13,7 @@
 --   • Case notes stored as NoteText/NoteDate on Stay (simplified for PoC)
 -- =============================================================================
 
-USE Serenity1;
+-- USE Serenity1;  -- commented out: not supported on Azure SQL (connect to the target DB directly)
 
 -- =============================================================================
 -- SECTION 0 — Drop all objects (safe dev reset)
