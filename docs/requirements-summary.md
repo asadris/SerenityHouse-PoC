@@ -1,5 +1,7 @@
 # Serenity House PoC — Requirements Summary
-*Synthesized from all project documents, Copilot conversation history, SQL schemas, Python generators, and Power BI semantic model. Prepared: 2026-05-20. Updated: 2026-06-01*
+*Synthesized from all project documents, Copilot conversation history, SQL schemas, Python generators, and Power BI semantic model. Prepared: 2026-05-20. Updated: 2026-06-01 — **PROJECT COMPLETE***
+
+> **Status as of 2026-06-01:** All PoC work is complete. The system is fully built, data rebuilt with v7 generator, all 14 dashboard pages verified, and the repo is committed and pushed. This document is retained for historical context and production planning reference.
 
 ---
 
@@ -102,25 +104,27 @@ DimBed, DimDate, DimDonor, DimFundraisingEvent, DimHouse, DimResident, DimRoom, 
 ### Note on report structure
 The dashboard pages are currently organized as a single Power BI report for the PoC. In a production deployment, these would likely be split into multiple focused reports by audience — e.g., an executive summary report, an operational/case management report, a financial report, and a fundraising report. The page structure here reflects content grouping, not a final report design.
 
-### Dashboard pages — current status
+### Dashboard pages — final status (all 14 complete)
 
-| Page | Status | Notes |
-|---|---|---|
-| Synthetic Data Notice | ✅ Complete | Formerly "Read First" |
-| Areas Served | ✅ Complete | Origin counties map + Top 10 Counties bar chart |
-| Rent | ✅ Complete | Date filters verified; test slicer to remove before final commit |
-| Arrears | ✅ Complete | SQL-verified ($4,909.26 total, 19 residents) |
-| Demographics | ✅ Complete | |
-| Referrals | ✅ Complete | TOPN measures fixed (MAXX pattern) |
-| Donations | ✅ Complete | Year Quarter trend chart |
-| Funding | ✅ Complete | Fixed 4 measures; Year Quarter chart |
-| Behaviors | ✅ Complete | Incident trends, drug test positivity, Most Common Incident fixed |
-| Resident Profile | ✅ Complete | Drillthrough — right-click resident name → Drill through |
-| Early Warning | ✅ Complete | Weighted Risk Score 0–6, KPIs, for April's weekly case manager review |
-| Master Roster | ✅ Complete | Stay-level roster, Active/Exited slicer, name search |
-| **Employment Progress** | ⬜ Not built | Employment snapshots, wage/hours, employment at exit — **to discuss** |
-| **Program Outcomes** | ⬜ Not built | Successful exits, destination types, LOS, referral source performance — **to discuss** |
-| Individual Resident Report (RDL) | Deprioritized | Replaced by Resident Profile drillthrough |
+Pages are listed in tab order as they appear in the report:
+
+| # | Page | Status | Notes |
+|---|---|---|---|
+| 1 | Synthetic Data Notice | ✅ Complete | Context for stakeholders |
+| 2 | Early Warning | ✅ Complete | Weighted Risk Score 0–6, KPIs, for April's weekly case manager review |
+| 3 | Master Roster | ✅ Complete | Stay-level roster, Active/Exited slicer, name search |
+| 4 | Arrears | ✅ Complete | SQL-verified, measures fixed |
+| 5 | Rent | ✅ Complete | Date filters verified |
+| 6 | Behaviors | ✅ Complete | Incident trends, drug test positivity, Most Common Incident |
+| 7 | Bed/Stay | ✅ Complete | Bed utilization, occupancy, length-of-stay |
+| 8 | Demographics | ✅ Complete | Age, gender, race/ethnicity |
+| 9 | Referrals | ✅ Complete | TOPN measures using MAXX pattern |
+| 10 | Areas Served | ✅ Complete | Origin counties map + Top 10 Counties bar chart |
+| 11 | Donations | ✅ Complete | Year Quarter trend chart |
+| 12 | Funding | ✅ Complete | Financial assistance by program |
+| 13 | Resident Profile | ✅ Complete | Drillthrough — right-click any resident name |
+| 14 | Program Outcomes | ✅ Complete | Exit destinations, employment at exit, completion rates |
+| — | Individual Resident Report (RDL) | Deprioritized | Replaced by Resident Profile drillthrough |
 
 ### DAX Measures (current — keep these)
 - Active Beds Today, Total Beds, Occupancy %, Bed Status

@@ -154,6 +154,6 @@ When this system moves toward production with real resident data, the identity m
 
 ## Project Repository
 
-GitHub: https://github.com/peter-c-smith/SerenityHouse-PoC
+GitHub: https://github.com/asadris/SerenityHouse-PoC
 
 The Python data generator, SQL schema scripts, ETL, and Power BI PBIP files are all version-controlled in this repository.
