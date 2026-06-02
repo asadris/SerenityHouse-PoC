@@ -77,7 +77,7 @@ table DimFundraisingEvent
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("PETRISLAP2025\PETRIS2022", "Serenity1"),
+				    Source = Sql.Database(ServerName, DatabaseName),
 				    dw_DimFundraisingEvent = Source{[Schema="dw",Item="DimFundraisingEvent"]}[Data],
 				    #"Changed Type" = Table.TransformColumnTypes(dw_DimFundraisingEvent,{{"IsGeneralFund", type logical}})
 				in

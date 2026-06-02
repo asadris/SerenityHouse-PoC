@@ -2,12 +2,12 @@
 AI_Notes.txt
 Serenity Activity and Misc Notes.txt
 
-# Connection strings / secrets
+# Connection strings / secrets — .env.example IS committed (safe template)
 python/config.py
-*.env
+python/.env
+.env
 
 # Paginated reports — credentials are embedded (temporary dev login, not production)
-# TODO-SECURITY: sweep entire repo for credentials/secrets before any production deployment
 # reports/  ← removed from ignore so RDL is version-controlled
 
 # Power BI — binary files (large, don't diff well; add back when ready to version)

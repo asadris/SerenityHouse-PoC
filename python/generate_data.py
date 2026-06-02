@@ -7,11 +7,16 @@ Usage:
     python generate_data.py
 
 Requirements:
-    pip install pyodbc faker --break-system-packages   (or: pip install pyodbc faker)
+    pip install pyodbc faker python-dotenv --break-system-packages
 
-Architecture:
-    Writes directly to SQL Server via pyodbc (Trusted Connection / Windows Auth).
-    Later: port to SQLite by swapping the Connection class at the bottom.
+Connection config (loaded from .env or environment variables):
+    SH_SERVER    — SQL Server hostname or Azure SQL FQDN
+    SH_DATABASE  — Database name
+    SH_AUTH      — "windows" (Trusted_Connection) or "sql" (username+password)
+    SH_USER      — SQL username (only needed if SH_AUTH=sql)
+    SH_PASSWORD  — SQL password (only needed if SH_AUTH=sql)
+
+    Copy python/.env.example to python/.env and fill in your values.
 
 Occupancy Model (seasonal, deterministic):
     Winter (Nov–Feb): 90–100% — peaks at 45/45 beds for 1–2 months straight
@@ -29,26 +34,50 @@ Identity Masking:
     External reports use PublicResidentID, never ResidentID.
 """
 
+import os
 import random
 import uuid
 import math
 from datetime import date, timedelta, datetime
 from decimal import Decimal
+from pathlib import Path
 
 import pyodbc
 from faker import Faker
 
+# Load .env file if present (python-dotenv — optional but recommended)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent / ".env")
+except ImportError:
+    pass  # dotenv not installed — fall back to raw environment variables
+
 # ===========================================================================
-# CONFIG — edit these to match your environment
+# CONFIG — loaded from environment variables (set in .env or shell)
 # ===========================================================================
-SERVER       = r"PETRISLAP2025\PETRIS2022"
-DATABASE     = "Serenity1"
-CONN_STRING  = (
-    f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-    f"SERVER={SERVER};"
-    f"DATABASE={DATABASE};"
-    "Trusted_Connection=yes;"
-)
+SERVER   = os.environ.get("SH_SERVER",   r"PETRISLAP2025\PETRIS2022")
+DATABASE = os.environ.get("SH_DATABASE", "Serenity1")
+_AUTH    = os.environ.get("SH_AUTH",     "windows").lower()
+
+if _AUTH == "sql":
+    _USER     = os.environ["SH_USER"]
+    _PASSWORD = os.environ["SH_PASSWORD"]
+    CONN_STRING = (
+        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+        f"SERVER={SERVER};"
+        f"DATABASE={DATABASE};"
+        f"UID={_USER};"
+        f"PWD={_PASSWORD};"
+        "Encrypt=yes;"
+        "TrustServerCertificate=no;"
+    )
+else:
+    CONN_STRING = (
+        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+        f"SERVER={SERVER};"
+        f"DATABASE={DATABASE};"
+        "Trusted_Connection=yes;"
+    )
 
 SEED              = 42           # Reproducible results
 NUM_RESIDENTS  = 500

@@ -12,6 +12,9 @@ annotation PBI_QueryOrder = ["DimBed","DimDate","DimHouse","DimRoom","FactStay",
 
 annotation PBI_ProTooling = ["DevMode"]
 
+ref expression ServerName
+ref expression DatabaseName
+
 ref table DimBed
 ref table DimDate
 ref table DimHouse

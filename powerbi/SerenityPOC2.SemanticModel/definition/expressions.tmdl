@@ -1,0 +1,17 @@
+expression ServerName
+	= "serenityhousepeter.database.windows.net" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+	queryGroup: 'Parameters'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression DatabaseName
+	= "SerenityHouse" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
+	queryGroup: 'Parameters'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text

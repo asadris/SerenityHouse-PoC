@@ -8,8 +8,15 @@ Usage:
 
 Requires:
     - sqlcmd on PATH  (ships with SQL Server tools)
-    - pyodbc, faker   (pip install pyodbc faker)
+    - pyodbc, faker, python-dotenv  (pip install pyodbc faker python-dotenv)
     - ODBC Driver 17 for SQL Server
+
+Connection config (loaded from .env or environment variables):
+    SH_SERVER    — SQL Server hostname or Azure SQL FQDN
+    SH_DATABASE  — Database name
+    SH_AUTH      — "windows" or "sql"
+    SH_USER      — SQL username (if SH_AUTH=sql)
+    SH_PASSWORD  — SQL password (if SH_AUTH=sql)
 
 Steps:
     1. sql/00_drop_all.sql         — drop all sh/dw objects
@@ -24,11 +31,21 @@ import sys
 import os
 from pathlib import Path
 
+# Load .env file if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent / ".env")
+except ImportError:
+    pass
+
 # ---------------------------------------------------------------------------
-# Config
+# Config — from environment variables
 # ---------------------------------------------------------------------------
-SERVER   = r"PETRISLAP2025\PETRIS2022"
-DATABASE = "Serenity1"
+SERVER   = os.environ.get("SH_SERVER",   r"PETRISLAP2025\PETRIS2022")
+DATABASE = os.environ.get("SH_DATABASE", "Serenity1")
+_AUTH    = os.environ.get("SH_AUTH",     "windows").lower()
+_USER    = os.environ.get("SH_USER",     "")
+_PASSWORD = os.environ.get("SH_PASSWORD", "")
 
 # Resolve paths relative to this script's location
 REPO_ROOT = Path(__file__).resolve().parent.parent   # SerenityPOC Repo/
@@ -63,14 +80,12 @@ def run_sql(label: str, script: Path):
         print(f"ERROR: Script not found: {script}")
         sys.exit(1)
 
-    cmd = [
-        "sqlcmd",
-        "-S", SERVER,
-        "-d", DATABASE,
-        "-E",                  # Windows auth (Trusted Connection)
-        "-i", str(script),
-        "-b",                  # exit with error code on SQL error
-    ]
+    cmd = ["sqlcmd", "-S", SERVER, "-d", DATABASE, "-i", str(script), "-b"]
+
+    if _AUTH == "sql":
+        cmd += ["-U", _USER, "-P", _PASSWORD]
+    else:
+        cmd += ["-E"]  # Windows auth (Trusted Connection)
 
     result = subprocess.run(cmd, text=True)
     if result.returncode != 0:
